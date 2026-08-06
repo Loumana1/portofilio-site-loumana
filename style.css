@@ -1,0 +1,5135 @@
+@font-face {
+    font-family: 'BDO Grotesk';
+    src: url('assets/fonts/bdogrotesk-vf.ttf') format('truetype');
+    font-weight: 100 900;
+    font-style: normal;
+}
+
+/* Cactus Jack Font for Floating Navigation */
+@font-face {
+    font-family: 'Cactus Jack';
+    src: url('assets/fonts/cactus-jack.ttf') format('truetype'),
+        url('assets/fonts/cactus-jack.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Cactus Jack Alternate Font */
+@font-face {
+    font-family: 'Cactus Jack Alternate';
+    src: url('assets/fonts/cactus-jack-alternate.ttf') format('truetype'),
+        url('assets/fonts/cactus-jack-alternate.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Bebas Neue Font for Hero Titles */
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
+:root {
+    --bg: #9697a7;
+    --bg-soft: #b5b6c5;
+    --bg-aqua: #A6D1C9;
+    /* Landing page aqua background */
+    --text: #000000;
+    /* Revert to black/dark for general text */
+    --muted: #5a5b6b;
+    --accent: #ee382b;
+    --black: #000000;
+    --white: #ffffff;
+
+    --neutral-color--primary-neutral: gray;
+    --neutral-color--secondary-neutral: #bbb;
+}
+
+/* Scoped White Text for Landing Page & DJ Section */
+#landing-page,
+#dj-career,
+.site-header,
+.fullscreen-menu {
+    color: var(--white);
+}
+
+/* Ensure headings in these sections inherit color */
+#landing-page h1,
+#landing-page h2,
+#landing-page h3,
+#dj-career h1,
+#dj-career h2,
+#dj-career h3 {
+    color: inherit;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+h1 {
+    /* margin: .67em 0; */
+    font-size: 2em;
+}
+
+body {
+    font-family: 'BDO Grotesk';
+    overflow-x: hidden;
+    /*  background-color: var(--bg); */
+    color: var(--text);
+}
+
+.container {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 80px;
+}
+
+/* Navigation */
+.site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    padding: 40px 0;
+    /* Start hidden */
+    transform: translateY(-100%);
+    transition: transform 0.4s ease, background 0.4s ease, padding 0.4s ease;
+}
+
+.site-header.scrolled {
+    transform: translateY(0);
+    padding: 20px 0;
+    background: transparent;
+    backdrop-filter: none;
+}
+
+.header-container {
+    font-style: bold;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    margin-left: -20px;
+    /* Move logo and text a bit more to the left */
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.logo-drum {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+    display: block;
+}
+
+.logo a {
+    font-family: 'Cactus Jack', 'BDO Grotesk', sans-serif;
+    font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+    /* Bigger text */
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: var(--white);
+    /* White on blue hero */
+    text-decoration: none;
+}
+
+/* Menu Toggle - EXACT ORIGINAL */
+.menu-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    z-index: 1001;
+}
+
+.menu-icon {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 24px;
+}
+
+.menu-icon span {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: var(--text);
+    transition: all 0.3s ease;
+}
+
+.menu-toggle.active .menu-icon span:nth-child(1) {
+    transform: rotate(45deg) translate(7px, 7px);
+}
+
+.menu-toggle.active .menu-icon span:nth-child(2) {
+    opacity: 0;
+}
+
+.menu-toggle.active .menu-icon span:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -7px);
+}
+
+/* Dropdown Menu - New Design */
+.dropdown-menu {
+    position: absolute;
+    top: 70%;
+    /* Below the header items */
+    right: 80px;
+    /* Align with container padding */
+    width: 280px;
+    background: rgba(15, 15, 15, 0.95);
+    /* Dark background */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 24px 0;
+    z-index: 999;
+    /* Below toggle button (1001) */
+
+    /* Initial state for animation */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transform-origin: top right;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+}
+
+.dropdown-menu.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.menu-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 0;
+}
+
+.menu-list li {
+    padding: 0;
+    overflow: hidden;
+    /* For text reveal animation */
+}
+
+.menu-list a {
+    display: block;
+    padding: 10px 32px;
+    font-family: 'Bebas Neue', Impact, sans-serif;
+    /* Use brand font */
+    font-size: 2rem;
+    font-weight: 400;
+    color: var(--white);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: color 0.3s ease, background 0.3s ease;
+    border-left: 0px solid var(--accent);
+}
+
+.menu-list a:hover {
+    color: var(--accent);
+    background: rgba(255, 255, 255, 0.03);
+    padding-left: 42px;
+    /* Slide effect */
+    border-left: 4px solid var(--accent);
+}
+
+/* Responsive Dropdown */
+@media (max-width: 768px) {
+    .dropdown-menu {
+        right: 20px;
+        width: 240px;
+        top: 60px;
+    }
+
+    .menu-list a {
+        font-size: 1.8rem;
+    }
+}
+
+/* Zone 1: Landing Page (Craflow Style) */
+
+/* ============================================
+   FLOATING NAVIGATION BUTTON
+   ============================================ */
+
+.floating-nav {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 999;
+    /* Below header but above content */
+}
+
+.floating-nav-toggle {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 50px;
+    padding: 0.75rem 1.5rem;
+    font-family: 'Cactus Jack Alternate', 'BDO Grotesk', sans-serif;
+    font-size: 2rem;
+    font-weight: normal;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--text);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.floating-nav-toggle:hover {
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0 6px 30px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+}
+
+.floating-nav-toggle.active {
+    background: var(--accent);
+    color: var(--white);
+    border-color: var(--accent);
+}
+
+.floating-nav-icon {
+    display: block;
+}
+
+.floating-nav-menu {
+    position: absolute;
+    bottom: calc(100% + 1rem);
+    right: 0;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    padding: 0.5rem 0;
+    min-width: 180px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+    pointer-events: none;
+}
+
+.floating-nav-menu.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.floating-nav-item {
+    display: block;
+    padding: 0.75rem 1.5rem;
+    font-family: 'Cactus Jack', 'BDO Grotesk', sans-serif;
+    font-size: 2rem;
+    font-weight: normal;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--text);
+    text-decoration: none;
+    transition: all 0.2s ease;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.floating-nav-item:last-child {
+    border-bottom: none;
+}
+
+.floating-nav-item:hover {
+    background: rgba(238, 56, 43, 0.1);
+    color: var(--accent);
+    padding-left: 2rem;
+}
+
+/* Responsive: Floating Nav */
+@media (max-width: 768px) {
+    .floating-nav {
+        bottom: 1.5rem;
+        right: 1.5rem;
+    }
+
+    .floating-nav-toggle {
+        padding: 0.625rem 1.25rem;
+        font-size: 0.75rem;
+    }
+
+    .floating-nav-menu {
+        min-width: 160px;
+        right: 0;
+    }
+
+    .floating-nav-item {
+        padding: 0.625rem 1.25rem;
+        font-size: 0.75rem;
+    }
+}
+
+/* Old hero styles removed - replaced with new landing header */
+
+.btn {
+    display: inline-block;
+    padding: 16px 32px;
+    border-radius: 50px;
+    background: var(--accent);
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    border: 2px solid var(--accent);
+    transition: all 0.2s ease;
+}
+
+/* Zone Layouts */
+.zone {
+    position: relative;
+    width: 100%;
+}
+
+/* ============================================
+   LANDING PAGE HEADER - Craflow Style
+   ============================================ */
+
+/* ============================================
+   LANDING PAGE HEADER - Cleaned Up
+   ============================================ */
+
+.section-home-header {
+    position: relative;
+    overflow: hidden;
+    /* 1. Define the gradient background - Blue/Green "Mesh/Aura" gradient */
+    background:
+        linear-gradient(to top, #107C74 0%, transparent 15%),
+        radial-gradient(ellipse at top left, #107C74 0%, transparent 50%),
+        radial-gradient(ellipse at bottom right, #002366 0%, transparent 50%),
+        linear-gradient(135deg, #002366 0%, #107C74 100%);
+    width: 100%;
+    height: 100vh;
+}
+
+.section-home-header::before {
+    /* 2. Create fine dithered noise overlay (ISO grain effect) */
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='5' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.25'/%3E%3C/svg%3E");
+    background-size: 150px 150px;
+    opacity: 0.25;
+    mix-blend-mode: overlay;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* DJ Drawing Fixed Background */
+
+/* Hide drawing on landing page - prevent flash on page load */
+.section-home-header .dj-drawing-background,
+.section-home-header~
+
+/* Hero Header Container */
+.landing-header-layout-grid {
+    display: grid;
+    grid-auto-columns: 1fr;
+    grid-column-gap: 1rem;
+    grid-row-gap: 1rem;
+    grid-template-rows: auto auto auto auto auto auto;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    z-index: 10;
+    /* Content above background/video */
+    pointer-events: none;
+    /* Let clicks pass through to video if needed, but usually text needs pointer events */
+}
+
+/* Re-enable pointer events for text elements */
+.landing-header-layout-grid>* {
+    pointer-events: auto;
+}
+
+.background {
+    display: none;
+}
+
+/* Video Container - Full Screen Background */
+.header-image-wrapper {
+    position: absolute;
+    inset: 0;
+    width: 50%;
+    height: 50%;
+    z-index: 2;
+    /* Above background (z-index: 0) and drawing (z-index: 3 if visible), below content (z-index: 10) */
+    overflow: hidden;
+
+    /* Centered Video Layout */
+    display: flex;
+    justify-content: center;
+    /* align-self: center; */
+    margin: auto;
+    pointer-events: none;
+    place-items: center;
+    /* Let clicks pass through */
+}
+
+.header-image-block {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header-video-container {
+    width: 25rem;
+    /* Smaller size */
+    height: 25rem;
+    /* Smaller size */
+    position: relative;
+    max-width: 90%;
+    max-height: 90%;
+    right: 22%;
+    background-color: #000;
+    overflow: hidden;
+    border-radius: 2rem;
+    margin: auto;
+    /* Center the video container */
+}
+
+.header-carousel-item {
+    position: absolute;
+    top: 0;
+
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out;
+    z-index: 1;
+}
+
+.header-carousel-item.active {
+    opacity: 1;
+    z-index: 2;
+}
+
+.header-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Cover the screen */
+    display: block;
+}
+
+/* Removed: .frame-image and 3D transform styles */
+
+/* Header Title Grid - Craflow Style */
+#header-component-title {
+    grid-area: 1 / 1 / 4 / 7;
+    align-self: start;
+    padding-top: 2rem;
+    /* Add some spacing from top */
+}
+
+.header-content-grid {
+    perspective: 1000px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+    width: 100%;
+    position: relative;
+    bottom: 1.5rem;
+}
+
+#title-header-section-loumana-left {
+    place-self: start;
+}
+
+#title-header-section-world-right {
+    place-self: end;
+}
+
+.padding-global {
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+}
+
+.header-title {
+    font-family: 'Bebas Neue', Impact, sans-serif;
+    font-size: clamp(6rem, 13vw, 15rem);
+    line-height: 1;
+    letter-spacing: 0.05rem;
+    font-weight: 400;
+    color: var(--text);
+    text-align: center;
+    margin: 0;
+    /*text-shadow: 0 4px 20px rgba(255, 255, 255, 0.3);*/
+}
+
+/* CTA Buttons Styles */
+.landing-cta-container {
+    grid-area: 5 / 1 / 7 / 7;
+    align-self: end;
+    display: flex;
+    justify-content: center;
+    gap: 5rem;
+    margin-bottom: 8rem;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 20;
+    pointer-events: auto;
+}
+
+.landing-cta-btn {
+    display: inline-block;
+    padding: 0.875rem 2rem;
+    background: transparent;
+    backdrop-filter: none;
+    border: 2px solid #002366;
+    /* Dark Blue */
+    border-radius: 50px;
+    color: #002366;
+    /* Dark Blue */
+    text-decoration: none;
+    font-family: 'BDO Grotesk', sans-serif;
+    font-weight: 600;
+    /* Slightly bolder for dark text */
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 0.875rem;
+    transition: all 0.2s ease;
+}
+
+.landing-cta-btn:hover {
+    background: transparent;
+    color: var(--white);
+    border-color: var(--white);
+    transform: translateY(-1px);
+    /* Subtle lift */
+    box-shadow: none;
+    text-shadow: none;
+}
+
+/* Mobile adjustments for CTA */
+@media (max-width: 768px) {
+    .landing-cta-container {
+        gap: 1rem;
+        margin-bottom: 4rem;
+        /* Less space on mobile */
+    }
+
+    .landing-cta-btn {
+        padding: 0.6rem 1rem;
+        font-size: 0.75rem;
+        border-width: 1px;
+    }
+}
+
+#header-component-text-sides-centered {
+    grid-area: 1 / 1 / 7 / 7;
+    align-self: center;
+}
+
+#header-component-text-sides-left {
+    grid-area: 1 / 1 / 2 / 2;
+    place-self: end start;
+}
+
+#header-component-text-sides-right {
+    grid-area: 1 / 3 / 2 / 4;
+    place-self: end;
+}
+
+.header-opacity {
+    z-index: 5;
+    background-image: linear-gradient(180deg, var(--border-color--transparent) 0%, var(--background-color--primary-background) 100%);
+    width: 100%;
+    height: 4rem;
+    /* Increased height for smoother gradient */
+    position: absolute;
+    inset: auto 0% 0%;
+    /* Start gradient higher */
+    background-position: 0% -20%;
+}
+
+/* Responsive Header - Fix video centering for tablet/medium screens (60%-99% width) */
+@media (min-width: 430px) and (max-width: 1024px) {
+
+    /* Fix video centering for medium screens */
+    .header-image-wrapper {
+        margin-left: 0 !important;
+        /* Remove left margin that pushes video right */
+        justify-content: center !important;
+        align-items: center !important;
+        left: 0 !important;
+        right: 0 !important;
+    }
+
+    .header-video-container {
+        margin: 0 auto !important;
+        /* Force center */
+        position: relative !important;
+        left: auto !important;
+        right: auto !important;
+    }
+}
+
+/* Responsive Header */
+@media (max-width: 768px) {
+
+    .header-title {
+        font-size: clamp(4rem, 12vw, 8rem);
+    }
+
+    .landing-header-layout-grid {
+        height: 50rem;
+    }
+
+    .padding-global {
+        padding-left: 1.25rem;
+        padding-right: 1.25rem;
+    }
+
+    /* Responsive video container for mobile - Apply centering fix */
+    .header-image-wrapper {
+        margin-left: 0 !important;
+        /* Remove left margin that pushes video right */
+        justify-content: center !important;
+        align-items: center !important;
+    }
+
+    .header-video-container {
+        width: clamp(15rem, 70vw, 25rem);
+        height: clamp(15rem, 70vw, 25rem);
+        border-radius: 1.5rem;
+        margin: 0 auto !important;
+        /* Keep centered */
+        position: relative !important;
+        left: auto !important;
+        right: auto !important;
+    }
+
+}
+
+/* iPhone 14 and similar (430x932) */
+@media (max-width: 430px) and (max-height: 932px) {
+
+    /* Navbar - Much smaller */
+    .site-header {
+        padding: 15px 0 !important;
+        /* Reduced from 40px */
+    }
+
+    .header-container {
+        padding: 0 20px !important;
+        /* Reduced from 80px */
+    }
+
+    .logo a {
+        font-size: clamp(0.9rem, 2vw, 1.2rem) !important;
+        /* Smaller */
+    }
+
+    .logo-drum {
+        width: 24px !important;
+        height: 24px !important;
+    }
+
+    .menu-toggle {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        padding: 4px !important;
+    }
+
+    /* Video - Force center horizontally, move up vertically */
+    .header-image-wrapper {
+        margin-left: 0 !important;
+        /* Remove left margin that pushes video right */
+        margin-top: 4rem !important;
+        /* Move video higher (was 8rem) */
+        justify-content: center !important;
+        align-items: center !important;
+        left: 0 !important;
+        right: 0 !important;
+    }
+
+    .header-video-container {
+        width: clamp(12rem, 75vw, 20rem);
+        height: clamp(12rem, 75vw, 20rem);
+        border-radius: 1rem;
+        margin: 0 auto !important;
+        position: relative !important;
+        left: auto !important;
+        right: auto !important;
+    }
+
+    /* Title - Slightly lower than before but still higher than original */
+    #header-component-title {
+        grid-area: 3 / 1 / 7 / 7 !important;
+        /* Rows 3-5 (was 5-7, tried 2-4 but too high) */
+        align-self: center !important;
+    }
+
+    .header-content-grid {
+        bottom: 0.5rem !important;
+        /* Small offset instead of 1.5rem */
+    }
+
+    .header-title {
+        font-size: clamp(3rem, 10vw, 6rem);
+    }
+
+    /* Gradient - Slightly lower than tried before */
+    .section-home-header {
+        background:
+            radial-gradient(ellipse at top left, #107C74 0%, transparent 50%),
+            radial-gradient(ellipse at bottom right, #002366 0%, transparent 50%),
+            linear-gradient(135deg, #002366 0%, #107C74 100%) !important;
+        height: 95vh !important;
+        /* Slightly reduced */
+    }
+
+    .landing-header-layout-grid {
+        height: 95vh !important;
+    }
+
+    /* Intro text - Move higher vertically */
+
+}
+
+/* Box Styles - IMAGE ONLY */
+.box {
+    padding: 0;
+    border-radius: 12px;
+    width: 320px;
+    /* Increased base size */
+    height: 420px;
+    /* Increased base size */
+    margin-bottom: 180px;
+    /* More breathing room */
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    background: var(--bg-soft);
+    position: sticky;
+    pointer-events: auto;
+    /* Re-enable pointer events */
+}
+
+.box img,
+.box video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+.box:hover img,
+.box:hover video {
+    transform: scale(1.05);
+}
+
+/* DJ Discovery Scroll Interaction Styles */
+.section_dj-discovery {
+    width: 100%;
+    position: relative;
+    z-index: 20;
+}
+
+.dj-discovery_wrapper {
+    flex-flow: column;
+    justify-content: flex-start;
+    align-items: center;
+    height: 300vh;
+    /* Sufficient scroll distance */
+    display: flex;
+    position: relative;
+}
+
+.intro-text-part.active {
+    opacity: 1;
+    visibility: visible;
+    animation: textFadeIn 0.5s ease;
+}
+
+@keyframes textFadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+.scroll-note_text {
+    position: absolute;
+    top: 60px;
+    /* Moved down to make room for intro text */
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--white);
+    z-index: 30;
+    opacity: 0;
+    /* Start hidden - will be animated by ScrollTrigger */
+    visibility: hidden;
+    /* Start hidden */
+}
+
+.dj-discovery_sticky {
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    position: sticky;
+    top: 0;
+    overflow: hidden;
+    background-color: inherit;
+}
+
+.dj-discovery_component {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    /* Initial state will be set by JS, but defaults here */
+}
+
+.dj-discovery_img-wrap {
+    border-radius: 1rem;
+    justify-content: center;
+    align-items: center;
+    width: 90%;
+    height: 90%;
+    display: flex;
+    position: relative;
+    overflow: hidden;
+    /* Crucial for the keyhole effect */
+    /* Centered in parent component via flexbox (parent has align-items: center) */
+}
+
+.dj-discovery_img {
+    object-fit: cover;
+    width: 100vw;
+    /* Always full viewport width */
+    height: 100vh;
+    /* Always full viewport height */
+    max-width: none;
+    /* Transform will be handled by JS */
+}
+
+.dj-discovery_heading {
+    font-family: inherit;
+    font-size: 3.5rem;
+    line-height: 1.05;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+    position: absolute;
+    top: 55%;
+    transform: translateY(-50%);
+    color: var(--text);
+    z-index: 10;
+}
+
+.dj-discovery_heading._1 {
+    right: calc(100% + 3rem);
+    /* Increased for more space between text and image */
+}
+
+.dj-discovery_heading._2 {
+    left: calc(100% + 3rem);
+    /* Increased for more space between text and image */
+}
+
+.dj-discovery_img-text {
+    position: absolute;
+    /* Aligned with external headings: positioned at same vertical center */
+    /* Headings use: top: 50%, transform: translateY(-50%) relative to .dj-discovery_component */
+    /* img-wrap is 90% height, centered in component (5% margin top/bottom) */
+    /* To align with headings at 50% of component, we need 50% of component height */
+    /* Since we're positioned relative to img-wrap, and wrap is centered: */
+    /* wrap top = 5vh, wrap center = 50vh, so top: 50% of wrap = 50vh from component top */
+    /* This should align, but we ensure exact match by using same positioning method */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 3.5rem;
+    line-height: 1.05;
+    /* Match line-height exactly with .dj-discovery_heading for perfect alignment */
+    font-weight: 500;
+    color: rgb(255, 255, 255);
+    /* White text for contrast on image */
+    text-align: center;
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+    z-index: 5;
+    opacity: 0;
+    /* Initially hidden */
+}
+
+/* ============================================
+   DJ DISCOVERY SECTION - Responsive
+   ============================================ */
+
+/* Tablets/Medium Screens (60%-99% viewport width) */
+@media (min-width: 430px) and (max-width: 1024px) {
+    .dj-discovery_heading {
+        font-size: clamp(2rem, 4vw, 3rem);
+        /* Progressive font size reduction for tablets */
+    }
+
+    .dj-discovery_img-text {
+        font-size: clamp(2rem, 4vw, 3rem);
+        /* Match heading size for consistency */
+    }
+
+    .dj-discovery_img-wrap {
+        width: 85%;
+        height: 85%;
+        /* Slightly smaller on tablets */
+    }
+
+}
+
+/* Mobile (iPhone 14) - Just make text visible */
+@media (max-width: 430px) and (max-height: 932px) {
+    .dj-discovery_heading {
+        font-size: clamp(1.2rem, 6vw, 2rem);
+        /* Smaller text to be visible on mobile */
+    }
+
+    .dj-discovery_img-text {
+        font-size: clamp(1.5rem, 5vw, 2.5rem);
+        /* Smaller text inside image for mobile */
+    }
+
+    .dj-discovery_img-wrap {
+        width: 95%;
+        height: 95%;
+        /* Larger on mobile for better visibility */
+    }
+
+    .dj-discovery_heading._1 {
+        right: calc(100% + 1.5rem);
+        /* Reduced spacing on mobile */
+    }
+
+    .dj-discovery_heading._2 {
+        left: calc(100% + 1.5rem);
+        /* Reduced spacing on mobile */
+    }
+
+}
+
+/* DJ Skills Section */
+.section_dj-skills {
+    background-color: #F5F0E8;
+    /* Creamish background matching drawing */
+    position: relative;
+    z-index: 1;
+    /* Lower than DJ Discovery (z-index: 20) to stay behind */
+    display: block;
+    min-height: 120vh;
+    /* Extended height for sticky scroll effect - text stays fixed */
+    width: 100%;
+    overflow: hidden;
+    /* Hidden to contain absolutely positioned images */
+    margin-top: 0;
+    /* No margin - DJ Career section extends instead */
+}
+
+/* DJ Banner - Scrolling text in multiple languages */
+.dj-skills-banner {
+    position: absolute;
+    top: 2rem;
+    left: 0;
+    width: 100%;
+    height: auto;
+    z-index: 1;
+    /* Above background image (z-index: 0) */
+    overflow: hidden;
+    /* Hide overflow for seamless scroll */
+    pointer-events: none;
+    /* Allow clicks through */
+}
+
+.dj-skills-banner-track {
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;
+    /* Prevent text wrapping */
+    will-change: transform;
+    /* Optimize for animation */
+}
+
+.dj-skills-banner-item {
+    font-family: 'BDO Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    /* Medium size like subtitle */
+    font-weight: 500;
+    color: #000;
+    margin-right: 4rem;
+    /* Space between items */
+    display: inline-block;
+    flex-shrink: 0;
+    /* Prevent shrinking */
+}
+
+/* Background Image - Absolute within pinned section */
+.dj-skills-background-image {
+    position: absolute;
+    top: 8rem;
+    /* Padding from top */
+    left: 0;
+    width: 100%;
+    height: calc(100vh - 4rem);
+    /* Account for top padding */
+    background-image: url('assets/media/Dj_carrer_drawing_no_bg.png');
+    background-size: contain;
+    /* Show full image, not zoomed */
+    background-position: center center;
+    background-repeat: no-repeat;
+    z-index: 0;
+    /* Behind everything */
+    opacity: 0.9;
+    /* Slightly transparent to let creamish background show through */
+}
+
+/* Progressive Images Layer - Absolute within pinned section (foreground) */
+.dj-skills-images-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    /* Viewport height - matches viewport instead of section height */
+    z-index: 3;
+    /* Foreground - above background image and text box */
+    pointer-events: none;
+    /* Allow clicks through to text */
+}
+
+.dj-skills-image {
+    position: absolute;
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.6s ease, transform 0.8s ease;
+    will-change: opacity, transform;
+}
+
+.dj-skills-image img {
+    width: auto;
+    height: auto;
+    max-width: 25vw;
+    max-height: 35vh;
+    object-fit: contain;
+    border-radius: 12px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+}
+
+.dj-skills-image.visible {
+    opacity: 1;
+    /* Transform is handled by GSAP to preserve rotation */
+}
+
+/* Image Positioning - Scattered around text */
+.dj-skills-image-1 {
+    top: 15%;
+    left: 10%;
+    transform: translateY(50px) rotate(-5deg);
+}
+
+/* .dj-skills-image-1.visible - Transform handled by GSAP */
+
+.dj-skills-image-2 {
+    top: 80%;
+    /* Changed from bottom: 20% to top: 80% - keeps image in viewport */
+    right: 12%;
+    transform: translateY(50px) rotate(5deg);
+}
+
+/* .dj-skills-image-2.visible - Transform handled by GSAP */
+
+.dj-skills-image-3 {
+    top: 25%;
+    right: 15%;
+    transform: translateY(50px) rotate(3deg);
+}
+
+/* .dj-skills-image-3.visible - Transform handled by GSAP */
+
+.dj-skills-image-4 {
+    top: 85%;
+    /* Changed from bottom: 15% to top: 85% - keeps image in viewport */
+    left: 18%;
+    transform: translateY(50px) rotate(-4deg);
+}
+
+/* .dj-skills-image-4.visible - Transform handled by GSAP */
+
+/* Sticky Text Wrapper - Absolute within pinned section */
+.dj-skills-sticky-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 2;
+    /* Middle layer - above background, below images */
+    display: flex;
+    align-items: center;
+    /* Center text vertically */
+    justify-content: center;
+    pointer-events: none;
+    /* Allow clicks through, but text box will have pointer-events: auto */
+}
+
+/* Text Box with Glass Effect */
+.dj-skills-text-box {
+    background: rgba(245, 240, 232, 0.85);
+    /* Creamy background with 85% opacity */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    /* Glass effect - blurs content behind */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    padding: 1.5rem 2rem;
+    /* Smaller padding */
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    max-width: 55%;
+    /* Smaller box */
+    pointer-events: auto;
+    /* Allow interaction with text box */
+    transform: translateY(100%);
+    /* Start off-screen at bottom - will slide up */
+    will-change: transform;
+    position: relative;
+    /* For absolute positioning of badges */
+}
+
+/* Venue Badges Container */
+.venue-badges-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    /* Allow clicks through to text */
+    z-index: 1;
+    /* Above text box background, below text */
+}
+
+/* Venue Badge Base Styles */
+.venue-badge {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    /* Round */
+    overflow: hidden;
+    border: 2px solid rgba(255, 255, 255, 0.9);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    background: rgba(255, 255, 255, 0.9);
+    transition: all 0.3s ease;
+    pointer-events: auto;
+    /* Allow hover interactions */
+}
+
+.venue-badge img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(0.3);
+    /* Slight grayscale for subtle effect */
+    transition: filter 0.3s ease, transform 0.3s ease;
+}
+
+.venue-badge:hover {
+    transform: scale(1.15);
+    /* Scale up on hover */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    z-index: 10;
+    /* Above other badges on hover */
+}
+
+.venue-badge:hover img {
+    filter: grayscale(0);
+    /* Full color on hover */
+    transform: scale(1.1);
+}
+
+/* Badge Positions - Corners */
+.venue-badge-corner {
+    width: 45px;
+    height: 45px;
+    /* Slightly smaller for corners */
+}
+
+.venue-badge-top-left {
+    top: -22px;
+    left: -22px;
+}
+
+.venue-badge-top-right {
+    top: -22px;
+    right: -22px;
+}
+
+.venue-badge-bottom-left {
+    bottom: -22px;
+    left: -22px;
+}
+
+/* Badge Positions - Edges */
+.venue-badge-edge {
+    width: 50px;
+    height: 50px;
+}
+
+.venue-badge-left {
+    top: 50%;
+    left: -25px;
+    transform: translateY(-50%);
+}
+
+.venue-badge-right {
+    top: 50%;
+    right: -25px;
+    transform: translateY(-50%);
+}
+
+.venue-badge-left:hover,
+.venue-badge-right:hover {
+    transform: translateY(-50%) scale(1.15);
+    /* Maintain center position while scaling */
+}
+
+/* Responsive: Text Box on Mobile */
+@media (max-width: 768px) {
+    .dj-skills-text-box {
+        padding: 1.5rem 2rem;
+        max-width: 90%;
+        border-radius: 8px;
+    }
+
+    .dj-skills-background-image {
+        top: 2rem;
+        /* Less space on mobile */
+        height: calc(100vh - 2rem);
+    }
+
+    /* Smaller badges on mobile */
+    .venue-badge {
+        width: 40px;
+        height: 40px;
+    }
+
+    .venue-badge-corner {
+        width: 35px;
+        height: 35px;
+    }
+
+    .venue-badge-top-left {
+        top: -17px;
+        left: -17px;
+    }
+
+    .venue-badge-top-right {
+        top: -17px;
+        right: -17px;
+    }
+
+    .venue-badge-bottom-left {
+        bottom: -17px;
+        left: -17px;
+    }
+
+    .venue-badge-left {
+        left: -20px;
+    }
+
+    .venue-badge-right {
+        right: -20px;
+    }
+
+    /* CTA Button on Mobile */
+    .dj-career-cta {
+        padding: 0.75rem 1.5rem;
+        font-size: 0.75rem;
+        margin-top: 0.75rem;
+    }
+}
+
+/* Scrollable Content Area */
+.dj-skills-scroll-content {
+    position: relative;
+    min-height: 100vh;
+    /* Reduced from 200vh to 100vh - enough for animation without excessive space */
+    padding-bottom: 2rem;
+    padding-top: 0;
+}
+
+.dj-skills-head {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    pointer-events: auto;
+    /* Enable pointer events for CTA button */
+}
+
+/* DJ Career CTA Button */
+.dj-career-cta {
+    display: inline-block;
+    padding: 0.875rem 2rem;
+    font-family: 'BDO Grotesk', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text);
+    text-decoration: none;
+    background: transparent;
+    border: 2px solid var(--text);
+    border-radius: 50px;
+    transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    margin-top: 1rem;
+    position: relative;
+    z-index: 10;
+    /* Above badges and text box */
+    pointer-events: auto;
+    /* Ensure button is clickable */
+    opacity: 1;
+    /* Ensure button is visible */
+}
+
+.dj-career-cta:hover {
+    background: #F5F0E8 !important;
+    /* Cream color matching the section - !important to override any conflicts */
+    border-color: #F5F0E8 !important;
+    color: var(--text) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.dj-skills-heading {
+    font-family: 'BDO Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: clamp(1.5rem, 3.5vw, 2.5rem);
+    /* Smaller text */
+    line-height: 1.2;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    color: #000000 !important;
+    margin: 0;
+    position: relative;
+    opacity: 1;
+    /* Start with full opacity - GSAP handles individual character opacity */
+    will-change: opacity;
+}
+
+/* Character spans - allow text wrapping */
+.dj-skills-heading span {
+    display: inline;
+    white-space: normal;
+    /* Allow text to wrap naturally */
+}
+
+.spacer-medium {
+    height: 2rem;
+}
+
+.padding-section-small {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+.container-medium {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* 
+    ============================================================================
+    DJ ACTIVITIES SCROLL SECTION
+    ============================================================================
+    Sticky scroll section with horizontal sliding images (right to left)
+    No fade effects - images fully visible entering/exiting frame
+    Similar sticky behavior to DJ Skills section
+*/
+
+.dj-activities-scroll-section {
+    background: #7fa89a;
+    /* Same background as DJ Career section */
+    position: relative;
+    z-index: 1;
+    /* Increased to stay above Releases */
+    width: 100%;
+    /* No overflow hidden here - let wrapper handle it */
+    /* margin-bottom: 300px;*/
+    /* Beaucoup plus d'espace avant Releases */
+}
+
+/* Wrapper: Creates scroll container - ScrollTrigger pin handles the scroll distance */
+.dj-activities-wrapper {
+    height: 100vh;
+    /* Reduced from 6000px - ScrollTrigger pin creates the scroll space, wrapper just needs initial height */
+    position: relative;
+    background: #7fa89a;
+    /* Background extends full wrapper height */
+}
+
+/* Sticky Section: Stays fixed in viewport while scrolling (like example) */
+.dj-activities-sticky {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    /* Full viewport height */
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    overflow: hidden;
+    /* Hide overflow - no scrollbars, animation controlled by GSAP */
+    background: transparent;
+    /* Transparent - wrapper provides background */
+    padding: 0;
+    z-index: 10;
+}
+
+/* Container: Horizontal flex layout for parts */
+.dj-activities-container {
+    display: flex;
+    align-items: center;
+    gap: clamp(100px, 20vw, 400px);
+    /* Responsive gap */
+    min-width: fit-content;
+    height: 100%;
+    padding-left: 5vw;
+    padding-right: 5vw;
+    flex-shrink: 0;
+}
+
+/*---------------------Gradiant back groung ---------*/
+   /* 
+           FINAL DESIGN MODIFICATION:
+           - User requested "cream shade on section 1 at the place of the 'white'".
+           - We use #FFF8E7 (Cream) as the base base nuance for the top-left area.
+
+        */
+.dj-activities-gradiant-container{
+              width: 200vh;
+            height: 100%;
+            position: relative;
+            display: flex;
+            z-index: 0;
+}
+        .atmospheric-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            /* Changed base from Pale Blue to a warm Cream to provide that "nuance" */
+            background-color: #FFF8E7;
+            overflow: hidden;
+        }
+
+        /* 
+           ORGANIC BLOBS (Giant Radial Gradients)
+        */
+
+        /* 1. Deep Blue Cloud (Top Left - Start) */
+        /* Slightly reduced opacity to let the Cream Nuance shine through */
+        .blob-blue {
+            position: absolute;
+            top: -50vh;
+            left: -20vw;
+            width: 80vmax;
+            height: 80vmax;
+            background: radial-gradient(circle,
+                    #87CEEB 0%,
+                    #6BB6E0 25%,
+                    #4FA3D5 50%,
+                    transparent 70%);
+            opacity: 0.85;
+            /* Reduced from 0.9 */
+            mix-blend-mode: multiply;
+            /* Allows cream background to warm it up */
+        }
+
+        /* 1.5 NEW NUANCE BLOB: Cream Highlight in Section 1 */
+        /* This specifically targets the "white/empty" space in Section 1 */
+        .blob-nuance {
+            position: absolute;
+            top: 10vh;
+            left: 10vw;
+            width: 50vmax;
+            height: 50vmax;
+            background: radial-gradient(circle,
+                    #FFF8E7 0%,
+                    #FFE8C8 40%,
+                    transparent 70%);
+            opacity: 0.9;
+            mix-blend-mode: lighten;
+            z-index: 2;
+            /* Sits on top of the blue to "bleach" it slightly into cream */
+        }
+
+        /* 2. Light Blue/Cyan Drift (Middle Transition) */
+        .blob-cyan {
+            position: absolute;
+            top: 10vh;
+            left: 40vw;
+            width: 60vmax;
+            height: 60vmax;
+            background: radial-gradient(circle,
+                    #A8D8F0 0%,
+                    #C8E8F8 30%,
+                    transparent 60%);
+            opacity: 0.7;
+            mix-blend-mode: overlay;
+        }
+
+        /* 3. Cream/Transition Blob (Bridge at meeting point) */
+        .blob-cream {
+            position: absolute;
+            top: 30vh;
+            left: 80vw;
+            width: 50vmax;
+            height: 50vmax;
+            background: radial-gradient(circle,
+                    #FFE8C8 0%,
+                    #FFD84D 30%,
+                    transparent 65%);
+            opacity: 0.6;
+            mix-blend-mode: screen;
+        }
+
+        /* 4. Golden Glow (Bottom Right - End) */
+        .blob-yellow {
+            position: absolute;
+            bottom: -50vh;
+            right: -20vw;
+            width: 80vmax;
+            height: 80vmax;
+            background: radial-gradient(circle,
+                    #FFD700 0%,
+                    #FFC700 20%,
+                    #FFB84D 40%,
+                    transparent 70%);
+            opacity: 0.9;
+        }
+
+        /* 5. Additional mixing blob */
+        .blob-mix {
+            position: absolute;
+            top: 20vh;
+            left: 100vw;
+            width: 70vmax;
+            height: 70vmax;
+            background: radial-gradient(circle,
+                    #FFD84D 0%,
+                    #FFE8C8 25%,
+                    #C8E8F8 50%,
+                    transparent 70%);
+            opacity: 0.5;
+            mix-blend-mode: overlay;
+        }
+
+        /* Noise Texture */
+        .noise-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.4'/%3E%3C/svg%3E");
+            background-size: 200px 200px;
+            opacity: 0.4;
+            mix-blend-mode: overlay;
+            pointer-events: none;
+            z-index: 3;
+        }
+
+
+
+/* Mobile: Stack vertical */
+@media (max-width: 430px) {
+    .dj-activities-container {
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 3rem;
+        padding: 2rem 1rem;
+        height: auto;
+        min-height: 100vh;
+    }
+
+    .dj-activities-part {
+        width: 100%;
+        max-width: 100%;
+        min-width: auto;
+    }
+
+    /* Mobile wrapper height - matches ScrollTrigger end: '+=100%' (100vh) */
+    .dj-activities-wrapper {
+        height: auto;
+        min-height: 100vh;
+        /* Matches ScrollTrigger scroll distance of 100vh */
+    }
+
+    /* Make drawing image 4x smaller and ensure it's hidden outside section */
+    .radio-dj-drawing-bg {
+        position: absolute !important;
+        /* Ensure absolute positioning within section */
+        top: 30%;
+        left: 40%;
+        width: 12.5vw !important;
+        /* 4x smaller: 50vw / 4 = 12.5vw */
+        height: 12.5vh !important;
+        /* 4x smaller: 50vh / 4 = 12.5vh */
+        display: none !important;
+        /* Hidden by default */
+    }
+
+    .dj-activities-scroll-section .radio-dj-drawing-bg {
+        display: flex !important;
+        /* Only show inside DJ Activities section */
+    }
+
+    /* Hide drawing outside DJ Activities section */
+    .radio-dj-drawing-bg:not(.dj-activities-scroll-section .radio-dj-drawing-bg) {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+    }
+}
+
+/* Individual Part: Contains text and images */
+.dj-activities-part {
+    min-width: clamp(300px, 30vw, 400px);
+    /* Responsive min-width */
+    max-width: clamp(400px, 50vw, 600px);
+    /* Responsive max-width */
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    flex-shrink: 0;
+    position: relative;
+    /* For absolute positioning of background image */
+}
+
+/* Align titles to same height (start just under "keep scrolling") */
+.going-on-tour-part .dj-activities-text-block,
+.radio-residency-part .dj-activities-text-block {
+    z-index: 4;
+    padding-top: 0;
+    /* Remove any top padding to align titles */
+}
+
+.going-on-tour-title,
+.radio-residency-title {
+    margin-top: 0;
+    /* Ensure titles start at same height */
+}
+
+/* Text Block */
+.dj-activities-text-block {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+    /* Full width of part */
+}
+
+.dj-activities-part-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    /* Larger title */
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    color: #000;
+    margin: 0;
+    line-height: 1.1;
+}
+
+/* Going on tour - Title (Cactus Jack, bolder) */
+.going-on-tour-title {
+    font-family: 'Cactus Jack', sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: bold;
+    letter-spacing: 0.05em;
+    color: #000;
+    margin: 0;
+    line-height: 1.1;
+}
+
+/* Going on tour - Subtitle (Bebas, gray) */
+.going-on-tour-subtitle {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    color: #666;
+    margin: 0.5rem 0 1rem 0;
+    line-height: 1.2;
+}
+
+/* Going on tour - Text (BDO, larger) */
+.going-on-tour-text {
+    font-family: 'BDO Grotesk', sans-serif;
+    font-size: clamp(0.875rem, 1.2vw, 1rem);
+    /* Larger than default */
+    line-height: 1.7;
+    color: #000;
+    margin: 0;
+    max-width: 100%;
+}
+
+.dj-activities-part-text {
+    font-family: 'BDO Grotesk', sans-serif;
+    font-size: clamp(0.5rem, 0.8vw, 0.75rem);
+    /* Much smaller text */
+    line-height: 1.6;
+    color: #000;
+    margin: 0;
+    max-width: 100%;
+}
+
+/* Image Wrapper: Container for each image */
+.dj-activities-image-wrapper {
+    position: relative;
+    overflow: hidden;
+    background: #fff;
+    aspect-ratio: 1 / 1;
+    /* Force square aspect ratio */
+    width: 100%;
+    max-width: 250px;
+    /* Image size */
+    height: auto;
+    /* Auto height based on width/ratio */
+    border-radius: 8px;
+}
+
+/* Drawing Part: Centered image */
+
+/* Radio Residency - Title (Cactus Jack, bolder) */
+.radio-residency-title {
+    font-family: 'Cactus Jack', sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: bold;
+    letter-spacing: 0.05em;
+    color: #000;
+    margin: 0;
+    line-height: 1.1;
+}
+
+/* Radio Residency - Subtitle (Bebas, gray) */
+.radio-residency-subtitle {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(1rem, 2vw, 1.5rem);
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    color: #666;
+    margin: 0.5rem 0 1rem 0;
+    line-height: 1.2;
+}
+
+/* Radio Residency - Text (BDO, smaller, black) */
+.radio-residency-text {
+    font-family: 'BDO Grotesk', sans-serif;
+    font-size: clamp(0.75rem, 1vw, 0.875rem);
+    /* Smaller than default */
+    line-height: 1.6;
+    color: #000;
+    margin: 0;
+    max-width: 100%;
+}
+
+/* Radio Residency - Grid Layout (2 columns: 2 images | 2 videos, all square, smaller) */
+.radio-residency-grid {
+    z-index: 4 ;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    width: 100%;
+    max-width: 300px;
+    /* Smaller image boxes */
+    margin-top: 2rem;
+}
+
+.radio-residency-images-column {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.radio-residency-image-wrapper {
+    position: relative;
+    overflow: hidden;
+    background: #fff;
+    aspect-ratio: 1 / 1;
+    /* Square */
+    width: 100%;
+    border-radius: 8px;
+}
+
+.radio-residency-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.radio-residency-videos-column {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.radio-residency-video-wrapper {
+    position: relative;
+    overflow: hidden;
+    background: #000;
+    aspect-ratio: 1 / 1;
+    /* Square */
+    width: 100%;
+    border-radius: 8px;
+}
+
+.radio-residency-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Split Layout for Bruzz Part (Text + Vertical Images) */
+
+.dj-activities-split .dj-activities-text-block {
+    width: 50%;
+    /* Take half width */
+}
+
+/* Going on tour - Grid Layout (2 images + 2 videos, all square, smaller) */
+.going-on-tour-grid {
+    z-index: 4;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    width: 100%;
+    max-width: 300px;
+    /* Smaller image boxes */
+    margin-top: 2rem;
+}
+
+.going-on-tour-images-column {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.going-on-tour-image-wrapper {
+    position: relative;
+    overflow: hidden;
+    background: #fff;
+    aspect-ratio: 1 / 1;
+    /* Square */
+    width: 100%;
+    border-radius: 8px;
+}
+
+.going-on-tour-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.going-on-tour-videos-column {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.going-on-tour-video-wrapper {
+    position: relative;
+    overflow: hidden;
+    background: #000;
+    aspect-ratio: 1 / 1;
+    /* Square */
+    width: 100%;
+    border-radius: 8px;
+}
+
+.going-on-tour-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* DJ Drawing Background for Radio Activities */
+.radio-dj-drawing-bg {
+    /* background: #ff5f56; */
+    position: absolute;
+    /* Changed from fixed to absolute to contain within section */
+    top: 30%;
+    left: 40%;
+    width: 50vw;
+    height: 50vh;
+    z-index: 4;
+    /* Behind text */
+    display: none;
+    /* Hidden by default to prevent flash on page load */
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+}
+
+/* Show drawing only in DJ Activities section */
+.dj-activities-scroll-section .radio-dj-drawing-bg {
+    display: flex;
+    position: absolute;
+    /* Ensure absolute within section */
+}
+
+/* Hide drawing outside DJ Activities section - Global rule */
+body>.radio-dj-drawing-bg:not(.dj-activities-scroll-section .radio-dj-drawing-bg),
+section:not(.dj-activities-scroll-section) .radio-dj-drawing-bg {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+}
+
+.radio-dj-drawing-image {
+    width: 100vw;
+    height: 100vh;
+    max-width: 100vw;
+    max-height: 100vh;
+    object-fit: cover;
+    display: none !important;
+    /* Hidden by default to prevent flash on page load */
+    visibility: hidden !important;
+    opacity: 0 !important;
+}
+
+/* Show image only in DJ Activities section */
+.dj-activities-scroll-section .radio-dj-drawing-image {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* "Connect genres, connect people" as part of horizontal scroll */
+.connect-text-block {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 100vw;
+
+    /* Full viewport width */
+    height: 20vh;
+    text-align: center;
+    /* Center the text */
+    position: relative;
+    z-index: 1;
+    /* Lower than blocks (z-index: 1000) so blocks cover it */
+}
+
+/* Ensure the text part takes full viewport width for proper centering */
+.dj-activities-part[data-part="connect-text"] {
+    min-width: 100vw !important;
+    max-width: 100vw !important;
+    margin: 0 !important;
+    position: relative;
+    z-index: 1;
+    /* Lower than blocks (z-index: 1000) so blocks cover it */
+}
+
+.adorable-connect-text {
+    font-family: 'Cactus Jack', sans-serif;
+    font-size: clamp(2rem, 5vw, 4rem);
+    /* Responsive font size */
+    line-height: 1.05;
+    font-weight: normal;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+    color: #0066cc;
+    /* Blue color */
+    margin: 0;
+    text-align: center;
+    /* Ensure text is centered */
+}
+
+/* "Keep Scrolling" Text for Adorable section */
+.scroll-note-text-adorable {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #000;
+    z-index: 6;
+    /* Above initial text, below blocks */
+    opacity: 0.7;
+    white-space: nowrap;
+    pointer-events: none;
+}
+
+/* Adorable Description Block (New Upfront Text) */
+.adorable-description-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    max-width: 600px;
+    margin: 0 auto;
+    margin-top: 2rem;
+    opacity: 1;
+    /* Visible upfront */
+}
+
+.adorable-description {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    line-height: 1.2;
+    color: #000;
+    margin: 0;
+    text-align: center;
+}
+
+.adorable-subtext {
+    font-family: inherit;
+    font-size: clamp(1rem, 1.5vw, 1.25rem);
+    line-height: 1.6;
+    color: #000;
+    opacity: 0.9;
+    margin: 0;
+    text-align: center;
+}
+
+/* Radio Residency Text - Blend Mode for Readability */
+.dj-activities-part[data-part="radio-intro"] .dj-activities-text-block {
+    position: relative;
+    z-index: 10;
+    /* Ensure text is above image */
+    mix-blend-mode: difference;
+    /* Invert colors based on background */
+    color: #fff;
+    /* Start with white, difference will make it readable */
+}
+
+.dj-activities-part[data-part="radio-intro"] .dj-activities-part-title,
+.dj-activities-part[data-part="radio-intro"] .dj-activities-part-text {
+    color: #fff;
+    /* Ensure text is white for difference mode */
+}
+
+/* ============================================================================
+   ADORABLE SECTION - SLIDING BLOCKS ANIMATION
+   ============================================================================ */
+
+/* Sliding Blocks */
+.adorable-block {
+    position: fixed;
+    /* Fixed to viewport so they slide over content */
+    top: 0;
+    width: 50vw;
+    height: 100vh;
+    background: #fff;
+    z-index: 1000;
+    /* Very high z-index to be above everything - but will be set to -1 when hidden */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    opacity: 0;
+    /* Hidden initially */
+    visibility: hidden;
+    /* Hidden initially */
+    pointer-events: none;
+    /* Allow clicks through when hidden */
+}
+
+.adorable-block-left {
+    left: -50vw;
+    /* Start OFF-SCREEN left */
+}
+
+.adorable-block-right {
+    right: -50vw;
+    /* Start OFF-SCREEN right */
+}
+
+/* Image Halves */
+.adorable-image-half {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+}
+
+.adorable-split-image {
+    width: 60vw;
+    /* Medium-big size - full image width */
+    height: 60vh;
+    aspect-ratio: 16 / 9;
+    /* Maintain aspect ratio */
+    object-fit: cover;
+    /* Fill container while maintaining aspect ratio */
+    display: block;
+    position: absolute;
+    opacity: 1;
+    /* Will be animated for fade out */
+    transition: opacity 0.3s ease;
+}
+
+/* Left block: Show LEFT half of image, positioned on RIGHT side of box */
+.adorable-image-left .adorable-split-image {
+    right: 0;
+    /* Anchor to right edge of left box */
+    transform: translateX(50%);
+    /* Shift image LEFT by 50% of its width */
+    clip-path: inset(0 50% 0 0);
+    /* Show only left 50% of image */
+    object-position: left center;
+}
+
+/* Right block: Show RIGHT half of image, positioned on LEFT side of box */
+.adorable-image-right .adorable-split-image {
+    left: 0;
+    /* Anchor to left edge of right box */
+    transform: translateX(-50%);
+    /* Shift image RIGHT by 50% of its width */
+    clip-path: inset(0 0 0 50%);
+    /* Show only right 50% of image */
+    object-position: right center;
+}
+
+/* Final Adorable Text (appears after blocks merge) */
+.adorable-final-text {
+    position: fixed;
+    /* Fixed to viewport */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2000;
+    /* Above blocks */
+    text-align: center;
+    max-width: 600px;
+    padding: 2rem;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.adorable-description {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    line-height: 1.2;
+    margin-bottom: 1rem;
+    color: #000;
+}
+
+.adorable-subtext {
+    font-family: inherit;
+    font-size: clamp(1rem, 1.5vw, 1.25rem);
+    line-height: 1.6;
+    color: #000;
+    opacity: 0.9;
+}
+
+/* Initial State: Will be set by JavaScript (GSAP) */
+/* Parts start off-screen to the right via GSAP.set() */
+
+/* ============================================
+   DJ ACTIVITIES SECTION - Responsive
+   ============================================ */
+
+/* Tablets/Medium Screens (60%-99% viewport width) */
+@media (min-width: 430px) and (max-width: 1024px) {
+    .dj-activities-container {
+        gap: clamp(80px, 15vw, 200px);
+    }
+
+    .dj-activities-part {
+        min-width: clamp(250px, 25vw, 350px);
+        max-width: clamp(350px, 45vw, 500px);
+    }
+
+    .dj-activities-image-wrapper {
+        max-width: clamp(200px, 20vw, 250px);
+    }
+
+    .radio-dj-drawing-bg {
+        top: 25%;
+        left: 40%;
+        width: 60vw;
+        height: 60vh;
+    }
+
+    .adorable-connect-text {
+        font-size: clamp(1.3rem, 3vw, 1.8rem);
+    }
+
+}
+
+/* Mobile (iPhone 14) */
+@media (max-width: 430px) and (max-height: 932px) {
+    .adorable-connect-text {
+        font-size: clamp(1.2rem, 4vw, 2rem);
+        white-space: normal;
+        /* Allow text to wrap on very small screens */
+    }
+
+    .adorable-split-image {
+        width: 80vw;
+        height: 50vh;
+        aspect-ratio: 16 / 9;
+        /* Maintain aspect ratio */
+    }
+
+    .dj-activities-wrapper {
+        height: auto;
+        min-height: 100vh;
+        /* Matches ScrollTrigger scroll distance of 100vh for iPhone 14 */
+    }
+
+    .dj-activities-container {
+        gap: clamp(50px, 10vw, 100px);
+        padding-left: 3vw;
+        padding-right: 3vw;
+    }
+
+    .dj-activities-part {
+        min-width: clamp(200px, 80vw, 300px);
+        max-width: clamp(250px, 90vw, 400px);
+        gap: 1.5rem;
+    }
+
+    .dj-activities-image-wrapper {
+        max-width: clamp(150px, 40vw, 200px);
+    }
+
+    .radio-dj-drawing-bg {
+        top: 20%;
+        left: 35%;
+        width: 70vw;
+        height: 60vh;
+    }
+
+    .dj-activities-text-block {
+        max-width: 100%;
+    }
+}
+
+/* Legacy media queries - keeping for compatibility */
+@media screen and (max-width: 480px) {
+
+    /* Small mobile adjustments */
+    .adorable-connect-text {
+        font-size: clamp(1rem, 5vw, 1.5rem);
+    }
+
+    .dj-activities-container {
+        gap: 30px;
+        padding-left: 2vw;
+        padding-right: 2vw;
+    }
+
+    .dj-activities-part {
+        min-width: 90vw;
+        max-width: 95vw;
+    }
+
+    .dj-activities-split .dj-activities-text-block {
+        width: 100%;
+    }
+
+}
+
+/* BLOCK 1: Solo DJ Experience (Text + 8-Col Grid) */
+.solo-dj-experience {
+    position: sticky;
+    top: 10vh;
+    z-index: 10;
+    margin-bottom: 60vh;
+    /* Increased spacing between DJ boxes */
+    background: transparent;
+    /* Transparent as requested */
+    padding-bottom: 20px;
+}
+
+/* Solo DJ Grid (8 Columns) */
+
+.solo-dj-grid .box {
+    position: static !important;
+    top: auto !important;
+    margin: 0 !important;
+    width: 100% !important;
+    height: 150px !important;
+}
+
+/* BLOCK 2: Adorable Party Organized (5-Col Grid + Row 2) */
+
+/* Inner Container for Adorable Block (Floating at bottom) */
+.adorable-inner {
+    width: 100%;
+    max-width: 900px;
+    /* Smaller container for smaller images */
+    margin: 0 auto;
+    padding: 0 20px;
+    position: fixed;
+    /* Fixed at bottom of viewport */
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    pointer-events: auto;
+    /* Re-enable pointer events for images */
+}
+
+/* Adorable Grid (Flexbox Row for floating images) */
+
+.dj-grid .box {
+    position: relative;
+    width: 120px;
+    /* Much smaller - cuter size */
+    height: 120px;
+    border-radius: 8px;
+    /* Slightly less rounded */
+    overflow: hidden;
+    /* No shadow - flat design */
+    transition: transform 0.3s ease;
+}
+
+.dj-grid .box:hover {
+    transform: translateY(-5px) scale(1.03);
+    /* Subtle hover effect */
+}
+
+/* 4-Column Layout & Sticky Offsets */
+/* Removed fixed z-indices to allow natural stacking (lower items on top) */
+.scroll-content {
+    position: relative;
+    z-index: 2;
+    padding-top: 10vh;
+    /* Reduced top padding */
+    padding-bottom: 100vh;
+    /* Increased bottom padding to extend DJ Career section */
+    width: 100%;
+    max-width: 1600px;
+    /* Wider container */
+    margin: 0 auto;
+    display: block;
+}
+
+/* Zone 2: Standard Content Sections (Pinned BG) */
+.section-content {
+    position: relative;
+    z-index: 10;
+    min-height: 200vh;
+    /* Ensure DJ Career section has enough height */
+}
+
+.sticky-wrapper {
+    position: sticky;
+    top: 0;
+    height: 120vh;
+    overflow: hidden;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.grey-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--bg-soft);
+    /* Soft grey background */
+    z-index: -1;
+}
+
+/* New Palette Backgrounds */
+.bg-pearl {
+    background-color: transparent !important;
+    background:
+        /* NEW: Top blending radial for seamless connection */
+        radial-gradient(circle at 50% 0%, rgba(16, 124, 116, 1) 0%, transparent 60%),
+        /* Deep Blue Spot - Pushed down to start at 30% to leave top edge clean */
+        radial-gradient(circle at 85% 30%, rgba(0, 35, 102, 0.6) 0%, transparent 40%),
+        /* Teal Spot - Pushed down to start at 60% */
+        radial-gradient(circle at 15% 60%, rgba(16, 124, 116, 0.4) 0%, transparent 45%),
+        /* Slow Drift Gradient: Teal -> Teal/Aqua Mix -> Aqua */
+        linear-gradient(to bottom, #107C74 0%, #107C74 40%, #4FA399 80%, #A6D1C9 100%) !important;
+    position: absolute;
+    overflow: hidden;
+}
+
+.bg-pearl::before {
+    /* Noise Overlay */
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='5' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.25'/%3E%3C/svg%3E");
+    background-size: 150px 150px;
+    opacity: 0.15;
+    mix-blend-mode: overlay;
+    pointer-events: none;
+}
+/*--------------------Gradiant build on dj activity------>
+/* Releases Section Specific Styling */
+#releases .scroll-content {
+    position: relative;
+    z-index: 2;
+    padding-top: 50vh;
+    padding-bottom: 50vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.scroll-content .box {
+    position: sticky;
+    margin-bottom: 70vh;
+}
+
+.scroll-content .box:nth-child(1) {
+    top: 15vh;
+}
+
+.scroll-content .box:nth-child(2) {
+    top: 25vh;
+}
+
+.scroll-content .box:nth-child(3) {
+    top: 35vh;
+}
+
+/* ============================================
+   STATS SECTION - Streaming & Performance Statistics
+   ============================================ */
+
+/* ============================================
+   RELEASES SECTION - "ABOUT-STYLE" IMPLEMENTATION
+   ============================================ */
+
+/* ============================================
+   BEAT MAKING SECTION
+   ============================================ */
+.beat-making-section {
+    /* Cream Background (Solid) */
+    background: #fff6e1;
+
+    /* Text Color */
+    color: #000000;
+    /* Black text on cream */
+
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+    /* Remove height constraints - allow natural scroll */
+    z-index: 11;
+    /* Above DJ Activities sticky (z-index: 10) and Releases (z-index: 2) */
+}
+
+/* Grainy Noise Overlay - Matched to Prototype */
+.beat-making-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Prototype noise filter settings */
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.3'/%3E%3C/svg%3E");
+    background-size: 200px 200px;
+    opacity: 0.3;
+    mix-blend-mode: soft-light;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Multilingual Banner */
+.beat-making-banner {
+    position: relative;
+    /* Relative positioning - everything goes below */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    z-index: 1;
+    overflow: hidden;
+    /* Hide overflow for seamless scroll */
+    pointer-events: none;
+    /* Allow clicks through */
+    background: transparent;
+    /* Transparent background like DJ Skills banner */
+    padding: 1.5rem 0;
+    /* Restored padding */
+    margin: 0;
+    /* Remove rotation and scale */
+    transform: none;
+    opacity: 0.8;
+    /* Increased opacity for better visibility */
+}
+
+.beat-making-banner-track {
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;
+    /* Prevent text wrapping */
+    will-change: transform;
+    /* Optimize for animation */
+}
+
+.beat-making-banner-item {
+    font-family: 'BDO Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    /* Use BDO Grotesk like DJ Skills banner */
+    font-size: clamp(1.25rem, 2.5vw, 2rem);
+    /* Restored original size for better visibility */
+    font-weight: 500;
+    /* Restored weight for better visibility */
+    color: rgba(0, 0, 0, 0.7);
+    /* Increased opacity for better visibility */
+    margin-right: 3rem;
+    /* Reduced spacing between items */
+}
+
+/* Grid Layout */
+.beat-making-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 3rem 40px 5rem 40px;
+    /* Increased top padding for better spacing from banner */
+    position: relative;
+    z-index: 2;
+    /* Above banner */
+    /* Remove height constraints - natural flow */
+}
+
+.beat-making-grid {
+    display: grid;
+    grid-template-rows: 75% 25%;
+    /* First row 75%, second row 25% (70-80/30-20 ratio) */
+    gap: 40px;
+    width: 100%;
+    min-height: 80vh;
+    /* Minimum height for the grid */
+}
+
+/* First Row: Title+Button (Left) | Paragraphs (Right) */
+.beat-making-first-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    align-items: start;
+    width: 100%;
+    /* Ensure visibility against Cream background */
+    color: #000000;
+}
+
+/* Left Column: Title + Button */
+.beat-making-title-col {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding-right: 20px;
+}
+
+/* Right Column: Paragraphs */
+.beat-making-text-col {
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.beat-making-title {
+    font-family: 'Cactus Jack', 'BDO Grotesk', sans-serif;
+    /* Cactus Jack for title */
+    font-size: clamp(4.5rem, 9vw, 8.5rem);
+    /* Bigger title as requested */
+    margin-bottom: 0;
+    line-height: 1.15;
+    /* Tighter line height */
+    color: #000000;
+    /* Pearl Aqua text color */
+    font-weight: normal;
+    /* Primary focal point - most prominent element */
+    text-shadow: 0 2px 10px rgba(166, 209, 201, 0.2);
+    /* Subtle glow to enhance prominence */
+}
+
+.beat-making-description {
+    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+    /* BDO Grotesk for paragraphs */
+}
+
+.beat-making-description p {
+    font-size: clamp(1rem, 1.3vw, 1.1rem);
+    margin-top: 4rem;
+    /* Slightly smaller for less prominence */
+    line-height: 1.7;
+    /* Increased line height for better readability */
+    margin-bottom: 1.5rem;
+    /* Increased spacing between paragraphs */
+    color: rgba(0, 0, 0, 0.8);
+    /* Light grey with reduced opacity for less prominence */
+}
+
+.beat-making-highlight {
+    font-weight: 500;
+    /* Reduced weight for less prominence */
+    color: rgba(166, 209, 201, 0.9) !important;
+    /* Slightly transparent Pearl Aqua for subtle emphasis */
+    font-size: clamp(1.1rem, 1.5vw, 1.2rem) !important;
+    /* Slightly smaller for less prominence */
+    margin-bottom: 0;
+    /* Remove bottom margin since it's last */
+}
+
+.beat-making-cta {
+    display: inline-block;
+    margin-top: 0.5rem;
+    /* Small top margin for spacing from text */
+    padding: 16px 45px;
+    /* Slightly increased padding for better proportion */
+    background: transparent;
+    color: rgba(166, 209, 201, 0.9);
+    /* Slightly transparent Pearl Aqua - secondary action */
+    border: 2px solid rgba(166, 209, 201, 0.6);
+    /* More transparent border - less prominent */
+    font-family: 'BDO Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    /* Change font to BDO Grotesk */
+    font-size: clamp(1rem, 1.3vw, 1.2rem);
+    /* Slightly smaller for less prominence */
+    font-weight: 500;
+    text-decoration: none;
+    border-radius: 50px;
+    transition: transform 0.3s ease, background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    align-self: flex-start;
+    /* Align to start */
+}
+
+.beat-making-cta:hover {
+    transform: scale(1.05);
+    /* Keep hover effect */
+    background: #A6D1C9;
+    /* Pearl Aqua background on hover - becomes more prominent on interaction */
+    color: #292B29;
+    /* Dark text on hover */
+    border-color: #A6D1C9;
+    /* Full opacity on hover for clear feedback */
+}
+
+/* Second Row: SoundCloud Full Width */
+.beat-making-second-row {
+    width: 100%;
+    display: flex;
+    align-items: stretch;
+}
+
+.soundcloud-viewport {
+    width: 100%;
+    height: 100%;
+    top: -40%;
+    /* Full height of second row */
+    min-height: 80px;
+    /* Minimum height for visibility */
+    border-radius: 16px;
+    /* Slightly smaller radius for cleaner look */
+    overflow: hidden;
+    position: relative;
+    border: 1px solid rgba(166, 209, 201, 0.15);
+    /* More subtle border - less eye-catching */
+    background: rgba(166, 209, 201, 0.03);
+    /* Even more subtle background - tertiary element */
+    opacity: 0.9;
+    /* Slightly reduced opacity to reduce visual weight */
+}
+
+.soundcloud-viewport iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .beat-making-banner {
+        padding: 1.25rem 0;
+        /* Reduced padding on mobile */
+    }
+
+    .beat-making-banner-item {
+        font-size: clamp(1.1rem, 2.5vw, 1.75rem);
+        /* Smaller on mobile */
+        margin-right: 2.5rem;
+        /* Reduced spacing */
+    }
+
+    .beat-making-container {
+        padding: 2.5rem 20px 4rem 20px;
+        /* Adjusted padding for mobile */
+    }
+
+    .beat-making-grid {
+        grid-template-rows: auto auto;
+        /* Auto rows on mobile */
+        gap: 30px;
+        min-height: auto;
+        /* Remove min-height on mobile */
+    }
+
+    .beat-making-first-row {
+        grid-template-columns: 1fr;
+        /* Single column on mobile */
+        gap: 30px;
+    }
+
+    .beat-making-title-col {
+        padding-right: 0;
+        gap: 1.5rem;
+    }
+
+    .beat-making-text-col {
+        padding-left: 0;
+        /* Remove padding on mobile */
+    }
+
+    .beat-making-title {
+        font-size: clamp(2.5rem, 7vw, 4rem);
+        /* Responsive title size */
+        line-height: 1.2;
+    }
+
+    .beat-making-description p {
+        font-size: clamp(1rem, 1.3vw, 1.1rem);
+        margin-bottom: 1.25rem;
+    }
+
+    .beat-making-highlight {
+        font-size: clamp(1.1rem, 1.5vw, 1.2rem) !important;
+    }
+
+    .beat-making-cta {
+        padding: 14px 35px;
+        font-size: clamp(1rem, 1.3vw, 1.15rem);
+        width: 100%;
+        /* Full width on mobile */
+        text-align: center;
+    }
+
+    .soundcloud-viewport {
+        height: 300px;
+        /* Fixed height on mobile */
+        min-height: 300px;
+        border-radius: 12px;
+        /* Smaller radius on mobile */
+    }
+}
+
+/* ============================================
+   RELEASES SECTION - SPLIT LAYOUT IMPLEMENTATION
+   ============================================ */
+
+.releases-pinned-section {
+    position: relative;
+    width: 100%;
+    min-height: 400vh;
+    /* Increased height for 'Ultra Slow' scroll plan */
+
+    /* Complementary Sandwich: Cream -> Dark -> Cream */
+    /* Extended top Cream (0-25%), Expanded Middle Dark (35-75%) */
+    background: linear-gradient(to bottom,
+            #FFF8E7 0%,
+            #0a0a0a 35%,
+            #0a0a0a 85%,
+            #fff1d2 100%);
+
+    z-index: 2;
+    /* Below DJ Activities sticky (z-index: 10) and Beat Making (z-index: 11) */
+    /*  padding-top: 30vh; */
+    padding-bottom: 0;
+}
+
+/* Noise Overlay */
+.releases-pinned-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.3'/%3E%3C/svg%3E");
+    background-size: 200px 200px;
+    opacity: 0.3;
+    mix-blend-mode: soft-light;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.releases-sticky-wrapper {
+    position: relative;
+    /* Changed from sticky to relative - GSAP pin handles positioning */
+    width: 100%;
+    height: 100vh;
+    /* Wrapper stays at viewport height */
+    overflow: hidden;
+    background: transparent;
+    /* Transparent to show gradient */
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 0;
+}
+
+/* Split Layout Container */
+.releases-content-layout {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    /* Minimum viewport height for initial layout */
+    max-width: 1600px;
+    margin: 0 auto;
+    display: flex;
+    /* Changed from flex to block for absolute positioning freedom */
+}
+
+/* Left Side: Title */
+.releases-side-title {
+    position: absolute;
+    top: 50%;
+    left: 5vw;
+    /* Initial Left Position */
+    transform: translateY(-50%);
+    width: auto;
+    height: auto;
+    z-index: 20;
+    pointer-events: none;
+    mix-blend-mode: difference;
+    /* Restore negative effect */
+}
+
+.releases-big-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(6rem, 15vw, 12rem);
+    line-height: 0.8;
+    margin: 0;
+    text-transform: uppercase;
+    text-align: left;
+    color: #ffffff;
+    /* White text + Difference on Cream BG = Visual Black */
+}
+
+/* Right Side: Card Stack */
+.releases-card-stack {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    /* Full width to center cards on screen */
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+    /* Allow clicking through to background if needed */
+}
+
+/* Card Styles */
+.release-card {
+    position: absolute;
+    /* Start Center Screen */
+    top: 50%;
+    left: 50%;
+    /* Transform handled by GSAP */
+
+    width: 260px;
+    /* Slightly bigger than previous 220px */
+    height: 350px;
+    /* Reduced height for tighter spacing (was 390px) */
+
+    background: #000000;
+    border: 8px solid #000000;
+    display: flex;
+    flex-direction: column;
+    padding: 0.75rem;
+    /* Reduced padding for tighter spacing (was 1rem) */
+    padding-top: 0.75rem;
+    /* Reduced padding-top for tighter spacing (was 1rem) */
+
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+    will-change: transform, opacity;
+    overflow: visible;
+
+    pointer-events: auto;
+    /* Re-enable clicks on cards */
+    cursor: pointer;
+    transition: box-shadow 0.3s ease;
+}
+
+.release-card:hover {
+    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.4);
+}
+
+@media (min-width: 768px) {
+    .release-card {
+        width: 300px;
+        /* Slightly bigger than previous 250px */
+        height: 400px;
+        /* Reduced height for tighter spacing (was 450px) */
+    }
+}
+
+/* Description Text (Inside Card, Positioned Above) */
+.release-desc-inner {
+    position: absolute;
+    bottom: 100%;
+    /* Position above the card */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 260px;
+    /* Match card width */
+    /* Fixed width for text */
+    text-align: center;
+    padding-bottom: 2rem;
+    /* Space between text and card */
+    opacity: 0;
+    /* Hidden initially */
+    pointer-events: none;
+    color: #ffffff;
+    /* White text on dark gradient background */
+}
+
+.release-desc-inner h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.75rem;
+    /* Balanced size */
+    margin-bottom: 0.5rem;
+    line-height: 1;
+    text-transform: uppercase;
+}
+
+.release-desc-inner p {
+    font-family: 'BDO Grotesk', sans-serif;
+    font-size: 0.95rem;
+    /* Balanced size */
+    line-height: 1.4;
+    font-weight: 500;
+    margin: 0;
+}
+
+/* Inner Card Styles (Preserved) */
+.release-card-inner {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+    /* Clip content inside border */
+    border-radius: 0.5rem;
+}
+
+.release-image-wrapper {
+    width: 100%;
+    height: 70%;
+    background: #000000;
+    display: block;
+    padding: 0;
+}
+
+.release-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+}
+
+.release-info {
+    height: 28%;
+    /* Reduced height for tighter spacing (was 30%) */
+    background: #000000;
+    color: #ffffff;
+    padding: 0.5rem 0.5rem;
+    /* Further reduced padding for tighter spacing (was 0.75rem) */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    /* Changed from space-between to flex-start for tighter spacing */
+    gap: 0.15rem;
+    /* Further reduced gap for tighter spacing (was 0.25rem) */
+}
+
+.release-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    gap: 0.25rem;
+    /* Reduced gap for tighter spacing (was 0.5rem) */
+}
+
+.release-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #ffffff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.release-year {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #ffffff;
+    white-space: nowrap;
+}
+
+/* Social Icons in Release Cards */
+.release-social-icons {
+    display: flex;
+    gap: 0.75rem;
+    /* Reduced gap for tighter spacing (was 1rem) */
+    justify-content: center;
+    align-items: center;
+    margin-top: 0.25rem;
+    /* Further reduced margin-top for tighter spacing (was 0.5rem) */
+    padding-top: 0.25rem;
+    /* Further reduced padding-top for tighter spacing (was 0.5rem) */
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.release-social-icons .social-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    color: rgba(255, 255, 255, 0.7);
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.release-social-icons .social-icon:hover {
+    color: #fff;
+    transform: scale(1.1);
+}
+
+.release-social-icons .social-icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+/* Release Modal */
+.release-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.release-modal.active {
+    display: flex;
+    opacity: 1;
+}
+
+.release-modal-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.release-modal-content {
+    position: relative;
+    width: 90%;
+    max-width: 800px;
+    max-height: 85vh;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+}
+
+.release-modal.active .release-modal-content {
+    transform: scale(1);
+}
+
+.release-modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    font-size: 1.5rem;
+    line-height: 1;
+    cursor: pointer;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000;
+    transition: all 0.3s ease;
+}
+
+.release-modal-close:hover {
+    background: rgba(0, 0, 0, 0.2);
+    transform: rotate(90deg);
+}
+
+.release-modal-body {
+    padding: 3rem 2rem 2rem;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.release-modal-body h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.5rem;
+    margin: 0 0 1rem 0;
+    color: #000;
+}
+
+.release-modal-body h3 {
+    font-family: 'BDO Grotesk', sans-serif;
+    font-size: 1.25rem;
+    margin: 1.5rem 0 0.5rem 0;
+    color: #000;
+    font-weight: 600;
+}
+
+.release-modal-body p {
+    font-family: 'BDO Grotesk', sans-serif;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #333;
+    margin: 0.5rem 0;
+}
+
+.release-modal-info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+}
+
+.release-modal-info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.release-modal-info-label {
+    font-size: 0.875rem;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+}
+
+.release-modal-info-value {
+    font-size: 1rem;
+    color: #000;
+    font-weight: 500;
+}
+
+.release-modal-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin: 1.5rem 0;
+}
+
+.release-modal-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: #000;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.release-modal-link:hover {
+    transform: translateY(-2px);
+}
+
+.release-modal-link.spotify:hover {
+    background: #1DB954;
+    /* Spotify Green */
+    color: #fff;
+}
+
+.release-modal-link.apple-music:hover {
+    background: #FA243C;
+    /* Apple Music Red */
+    color: #fff;
+}
+
+.release-modal-link.youtube:hover {
+    background: #FF0000;
+    /* YouTube Red */
+    color: #fff;
+}
+
+.release-modal-link.bandcamp:hover {
+    background: #629aa9;
+    /* Bandcamp Blue */
+    color: #fff;
+}
+
+.release-modal-link svg {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+}
+
+.release-modal-description {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.release-modal-description h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.5rem;
+    margin: 0 0 1rem 0;
+    color: #fff;
+    font-weight: 400;
+}
+
+.release-modal-description p {
+    font-family: 'BDO Grotesk', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.95);
+    margin: 0;
+    text-align: justify;
+}
+
+/* Release Modal CTA Button */
+.release-modal-cta-wrapper {
+    margin-top: 2.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    text-align: center;
+}
+
+.release-modal-cta {
+    display: inline-block;
+    padding: 1rem 2.5rem;
+    font-family: 'BDO Grotesk', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #fff;
+    text-decoration: none;
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.release-modal-cta:hover {
+    background: rgba(255, 255, 255, 0.9);
+    border-color: rgba(255, 255, 255, 0.9);
+    color: #000;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+@media (max-width: 768px) {
+    .release-modal-content {
+        width: 95%;
+        max-height: 90vh;
+    }
+
+    .release-modal-body {
+        padding: 2.5rem 1.5rem 1.5rem;
+    }
+
+    .release-modal-body h2 {
+        font-size: 2rem;
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .releases-content-layout {
+        flex-direction: column;
+        padding-top: 10vh;
+    }
+
+    .releases-side-title {
+        width: 100%;
+        height: auto;
+        margin-bottom: 2rem;
+        align-items: center;
+    }
+
+    .releases-big-title {
+        text-align: center;
+        font-size: 4rem;
+    }
+
+    .releases-card-stack {
+        width: 100%;
+        height: auto;
+        min-height: 50vh;
+    }
+
+    .release-card {
+        width: 280px;
+        height: 360px;
+        /* Reduced height for tighter spacing (was 400px) */
+    }
+
+    .release-desc-inner {
+        width: 250px;
+    }
+}
+
+/* ============================================
+   END RELEASES SECTION
+   ============================================ */
+
+.full {
+    width: 100%;
+}
+
+/* ============================================
+   RELEASES SECTION - Responsive
+   ============================================ */
+
+/* Tablets/Medium Screens (60%-99% viewport width) */
+@media (min-width: 430px) and (max-width: 1024px) {
+    .releases-pinned-section {
+        min-height: auto;
+    }
+
+    .releases-sticky-wrapper {
+        height: auto;
+        min-height: 100vh;
+    }
+
+    .release-card {
+        width: clamp(250px, 30vw, 300px);
+        height: clamp(320px, 40vw, 380px);
+    }
+
+    .releases-big-title {
+        font-size: clamp(3rem, 8vw, 6rem);
+    }
+
+    .release-title {
+        font-size: clamp(1rem, 1.5vw, 1.125rem);
+    }
+
+    .release-year {
+        font-size: clamp(0.9rem, 1.3vw, 1rem);
+    }
+}
+
+/* Mobile (iPhone 14) */
+@media (max-width: 430px) and (max-height: 932px) {
+    .releases-pinned-section {
+        min-height: auto;
+        padding: 2rem 0;
+    }
+
+    .releases-sticky-wrapper {
+        height: auto;
+        min-height: 80vh;
+        padding: 1rem;
+    }
+
+    .releases-content-layout {
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .releases-side-title {
+        position: relative;
+        width: 100%;
+        text-align: center;
+    }
+
+    .releases-big-title {
+        font-size: clamp(2.5rem, 10vw, 4rem);
+    }
+
+    .releases-card-stack {
+        width: 100%;
+        height: auto;
+        min-height: 60vh;
+    }
+
+    .release-card {
+        width: clamp(200px, 80vw, 280px);
+        height: clamp(280px, 50vh, 360px);
+        position: relative;
+        /* Change from absolute to relative for mobile stacking */
+    }
+
+    .release-title {
+        font-size: clamp(0.95rem, 3vw, 1.1rem);
+    }
+
+    .release-year {
+        font-size: clamp(0.85rem, 2.5vw, 1rem);
+    }
+
+    .release-social-icons {
+        gap: 0.5rem;
+    }
+
+    .release-social-icons .social-icon {
+        width: 28px;
+        height: 28px;
+    }
+}
+
+/* Animations */
+/* Animations */
+[data-anim="fade-up"] {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+[data-anim="slide-left"] {
+    opacity: 0;
+    transform: translateX(-30px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+[data-anim="slide-right"] {
+    opacity: 0;
+    transform: translateX(30px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.visible {
+    opacity: 1;
+    transform: translate(0);
+}
+
+/* Typography Overrides */
+h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+h3 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+
+p {
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+ul {
+    list-style: none;
+}
+
+li {
+    margin-bottom: 10px;
+}
+
+.eyebrow {
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0.7;
+    margin-bottom: 10px;
+}
+
+.tag {
+    display: inline-block;
+    background: white;
+    color: var(--accent);
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.year {
+    font-family: monospace;
+    opacity: 0.6;
+    display: block;
+    margin-bottom: 10px;
+}
+
+/* ============================================
+   FOOTER - Styled to match Contact Section
+   ============================================ */
+
+footer {
+    padding: 3rem 2.5rem;
+    background: #070707;
+    color: #fff;
+    z-index: 60;
+    position: relative;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-container {
+    width: 100%;
+    max-width: 100rem;
+    margin: 0 auto;
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+.footer-copyright {
+    font-family: 'BDO Grotesk', sans-serif;
+    font-size: 0.875rem;
+    color: #bbb;
+    text-align: center;
+    margin: 0;
+}
+
+.footer-actions {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.footer-btn {
+    font-family: 'BDO Grotesk', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #fff;
+    text-decoration: none;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50px;
+    padding: 0.625rem 1.5rem;
+    transition: all 0.35s ease;
+    background: transparent;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.footer-btn:hover {
+    border-color: rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.05);
+    transform: translateY(-2px);
+}
+
+.footer-btn--back-top {
+    position: relative;
+}
+
+/* .footer-btn--legal - Uses same style as other footer buttons */
+
+/* Responsive Footer */
+@media (min-width: 430px) and (max-width: 1024px) {
+    footer {
+        padding: 2.5rem 2rem;
+    }
+
+    .footer-content {
+        gap: 1.25rem;
+    }
+
+    .footer-copyright {
+        font-size: 0.8rem;
+    }
+
+    .footer-btn {
+        font-size: 0.8rem;
+        padding: 0.5rem 1.25rem;
+    }
+}
+
+@media (max-width: 430px) and (max-height: 932px) {
+    footer {
+        padding: 2rem 1.25rem;
+    }
+
+    .footer-content {
+        gap: 1rem;
+    }
+
+    .footer-copyright {
+        font-size: 0.75rem;
+    }
+
+    .footer-actions {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .footer-btn {
+        width: 100%;
+        font-size: 0.75rem;
+        padding: 0.625rem 1.25rem;
+    }
+}
+
+/* ============================================
+   LEGAL MENTIONS PAGE
+   ============================================ */
+
+.legal-section {
+    position: relative;
+    width: 100vw;
+    min-height: 100vh;
+    background: #070707;
+    color: #fff;
+    padding: 12rem 2.5rem 4rem;
+    z-index: 1;
+}
+
+.legal-container {
+    width: 100%;
+    max-width: 100rem;
+    margin: 0 auto;
+}
+
+.legal-header {
+    text-align: center;
+    margin-bottom: 4rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.legal-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3rem;
+    font-weight: 600;
+    line-height: 1;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 0.5rem;
+}
+
+.legal-subtitle {
+    font-family: 'BDO Grotesk', sans-serif;
+    font-size: 1rem;
+    color: #bbb;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin: 0;
+}
+
+.legal-content {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    max-width: 60rem;
+    margin: 0 auto;
+}
+
+.legal-block {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.legal-block-title {
+    font-family: 'BDO Grotesk', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #fff;
+    margin: 0;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.legal-text {
+    font-family: 'BDO Grotesk', sans-serif;
+    font-size: 0.9375rem;
+    line-height: 1.7;
+    color: #bbb;
+    margin: 0;
+}
+
+.legal-link {
+    color: #fff;
+    text-decoration: underline;
+    transition: opacity 0.35s;
+}
+
+.legal-link:hover {
+    opacity: 0.7;
+}
+
+.legal-list {
+    list-style: none;
+    padding-left: 0;
+    margin: 1rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.legal-list li {
+    font-family: 'BDO Grotesk', sans-serif;
+    font-size: 0.9375rem;
+    line-height: 1.7;
+    color: #bbb;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.legal-list li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #fff;
+    font-weight: bold;
+}
+
+.legal-footer {
+    margin-top: 4rem;
+    padding-top: 3rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
+}
+
+.legal-back-btn {
+    font-family: 'BDO Grotesk', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #fff;
+    text-decoration: none;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50px;
+    padding: 0.625rem 1.5rem;
+    transition: all 0.35s ease;
+    background: transparent;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.legal-back-btn:hover {
+    border-color: rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.05);
+    transform: translateY(-2px);
+}
+
+/* Responsive Legal Page */
+@media (min-width: 430px) and (max-width: 1024px) {
+    .legal-section {
+        padding: 10rem 2rem 3rem;
+    }
+
+    .legal-title {
+        font-size: 2.5rem;
+    }
+
+    .legal-content {
+        gap: 2.5rem;
+    }
+
+    .legal-block-title {
+        font-size: 1.125rem;
+    }
+
+    .legal-text,
+    .legal-list li {
+        font-size: 0.875rem;
+    }
+}
+
+@media (max-width: 430px) and (max-height: 932px) {
+    .legal-section {
+        padding: 8rem 1.25rem 2rem;
+    }
+
+    .legal-header {
+        margin-bottom: 3rem;
+        padding-bottom: 1.5rem;
+    }
+
+    .legal-title {
+        font-size: 2rem;
+    }
+
+    .legal-subtitle {
+        font-size: 0.875rem;
+    }
+
+    .legal-content {
+        gap: 2rem;
+    }
+
+    .legal-block {
+        gap: 0.75rem;
+    }
+
+    .legal-block-title {
+        font-size: 1rem;
+    }
+
+    .legal-text,
+    .legal-list li {
+        font-size: 0.8125rem;
+        line-height: 1.6;
+    }
+
+    .legal-list li {
+        padding-left: 1.25rem;
+    }
+
+    .legal-footer {
+        margin-top: 3rem;
+        padding-top: 2rem;
+    }
+
+    .legal-back-btn {
+        width: 100%;
+        font-size: 0.75rem;
+        padding: 0.625rem 1.25rem;
+    }
+}
+
+/* ============================================
+   SOFTWARE SECTION – Stripe-Style Split Layout
+   ============================================ */
+
+.software-section {
+    background-color: #05060A;
+    color: #F2F0EB;
+    z-index: 15;
+    position: relative;
+}
+
+.software-split {
+    display: flex;
+    min-height: 100vh;
+}
+
+.software-panel {
+    position: relative;
+    flex: 1;
+    background-color: #05060A;
+    color: #F2F0EB;
+    transition: background-color 0.35s ease, color 0.35s ease;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.software-panel:hover {
+    background-color: #D3D0C8;
+    color: #18181B;
+}
+
+/* Thin divider between panels */
+.software-panel+.software-panel::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1px;
+    height: 100%;
+    background: linear-gradient(to bottom,
+            transparent 0%,
+            rgba(255, 255, 255, 0.12) 50%,
+            transparent 100%);
+    pointer-events: none;
+}
+
+.software-panel-inner {
+    position: relative;
+    height: 100%;
+    padding: 4vw 5vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.software-panel-title {
+    font-family: "Times New Roman", "Georgia", serif;
+    font-weight: 400;
+    font-style: italic;
+    letter-spacing: -0.03em;
+    line-height: 0.95;
+    font-size: clamp(3.5rem, 6.4vw, 7.5rem);
+}
+
+.software-panel-meta {
+    font-family: "SF Mono", ui-monospace, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size: clamp(0.7rem, 1vw, 0.9rem);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    opacity: 0.78;
+}
+
+.software-panel-meta span {
+    display: block;
+}
+
+/* Panel-specific alignment */
+.software-panel--web .software-panel-title-block,
+.software-panel--web .software-panel-meta-block {
+    align-self: flex-start;
+    text-align: left;
+}
+
+.software-panel--audio .software-panel-meta-block {
+    align-self: flex-start;
+    text-align: left;
+}
+
+.software-panel--audio .software-panel-title-block {
+    align-self: flex-end;
+    text-align: right;
+}
+
+/* Background videos on panels */
+.software-panel-video {
+    position: absolute;
+    inset: 8% 10%;
+    pointer-events: none;
+    opacity: 0.25;
+    transition: opacity 0.35s ease;
+    mix-blend-mode: screen;
+}
+
+.software-panel-video video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.software-panel:hover .software-panel-video {
+    opacity: 0.45;
+}
+
+.software-panel-content {
+    position: relative;
+    z-index: 1;
+}
+
+/* ============================================
+   SOFTWARE SECTION - RESPONSIVE DESIGN
+   Following responsive norm: Tablets (430px-1024px) and Mobile (max 430px)
+   ============================================ */
+
+/* Tablets/Medium Screens (60%-99% viewport width) */
+@media (min-width: 430px) and (max-width: 1024px) {
+    .software-split {
+        flex-direction: column;
+        min-height: auto;
+    }
+
+    .software-panel {
+        min-height: 50vh;
+        max-height: none;
+    }
+
+    .software-panel+.software-panel::before {
+        width: 100%;
+        height: 1px;
+        top: 0;
+        left: 0;
+        background: linear-gradient(to right,
+                transparent 0%,
+                rgba(255, 255, 255, 0.12) 50%,
+                transparent 100%);
+    }
+
+    .software-panel--audio .software-panel-title-block {
+        align-self: flex-start;
+        text-align: left;
+    }
+
+    .software-panel-video {
+        inset: 8% 6%;
+        opacity: 0.25;
+    }
+
+    .software-panel-title {
+        font-size: clamp(2.5rem, 7vw, 5rem);
+    }
+
+    .software-panel-meta {
+        font-size: clamp(0.65rem, 1.2vw, 0.85rem);
+    }
+
+    .software-panel-inner {
+        padding: 3rem 4vw;
+    }
+}
+
+/* Mobile - iPhone 14 and similar */
+@media (max-width: 430px) and (max-height: 932px) {
+    .software-split {
+        flex-direction: column;
+        min-height: auto;
+    }
+
+    .software-panel {
+        min-height: 50vh;
+        /* See both panels at once */
+        max-height: 50vh;
+    }
+
+    .software-panel+.software-panel::before {
+        width: 100%;
+        height: 1px;
+        top: 0;
+        left: 0;
+        background: linear-gradient(to right,
+                transparent 0%,
+                rgba(255, 255, 255, 0.12) 50%,
+                transparent 100%);
+    }
+
+    .software-panel--audio .software-panel-title-block {
+        align-self: flex-start;
+        text-align: left;
+    }
+
+    .software-panel-video {
+        inset: 5% 5% 5% 5%;
+        /* Reduced video size */
+        opacity: 0.2;
+        /* Slightly more transparent */
+    }
+
+    .software-panel-title {
+        font-size: clamp(2rem, 8vw, 4rem);
+        /* Smaller title on mobile */
+    }
+
+    .software-panel-meta {
+        font-size: clamp(0.6rem, 2vw, 0.8rem);
+        /* Smaller meta on mobile */
+    }
+
+    .software-panel-inner {
+        padding: 2rem 3vw;
+        /* Reduced padding */
+    }
+}
+
+/* ============================================
+   SOFTWARE EXTENSION – Additional Info & CTAs
+   ============================================ */
+
+.software-extension {
+    background-color: #D3D0C8;
+    /* Same cream color as hover */
+    color: #18181B;
+    /* Dark text on cream */
+    padding: 6rem 0;
+    /* Natural padding for scroll flow */
+    position: relative;
+    z-index: 15;
+}
+
+.software-extension-split {
+    display: flex;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.software-extension-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 2rem 4vw;
+    position: relative;
+    min-height: auto;
+    /* Natural height based on content */
+}
+
+/* Thin divider between extension panels */
+.software-extension-panel+.software-extension-panel::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1px;
+    height: 100%;
+    background: linear-gradient(to bottom,
+            transparent 0%,
+            rgba(0, 0, 0, 0.12) 50%,
+            transparent 100%);
+    pointer-events: none;
+}
+
+.software-extension-image {
+    width: 100%;
+    max-width: 80%;
+    margin: 0 auto 2rem auto;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.software-extension-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: contain;
+}
+
+.software-extension-content {
+    display: flex;
+    flex-direction: column;
+    margin: 2rem 0;
+}
+
+.software-extension-content p {
+    font-family: 'BDO Grotesk', sans-serif;
+    font-size: clamp(1rem, 1.5vw, 1.25rem);
+    line-height: 1.6;
+    color: #18181B;
+    margin: 0;
+}
+
+.software-extension-cta {
+    display: inline-block;
+    width: fit-content;
+    margin-top: 2rem;
+    padding: 0.875rem 2rem;
+    font-family: 'BDO Grotesk', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #18181B;
+    text-decoration: none;
+    background: transparent;
+    border: 2px solid #18181B;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+}
+
+.software-extension-cta:hover {
+    background: #18181B;
+    color: #D3D0C8;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* ============================================
+   SOFTWARE EXTENSION - RESPONSIVE DESIGN
+   ============================================ */
+
+/* Tablets/Medium Screens (60%-99% viewport width) */
+@media (min-width: 430px) and (max-width: 1024px) {
+    .software-extension {
+        padding: 4rem 0;
+    }
+
+    .software-extension-split {
+        flex-direction: column;
+        padding: 0 2.5rem;
+    }
+
+    .software-extension-panel {
+        min-height: auto;
+        padding: 2rem 2vw;
+    }
+
+    .software-extension-panel+.software-extension-panel::before {
+        width: 100%;
+        height: 1px;
+        top: 0;
+        left: 0;
+        background: linear-gradient(to right,
+                transparent 0%,
+                rgba(0, 0, 0, 0.12) 50%,
+                transparent 100%);
+    }
+
+    .software-extension-image {
+        max-width: 70%;
+        margin-bottom: 1.5rem;
+    }
+
+    .software-extension-content p {
+        font-size: clamp(0.95rem, 1.3vw, 1.15rem);
+    }
+
+    .software-extension-cta {
+        font-size: 0.8rem;
+        padding: 0.75rem 1.75rem;
+    }
+}
+
+/* Mobile - iPhone 14 and similar */
+@media (max-width: 430px) and (max-height: 932px) {
+    .software-extension {
+        padding: 3rem 0;
+    }
+
+    .software-extension-split {
+        flex-direction: column;
+        padding: 0 1.25rem;
+    }
+
+    .software-extension-panel {
+        min-height: auto;
+        padding: 1.5rem 3vw;
+    }
+
+    .software-extension-panel+.software-extension-panel::before {
+        width: 100%;
+        height: 1px;
+        top: 0;
+        left: 0;
+        background: linear-gradient(to right,
+                transparent 0%,
+                rgba(0, 0, 0, 0.12) 50%,
+                transparent 100%);
+    }
+
+    .software-extension-image {
+        max-width: 80%;
+        margin-bottom: 1.5rem;
+    }
+
+    .software-extension-content p {
+        font-size: clamp(0.9rem, 2vw, 1rem);
+    }
+
+    .software-extension-cta {
+        font-size: 0.75rem;
+        padding: 0.7rem 1.5rem;
+        margin-top: 1.5rem;
+    }
+}
+
+/* ============================================
+   CONTACT SECTION - Work with me (Minimalist)
+   ============================================ */
+
+.contact-section {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    background: #070707;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 50;
+    padding: 0;
+}
+
+.contact-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3rem;
+    text-align: center;
+    max-width: 600px;
+    padding: 2rem;
+}
+
+.contact-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3rem, 8vw, 5rem);
+    font-weight: 600;
+    line-height: 1;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin: 0;
+}
+
+.contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+}
+
+.contact-link {
+    font-family: 'BDO Grotesk', sans-serif;
+    font-size: 1rem;
+    color: #bbb;
+    text-decoration: none;
+    transition: color 0.35s ease;
+    display: block;
+}
+
+.contact-link:hover {
+    color: #fff;
+}
+
+.contact-social {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.contact-action-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 3rem;
+    width: 100%;
+}
+
+.contact-btn {
+    display: inline-block;
+    padding: 12px 24px;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #fff;
+    font-family: 'BDO Grotesk', sans-serif;
+    font-size: 0.9rem;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+}
+
+.contact-btn:hover {
+    background: #fff;
+    color: #000;
+    border-color: #fff;
+    transform: translateY(-2px);
+}
+
+.social-link {
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    transition: all 0.35s ease;
+    text-decoration: none;
+}
+
+.social-link:hover {
+    border-color: rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.social-icon-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+.social-icon {
+    width: 100%;
+    height: 100%;
+    color: #f7f7f7;
+}
+
+.social-icon svg {
+    width: 100%;
+    height: 100%;
+    fill: currentColor;
+}
+
+/* ============================================
+   CONTACT SECTION - Responsive
+   ============================================ */
+
+/* Tablets/Medium Screens (60%-99% viewport width) */
+@media (min-width: 430px) and (max-width: 1024px) {
+    .contact-container {
+        gap: 2.5rem;
+        padding: 1.5rem;
+    }
+
+    .contact-title {
+        font-size: clamp(2.5rem, 6vw, 4rem);
+    }
+
+    .contact-link {
+        font-size: 0.9375rem;
+    }
+
+    .social-link {
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+
+}
+
+/* Mobile (iPhone 14) */
+@media (max-width: 430px) and (max-height: 932px) {
+    .contact-section {
+        padding: 4rem 0 2rem;
+        min-height: auto;
+    }
+
+}
+
+.contact-cta-button:hover .contact-cta-text
+/* Navigation Menu (row de boutons) */
+
+.nav-text .menu-link:hover .menu-link:hover .nav-text
+/* Mobile (max-width: 430px) */
+@media (max-width: 430px) and (max-height: 932px) {
+    .contact-container {
+        gap: 2rem;
+        padding: 1.25rem;
+    }
+
+    .contact-title {
+        font-size: clamp(2rem, 8vw, 3rem);
+    }
+
+    .contact-link {
+        font-size: 0.875rem;
+    }
+
+    .contact-social {
+        gap: 1rem;
+    }
+
+    .social-link {
+        width: 2.25rem;
+        height: 2.25rem;
+    }
+
+    .social-icon-wrap {
+        width: 1.125rem;
+        height: 1.125rem;
+    }
+}
+
+/* Replaced with new implementation based on Noura Services */
+
+/* Header Video Container */
+.header-video-container {
+    width: 100%;
+    height: 100%;
+    min-height: 400px;
+    /* Minimum height to ensure visibility */
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 20;
+    /* Higher z-index to be above other elements */
+    overflow: visible;
+    /* Changed to visible so video isn't clipped */
+    background: transparent;
+}
+
+.header-video {
+    width: 80vw;
+    /* Use viewport width for responsive sizing */
+    max-width: 800px;
+    height: auto;
+    max-height: 80vh;
+    object-fit: contain;
+    /* Contain to show full video without cropping */
+    display: block !important;
+    /* Force display */
+    position: relative;
+    z-index: 21;
+    background: transparent;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* Ensure all videos are visible */
+video {
+    display: block;
+    visibility: visible;
+    opacity: 1;
+}
+
+/* ============================================
+   BEATS DOWNLOAD PAGE - iTunes Style
+   ============================================ */
+.beats-page-body {
+    background: linear-gradient(180deg, #0a0a0a 0%, #050505 100%);
+    color: #ffffff;
+    min-height: 100vh;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+.beats-page-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 60px 40px 100px 40px;
+}
+
+.beats-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.beats-back-link {
+    display: inline-block;
+    color: #888;
+    text-decoration: none;
+    font-size: 0.9rem;
+    margin-bottom: 40px;
+    transition: color 0.2s ease;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.beats-back-link:hover {
+    color: #fff;
+}
+
+.beats-page-title {
+    font-family: 'Cactus Jack', 'BDO Grotesk', sans-serif;
+    font-size: clamp(4rem, 10vw, 8rem);
+    color: #ff0000;
+    text-transform: uppercase;
+    line-height: 0.8;
+    margin-bottom: 1.5rem;
+    transform: scaleY(1.5);
+    transform-origin: center;
+    font-weight: normal;
+    letter-spacing: 0.02em;
+}
+
+.beats-page-subtitle {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    font-size: clamp(1rem, 1.5vw, 1.2rem);
+    color: #999;
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+    font-weight: 300;
+}
+
+/* Track List - iTunes Style */
+.beats-track-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.beats-track-item {
+    display: grid;
+    grid-template-columns: 50px 1fr auto;
+    align-items: center;
+    padding: 12px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    transition: background 0.2s ease;
+    position: relative;
+}
+
+.beats-track-item:last-child {
+    border-bottom: none;
+}
+
+.beats-track-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.beats-track-item.playing {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+/* Play/Pause Button */
+.beats-play-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    padding: 0;
+    margin: 0;
+}
+
+.beats-play-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
+}
+
+.beats-play-btn.playing {
+    background: #ff0000;
+    border-color: #ff0000;
+}
+
+.beats-play-icon,
+.beats-pause-icon {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+}
+
+.beats-pause-icon {
+    display: none;
+}
+
+.beats-play-btn.playing .beats-play-icon {
+    display: none;
+}
+
+.beats-play-btn.playing .beats-pause-icon {
+    display: block;
+}
+
+/* Track Info */
+.beats-track-info {
+    display: grid;
+    grid-template-columns: 40px 1fr auto;
+    align-items: center;
+    gap: 20px;
+    flex: 1;
+}
+
+.beats-track-number {
+    color: #666;
+    font-size: 0.85rem;
+    font-weight: 400;
+    text-align: right;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.beats-track-name {
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 400;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.beats-track-item.playing .beats-track-name {
+    color: #ff0000;
+}
+
+.beats-track-duration {
+    color: #666;
+    font-size: 0.85rem;
+    font-weight: 400;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    min-width: 50px;
+    text-align: right;
+}
+
+/* Download Button */
+.beats-download-btn {
+    padding: 8px 20px;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #fff;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.beats-download-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* Hidden Audio Element */
+.beats-audio {
+    display: none;
+}
+
+/* Custom Checkbox */
+
+.checkbox-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checkbox-container:hover input~.checkbox-container input:checked~.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.checkbox-container input:checked~.checkmark:after {
+    display: block;
+}
+
+.checkbox-container .checkmark:after {
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    transform: rotate(45deg);
+}
+
+/* Footer Actions */
+
+.beats-footer-actions.visible {
+    transform: translateY(0);
+}
+
+.download-btn {
+    padding: 12px 30px;
+    background: var(--white);
+    color: #000;
+    border: none;
+    border-radius: 50px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.download-btn:hover {
+    background: var(--accent);
+    color: var(--white);
+}
+
+.download-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Download Modal - iTunes Style */
+.beats-modal {
+    display: none;
+    position: fixed;
+    z-index: 10000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(10px);
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.beats-modal.active {
+    display: flex;
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.beats-modal-content {
+    background: #1a1a1a;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 50px 40px;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 450px;
+    position: relative;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    transform: scale(0.95);
+    transition: transform 0.3s ease;
+}
+
+.beats-modal.active .beats-modal-content {
+    transform: scale(1);
+}
+
+.beats-modal-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: transparent;
+    border: none;
+    color: #999;
+    font-size: 28px;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.beats-modal-close:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.beats-modal-title {
+    font-family: 'Cactus Jack', 'BDO Grotesk', sans-serif;
+    font-size: clamp(2rem, 5vw, 2.5rem);
+    color: #fff;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    font-weight: normal;
+}
+
+.beats-modal-text {
+    color: #999;
+    font-size: 1rem;
+    margin-bottom: 30px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.6;
+}
+
+.beats-modal-form {
+    text-align: left;
+}
+
+.beats-form-group {
+    margin-bottom: 24px;
+}
+
+.beats-form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+    color: #ccc;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-weight: 400;
+}
+
+.beats-form-group input {
+    width: 100%;
+    padding: 14px 16px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    color: #fff;
+    font-size: 1rem;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+}
+
+.beats-form-group input:focus {
+    outline: none;
+    border-color: #ff0000;
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.beats-form-group input::placeholder {
+    color: #666;
+}
+
+.beats-modal-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.beats-donate-link {
+    flex: 1;
+    padding: 14px 20px;
+    background: #fff;
+    color: #000;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.95rem;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    transition: opacity 0.2s ease;
+}
+
+.beats-donate-link:hover {
+    opacity: 0.9;
+}
+
+.beats-submit-btn {
+    flex: 1;
+    padding: 14px 20px;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #fff;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.95rem;
+    cursor: pointer;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    transition: all 0.2s ease;
+}
+
+.beats-submit-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* Responsive - Beats Download Page */
+@media (max-width: 768px) {
+    .beats-page-container {
+        padding: 40px 20px 80px 20px;
+    }
+
+    .beats-page-title {
+        font-size: clamp(3rem, 12vw, 6rem);
+        margin-bottom: 1rem;
+    }
+
+    .beats-page-subtitle {
+        font-size: clamp(0.9rem, 3vw, 1.1rem);
+    }
+
+    .beats-track-item {
+        padding: 10px 15px;
+        grid-template-columns: 40px 1fr auto;
+    }
+
+    .beats-play-btn {
+        width: 32px;
+        height: 32px;
+    }
+
+    .beats-play-icon,
+    .beats-pause-icon {
+        width: 14px;
+        height: 14px;
+    }
+
+    .beats-track-info {
+        gap: 15px;
+    }
+
+    .beats-track-number {
+        font-size: 0.8rem;
+    }
+
+    .beats-track-name {
+        font-size: 0.9rem;
+    }
+
+    .beats-track-duration {
+        font-size: 0.8rem;
+        min-width: 45px;
+    }
+
+    .beats-download-btn {
+        padding: 6px 16px;
+        font-size: 0.8rem;
+    }
+
+    .beats-modal-content {
+        padding: 40px 30px;
+        width: 95%;
+    }
+
+    .beats-modal-actions {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .beats-donate-link,
+    .beats-submit-btn {
+        width: 100%;
+    }
+}

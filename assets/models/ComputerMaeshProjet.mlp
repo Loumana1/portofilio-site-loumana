@@ -1,0 +1,30 @@
+<!DOCTYPE MeshLabDocument>
+<MeshLabProject>
+ <MeshGroup>
+  <MLMesh visible="1" idInFile="-1" filename="computer.ply" label="computer.ply">
+   <MLMatrix44>
+1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 
+</MLMatrix44>
+   <RenderingOption wireColor="64 64 64 255" wireWidth="1" pointSize="3" pointColor="252 233 79 255" solidColor="192 192 192 255" boxColor="234 234 234 255">000001000000000000000100000001001000001010100000000100111011110000001001</RenderingOption>
+  </MLMesh>
+  <MLMesh visible="1" idInFile="-1" filename="Poison meshlayer.ply" label="Poisson mesh">
+   <MLMatrix44>
+1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 
+</MLMatrix44>
+   <RenderingOption wireColor="64 64 64 255" wireWidth="1" pointSize="3" pointColor="252 233 79 255" solidColor="192 192 192 255" boxColor="234 234 234 255">110001000000000000000110000001010100000010100000010100111011110000001001</RenderingOption>
+  </MLMesh>
+  <MLMesh visible="1" idInFile="-1" filename="component.ply" label="plymcout.ply">
+   <MLMatrix44>
+1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 
+</MLMatrix44>
+   <RenderingOption wireColor="64 64 64 255" wireWidth="1" pointSize="3" pointColor="252 233 79 255" solidColor="192 192 192 255" boxColor="234 234 234 255">100001000000000000000100000001010100000010100000000100111011110000001001</RenderingOption>
+  </MLMesh>
+  <MLMesh visible="1" idInFile="-1" filename="poison-disk.ply" label="Poisson-disk Samples">
+   <MLMatrix44>
+1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 
+</MLMatrix44>
+   <RenderingOption wireColor="64 64 64 255" wireWidth="1" pointSize="3" pointColor="252 233 79 255" solidColor="192 192 192 255" boxColor="234 234 234 255">000001000000000000000000000001000000000010100000000100111011110000001101</RenderingOption>
+  </MLMesh>
+ </MeshGroup>
+ <RasterGroup/>
+</MeshLabProject>

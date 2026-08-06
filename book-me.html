@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Loumana - DJ & Live Set</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Bebas Neue Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+
+    <!-- GSAP & ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+</head>
+
+<body style="background-color: #F5F0E8; color: #000;">
+
+    <!-- Navigation -->
+    <div class="site-header">
+        <div class="header-container">
+            <div class="logo">
+                <img src="assets/images/Loumana_logo_white.png" alt="Loumana Logo" class="logo-drum"
+                    style="filter: invert(1);">
+                <a href="index.html" style="color: #000;">LOUMANA</a>
+            </div>
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                <span class="menu-icon">
+                    <span style="background: #000;"></span>
+                    <span style="background: #000;"></span>
+                    <span style="background: #000;"></span>
+                </span>
+            </button>
+        </div>
+        <nav class="dropdown-menu" id="dropdownMenu">
+            <ul class="menu-list">
+                <li><a href="about.html">ABOUT</a></li>
+                <li><a href="book-me.html">DJ</a></li>
+                <li><a href="music.html">MUSIC</a></li>
+                <li><a href="software.html">SOFTWARE</a></li>
+                <li><a href="index.html#contact">CONTACT</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <main class="book-me-page">
+
+        <!-- Hero Section -->
+        <section class="book-hero">
+            <div class="container">
+                <h1 class="book-title">BOOK LOUMANA</h1>
+                <p class="book-subtitle">DJ SETS • HYBRID LIVE PERFORMANCES • SOUND DESIGN</p>
+                <a href="#booking-form" class="book-cta-btn">Inquire Now</a>
+            </div>
+        </section>
+
+        <!-- Bio Section -->
+        <section class="book-section bio-section">
+            <div class="container">
+                <div class="content-grid two-col">
+                    <div class="text-col">
+                        <h2 class="section-heading">WHO IS LOUMANA?</h2>
+                        <p>Born in Burkina Faso and raised across Africa before settling in Brussels at 14, Loumana
+                            (Alassane Traoré) embodies a unique cultural synthesis. His music is the bridge between West
+                            African rhythmic foundations and European electronic urban landscapes.</p>
+                        <p>Starting in Brussels' underground creative spaces, he quickly evolved from a self-taught
+                            producer to a key figure in the local scene, notably after winning a pivotal beat battle
+                            that
+                            caught the attention of Cosmic Pop Records.</p>
+                    </div>
+                    <div class="image-col">
+                        <!-- Placeholder for artist image -->
+                        <img src="assets/images/Loumana_house_party.jpg" alt="Loumana Portrait" class="content-image">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Style & Genre Section -->
+        <section class="book-section style-section">
+            <div class="container">
+                <h2 class="section-heading center">GENRE-DEFYING STYLE</h2>
+                <div class="style-grid">
+                    <div class="style-card">
+                        <h3>Afro-Rhythms</h3>
+                        <p>Deep Percussive roots drawing from West African traditions.</p>
+                    </div>
+                    <div class="style-card">
+                        <h3>Electronic</h3>
+                        <p>Textured synth work and atmospheric soundscapes.</p>
+                    </div>
+                    <div class="style-card">
+                        <h3>Hip-Hop</h3>
+                        <p>Instrumental beats with narrative depth.</p>
+                    </div>
+                    <div class="style-card">
+                        <h3>Jazz</h3>
+                        <p>Sophisticated harmonies and improvisational spirit.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Hybrid Sets Highlight -->
+        <section class="book-section hybrid-section">
+            <div class="container">
+                <div class="hybrid-content">
+                    <h2 class="section-heading">HYBRID SETS SPECIALIST</h2>
+                    <p class="hybrid-text">Loumana doesn't just play tracks; he constructs live experiences. Known for
+                        "constructing live shows" for artists like <strong>Blu Samu</strong>, his own sets are a unique
+                        fusion of DJing and live performance elements (finger drumming, synths), creating a dynamic
+                        energy that bridges the gap between club set and concert.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Achievements & Venues -->
+        <section class="book-section achievements-section">
+            <div class="container">
+                <h2 class="section-heading">CAREER HIGHLIGHTS</h2>
+                <div class="achievements-grid">
+                    <div class="achievement-item">
+                        <h4>FESTIVALS & VENUES</h4>
+                        <ul>
+                            <li>We Can Dance Festival</li>
+                            <li>La Cabane (Brussels)</li>
+                            <li>Tour & Taxis (AfterWork)</li>
+                            <li>Beursschouwburg</li>
+                        </ul>
+                    </div>
+                    <div class="achievement-item">
+                        <h4>MILESTONES</h4>
+                        <ul>
+                            <li>Founder, Waffle Street Records</li>
+                            <li>Host, "The Waffle Show" on BRUZZ</li>
+                            <li>Cosmic Pop Records Alumni</li>
+                            <li>"Nethaan" Collaborative EP (2024)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Media / Kiosk Radio -->
+        <section class="book-section media-section">
+            <div class="container center-text">
+                <h2 class="section-heading">LISTEN & WATCH</h2>
+                <p style="margin-bottom: 2rem;">Experience the sound on Kiosk Radio and other platforms.</p>
+                <div class="video-embed-wrapper">
+                    <!-- Placeholder for Kiosk Radio Embed or Link -->
+                    <a href="https://kioskradio.com" target="_blank" class="media-link-card">
+                        <div class="media-icon"><i class="fas fa-play"></i></div>
+                        <span>Listen to sets on Kiosk Radio</span>
+                    </a>
+                    <a href="https://soundcloud.com/loumana" target="_blank" class="media-link-card">
+                        <div class="media-icon"><i class="fab fa-soundcloud"></i></div>
+                        <span>Explore SoundCloud</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Booking CTA -->
+        <section id="booking-form" class="book-section booking-contact">
+            <div class="container">
+                <h2 class="section-heading center">READY TO CREATE AN EXPERIENCE?</h2>
+                <div class="booking-options">
+                    <a href="mailto:loumana_@hotmail.com?subject=Booking%20Request%20-%20DJ%20Set"
+                        class="booking-btn primary">Book DJ Set</a>
+                    <a href="mailto:loumana_@hotmail.com?subject=Booking%20Request%20-%20Hybrid%20Live"
+                        class="booking-btn secondary">Book Hybrid Live</a>
+                </div>
+                <p class="contact-email">Or email directly: <a
+                        href="mailto:loumana_@hotmail.com">loumana_@hotmail.com</a></p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Loumana. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <style>
+        /* Book Me Specific Styles */
+        .book-me-page {
+            padding-top: 100px;
+            background-image: url('assets/media/Dj_carrer_drawing_no_bg.png');
+            background-size: 100% auto;
+            background-repeat: no-repeat;
+            background-position: top center;
+            background-attachment: scroll;
+        }
+
+        .book-hero {
+            padding: 10vh 0;
+            text-align: center;
+        }
+
+        .book-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(4rem, 10vw, 8rem);
+            margin: 0;
+            line-height: 0.9;
+        }
+
+        .book-subtitle {
+            font-family: 'BDO Grotesk', sans-serif;
+            font-size: 1.2rem;
+            letter-spacing: 0.2em;
+            margin: 1rem 0 3rem 0;
+            text-transform: uppercase;
+        }
+
+        .book-cta-btn {
+            display: inline-block;
+            padding: 15px 40px;
+            background: #000;
+            color: #fff;
+            text-decoration: none;
+            font-family: 'BDO Grotesk', sans-serif;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 0.1em;
+            border-radius: 50px;
+            transition: transform 0.3s ease;
+        }
+
+        .book-cta-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .book-section {
+            padding: 8vh 0;
+        }
+
+        .section-heading {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            line-height: 1;
+        }
+
+        .section-heading.center {
+            text-align: center;
+        }
+
+        .content-grid {
+            display: grid;
+            gap: 4rem;
+        }
+
+        .two-col {
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+        }
+
+        .text-col p {
+            font-family: 'BDO Grotesk', sans-serif;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .content-image {
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .style-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .style-card {
+            background: rgba(255, 255, 255, 0.5);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+
+        .style-card h3 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .hybrid-section {
+            background: #000;
+            color: #fff;
+            margin: 4rem 0;
+        }
+
+        .hybrid-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .hybrid-text {
+            font-size: 1.25rem;
+            line-height: 1.6;
+        }
+
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+        }
+
+        .achievement-item h4 {
+            font-family: 'BDO Grotesk', sans-serif;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #000;
+            padding-bottom: 0.5rem;
+            display: inline-block;
+        }
+
+        .achievement-item ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .achievement-item li {
+            font-family: 'BDO Grotesk', sans-serif;
+            font-size: 1.1rem;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .achievement-item li::before {
+            content: "•";
+            margin-right: 10px;
+            font-size: 1.5rem;
+        }
+
+        .video-embed-wrapper {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .media-link-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            text-decoration: none;
+            color: #000;
+            font-family: 'BDO Grotesk', sans-serif;
+            font-weight: bold;
+            transition: transform 0.3s ease;
+        }
+
+        .media-link-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .media-icon {
+            width: 80px;
+            height: 80px;
+            background: #000;
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2rem;
+        }
+
+        .booking-options {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .booking-btn {
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-weight: bold;
+            font-family: 'BDO Grotesk', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .booking-btn.primary {
+            background: #000;
+            color: #fff;
+        }
+
+        .booking-btn.secondary {
+            background: transparent;
+            border: 2px solid #000;
+            color: #000;
+        }
+
+        .booking-btn:hover {
+            transform: scale(1.05);
+            opacity: 0.9;
+        }
+
+        .contact-email a {
+            color: #000;
+            font-weight: bold;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            font-family: 'BDO Grotesk', sans-serif;
+            font-size: 0.9rem;
+            opacity: 0.6;
+        }
+
+        @media (max-width: 768px) {
+            .two-col {
+                grid-template-columns: 1fr;
+            }
+
+            .achievements-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .book-title {
+                font-size: 15vw;
+            }
+        }
+    </style>
+</body>
+
+</html>

@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loumana</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Bebas Neue Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+
+    <!-- GSAP & ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="js/splittext.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <div class="site-header" id="top">
+        <div class="header-container">
+            <div class="logo">
+                <img src="assets/images/Loumana_logo_white.png" alt="Loumana Logo" class="logo-drum" loading="eager">
+                <a href="#top">LOUMANA</a>
+            </div>
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                <span class="menu-icon">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </span>
+            </button>
+        </div>
+        <nav class="dropdown-menu" id="dropdownMenu">
+            <ul class="menu-list">
+                <li><a href="about.html">ABOUT</a></li>
+                <li><a href="book-me.html">DJ</a></li>
+                <li><a href="music.html">MUSIC</a></li>
+                <li><a href="software.html">SOFTWARE</a></li>
+                <li><a href="#contact">CONTACT</a></li>
+            </ul>
+        </nav>
+    </div>
+    <main>
+
+        <!-- ============================================
+             LANDING PAGE - Craflow Style Header
+             ============================================ -->
+        <header id="landing-page" class="section-home-header">
+            <!-- Hero Header Grid Background -->
+            <div class="background">
+            </div>
+
+            <div class="landing-header-layout-grid">
+                <!-- Background Layered Images -->
+                <div class="header-image-wrapper">
+                    <div class="header-image-block">
+                        <!-- Video Carousel Container -->
+                        <div class="header-video-container">
+                            <!-- Video 1: Keyboard Moog (Music Production) -->
+                            <div class="header-carousel-item active" data-text="music-production">
+                                <video class="header-video" autoplay muted playsinline loop>
+                                    <source src="assets/media/landing-3d-keyboard-moog.mp4" type="video/mp4">
+                                </video>
+                            </div>
+                            <!-- Video 2: Computer Straight (Developer) -->
+                            <div class="header-carousel-item" data-text="developer">
+                                <video class="header-video" muted playsinline loop>
+                                    <source src="assets/media/landing-3d-computer-straight.mp4" type="video/mp4">
+                                </video>
+                            </div>
+                            <!-- Video 3: Turntable (DJ) -->
+                            <div class="header-carousel-item" data-text="dj">
+                                <video class="header-video" muted playsinline loop>
+                                    <source src="assets/media/landing-3d-turntable.mp4" type="video/mp4">
+                                </video>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Title Text (Craflow Style) -->
+                <div id="header-component-title" class="padding-global">
+                    <!-- Header Title (Moved to Top) -->
+                    <div class="header-content-grid">
+                        <h1 id="title-header-section-loumana-left" class="header-title">LOUMANA'S</h1>
+
+                        <h1 id="title-header-section-world-right" class="header-title">WORLD©</h1>
+                    </div>
+
+                </div>
+
+                <!-- CTA Buttons (Moved below Title) -->
+                <div class="landing-cta-container">
+                    <a href="music.html" class="landing-cta-btn">Buy a beat</a>
+                    <a href="#contact" class="landing-cta-btn">I want a website</a>
+                    <a href="software.html" class="landing-cta-btn">Audio projects</a>
+                    <a href="book-me.html" class="landing-cta-btn">Book a dj set</a>
+                </div>
+
+            </div>
+
+
+            <!-- Side Text Removed -->
+            </div>
+            <div class="header-opacity">
+            </div>
+
+
+
+        </header>
+
+
+        <!-- ============================================
+                  DJ SECTION discover 
+             ============================================ -->
+        <section id="dj-career" class="zone section-content">
+            <div class="sticky-wrapper">
+                <div class="grey-bg bg-pearl"></div>
+                <!-- DJ Discovery Scroll Interaction -->
+                <section class="section_dj-discovery">
+                    <div class="dj-discovery_wrapper">
+                        <div class="scroll-note_text">Keep scrolling</div>
+                        <div class="dj-discovery_sticky">
+                            <div class="dj-discovery_component">
+                                <h2 class="dj-discovery_heading _1">Afro, Hip hop</h2>
+                                <div class="dj-discovery_img-wrap">
+                                    <img src="assets/images/Loumana_house_party.jpg" loading="lazy" alt="Loumana DJ"
+                                        class="dj-discovery_img" />
+                                    <h2 class="dj-discovery_img-text">Bridging the gaps between genres</h2>
+                                </div>
+                                <h2 class="dj-discovery_heading _2"> Jazz, Electronic</h2>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+
+
+
+            <div class="scroll-content container">
+
+                <!-- BLOCK 1: Solo DJ Experience -->
+                <div class="solo-dj-experience">
+
+                </div>
+
+            </div>
+            <!-- DJ Career Text Section -->
+            <section id="dj-skills" class="section_dj-skills">
+                <!-- DJ Banner - Scrolling text in multiple languages -->
+                <div class="dj-skills-banner">
+                    <div class="dj-skills-banner-track">
+                        <span class="dj-skills-banner-item">DJ</span>
+                        <span class="dj-skills-banner-item">deejay</span>
+                        <span class="dj-skills-banner-item">ДИДЖЕЙ</span>
+                        <span class="dj-skills-banner-item">打碟</span>
+                        <span class="dj-skills-banner-item">disc jockey</span>
+                        <span class="dj-skills-banner-item">Ντι Τζέι</span>
+                        <span class="dj-skills-banner-item">DJ</span>
+                        <span class="dj-skills-banner-item">ディスクジョッキー</span>
+                        <span class="dj-skills-banner-item">deejay</span>
+                        <span class="dj-skills-banner-item">ดีเจ</span>
+                        <span class="dj-skills-banner-item">disc jockey</span>
+                        <!-- Duplicate for seamless loop -->
+                        <span class="dj-skills-banner-item">DJ</span>
+                        <span class="dj-skills-banner-item">deejay</span>
+                        <span class="dj-skills-banner-item">ДИДЖЕЙ</span>
+                        <span class="dj-skills-banner-item">打碟</span>
+                        <span class="dj-skills-banner-item">disc jockey</span>
+                        <span class="dj-skills-banner-item">Ντι Τζέι</span>
+                        <span class="dj-skills-banner-item">DJ</span>
+                        <span class="dj-skills-banner-item">ディスクジョッキー</span>
+                        <span class="dj-skills-banner-item">deejay</span>
+                        <span class="dj-skills-banner-item">ดีเจ</span>
+                        <span class="dj-skills-banner-item">disc jockey</span>
+                    </div>
+                </div>
+                <!-- Sticky Background Image (Viewport-sized) -->
+                <div class="dj-skills-background-image"></div>
+
+                <!-- Progressive Images Layer -->
+                <div class="dj-skills-images-layer">
+                    <div class="dj-skills-image dj-skills-image-1" data-opacity-trigger="0.25">
+                        <img src="assets/media/dj-7.jpg" alt="Solo DJing" loading="lazy">
+                    </div>
+                    <div class="dj-skills-image dj-skills-image-2" data-opacity-trigger="0.50">
+                        <img src="assets/media/tour-1.jpg" alt="Tour performance" loading="lazy">
+                    </div>
+                    <div class="dj-skills-image dj-skills-image-3" data-opacity-trigger="0.75">
+                        <img src="assets/media/tour-7.png" alt="Tour performance" loading="lazy">
+                    </div>
+                    <!-- To replace -->
+                    <!-- <div class="dj-skills-image dj-skills-image-4" data-opacity-trigger="1.0">
+                        <img src="assets/media/dj_onPlane_no_bg.png" alt="DJ on plane" loading="lazy">
+                    </div> -->
+                </div>
+
+                <!-- Sticky Text Container -->
+                <div class="dj-skills-sticky-wrapper">
+                    <div class="padding-global">
+                        <div class="container-medium">
+                            <div class="dj-skills-head">
+                                <div class="dj-skills-text-box">
+                                    <!-- Venue Badges -->
+                                    <div class="venue-badges-container">
+                                        <div class="venue-badge venue-badge-corner venue-badge-top-left"
+                                            data-venue="c12">
+                                            <img src="assets/images/C12.jpeg" alt="C12" loading="lazy">
+                                        </div>
+                                        <div class="venue-badge venue-badge-corner venue-badge-top-right"
+                                            data-venue="pukkelpop">
+                                            <img src="assets/images/Pukelpopp.jpg" alt="Pukkelpop" loading="lazy">
+                                        </div>
+                                        <div class="venue-badge venue-badge-edge venue-badge-left"
+                                            data-venue="wecandance">
+                                            <img src="assets/images/WeCanDance.jpeg" alt="WeCanDance" loading="lazy">
+                                        </div>
+                                        <div class="venue-badge venue-badge-edge venue-badge-right"
+                                            data-venue="kiosk-radio">
+                                            <img src="assets/images/kiosk-radio.png" alt="Kiosk Radio" loading="lazy">
+                                        </div>
+                                        <div class="venue-badge venue-badge-corner venue-badge-bottom-left"
+                                            data-venue="rock-en-seine">
+                                            <img src="assets/images/rock-en-seine.jpg" alt="Rock en Seine"
+                                                loading="lazy">
+                                        </div>
+                                    </div>
+                                    <h2 class="dj-skills-heading">
+                                        I'm a DJ and producer. I've been DJing around Brussels and making the local
+                                        scene vibrate. I've made a lot of things with local artists such as Bart Cobain
+                                        and Blue Samu.
+                                    </h2>
+                                </div>
+                                <!-- CTA Button -->
+                                <a href="#contact" class="dj-career-cta">
+                                    Book a DJ set
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Scrollable Content Area for spacing -->
+                <div class="dj-skills-scroll-content">
+                    <div class="spacer-medium"></div>
+                    <div class="padding-section-small"></div>
+                </div>
+            </section>
+
+
+        </section>
+
+        <!-- 
+            ============================================================================
+            DJ ACTIVITIES SCROLL SECTION
+            ============================================================================
+            Sticky scroll section showcasing Solo DJ, Radio Residency: BRUZZ, 
+            and Adorable Collective with sliding white boxes animation.
+        -->
+        <section id="dj-activities-scroll" class="dj-activities-scroll-section">
+
+
+            <!-- Wrapper: Creates scroll space for animation -->
+            <div class="dj-activities-wrapper">
+
+
+
+                <!-- Sticky Section: Stays fixed in viewport while scrolling -->
+                <div class="dj-activities-sticky">
+
+
+
+                    <div class="dj-activities-container">
+
+                        <div class="atmospheric-background">
+                            <div class="blob-blue"></div>
+                            <div class="blob-nuance"></div> <!-- NEW Cream Nuance -->
+                            <div class="blob-cyan"></div>
+                            <div class="blob-cream"></div>
+                            <div class="blob-mix"></div>
+                            <div class="blob-yellow"></div>
+                            <div class="noise-overlay"></div>
+                        </div>
+                        <!-- DJ Drawing Background for Radio Activities 
+                        <div class="radio-dj-drawing-bg">
+                            <img src="../resources/To be used later/dessin dj_no_bg.png" alt="DJ Drawing"
+                                class="radio-dj-drawing-image" style="display: none;">
+                        </div>
+-->
+                        <!-- PART 1: Going on tour -->
+                        <div class="dj-activities-part going-on-tour-part" data-part="solo-dj">
+                            <div class="dj-activities-text-block">
+                                <h3 class="dj-activities-part-title going-on-tour-title">Going on tour</h3>
+                                <p class="dj-activities-part-subtitle going-on-tour-subtitle">Playing synth, finger
+                                    drumming to a DJ</p>
+                                <p class="dj-activities-part-text going-on-tour-text">
+                                    As a multidisciplinary artist, I've toured across Europe, performing finger drums
+                                    and live synthesizer sets. I've been a tour DJ with Antena and OxiHose, playing Moog
+                                    and VST synths on stage. From intimate clubs to major festivals, I've brought my
+                                    unique blend of electronic and live instrumentation to venues across the continent.
+                                </p>
+                            </div>
+                            <!-- Grid Layout: 2 images + 2 videos -->
+                            <div class="going-on-tour-grid">
+                                <!-- Column 1: 2 images stacked -->
+                                <div class="going-on-tour-images-column">
+                                    <div class="going-on-tour-image-wrapper">
+                                        <img src="assets/media/tour-3.jpg" alt="Tour performance"
+                                            class="going-on-tour-image" loading="lazy" />
+                                    </div>
+
+                                </div>
+                                <!-- Column 2: 2 videos stacked -->
+                                <div class="going-on-tour-videos-column">
+
+                                    <div class="going-on-tour-video-wrapper">
+                                        <video class="going-on-tour-video" autoplay muted loop playsinline>
+                                            <source
+                                                src="../resources/TOUR DJ,  FINGER DRUMING/Bart Kobain /Bart_kobain_Mic_bxl.mp4"
+                                                type="video/mp4">
+                                            Your browser does not support the video tag.
+                                        </video>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- PART 2: Radio Residency: BRUZZ -->
+                        <div class="dj-activities-part radio-residency-part" data-part="radio-intro">
+                            <div class="dj-activities-text-block">
+                                <h3 class="dj-activities-part-title radio-residency-title">Radio Residency: BRUZZ</h3>
+                                <p class="dj-activities-part-subtitle radio-residency-subtitle">Monthly radio show on
+                                    Bruzz Media</p>
+                                <p class="dj-activities-part-text radio-residency-text">
+                                    It's been 4 years since I've been on the radio and I've interviewed a lot of people
+                                    like Dr. Peet, David Numwami, Blue Samu, and Izzy Kaya. My show is mainly based
+                                    on the discovery of music. I also host DJs for guest sets and interviews.
+                                </p>
+                            </div>
+                            <!-- Grid Layout: 2 images + 2 videos (all square) -->
+                            <div class="radio-residency-grid">
+                                <!-- Column 1: 2 images stacked -->
+                                <div class="radio-residency-images-column">
+                                    <div class="radio-residency-image-wrapper">
+                                        <img src="../resources/Radio waffle/IMG_2949.jpg" alt="Radio BRUZZ"
+                                            class="radio-residency-image" loading="lazy" />
+                                    </div>
+                                </div>
+                                <!-- Column 2: 2 videos stacked -->
+                                <div class="radio-residency-videos-column">
+                                    <div class="radio-residency-video-wrapper">
+                                        <video class="radio-residency-video" autoplay muted loop playsinline>
+                                            <source src="../resources/Radio waffle/20221116_221631.mp4"
+                                                type="video/mp4">
+                                            Your browser does not support the video tag.
+                                        </video>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- PART 3: "Connecting people" - Part of horizontal scroll -->
+                        <div class="dj-activities-part" data-part="connect-text" style="margin-right: 10vw;">
+                            <div class="dj-activities-text-block connect-text-block">
+                                <h2 class="adorable-connect-text">Connecting people</h2>
+                                <p class="adorable-description">
+                                    Adorable Collective, connecting the genres, connecting people.
+                                </p>
+                                <p class="adorable-subtext">
+                                    Organizing local events in local clubs for me is a way to connect people in the city
+                                    of Brussels. Through the years, I've organized several events including DJing
+                                    events, afterworks, Big Club Sporting, TechnoSite, and parties with Afro dancing
+                                    people. Different crowds, different people - completely different.
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- OVERLAY ELEMENTS (Fixed to viewport, outside horizontal container) -->
+                    <!-- Left Block (slides from left) -->
+                    <div class="adorable-block adorable-block-left">
+                        <div class="adorable-image-half adorable-image-left">
+                            <img src="../resources/To be used later/People_color_ghost_merge.png"
+                                alt="Adorable Collective" class="adorable-split-image" />
+                        </div>
+                    </div>
+
+                    <!-- Right Block (slides from right) -->
+                    <div class="adorable-block adorable-block-right">
+                        <div class="adorable-image-half adorable-image-right">
+                            <img src="../resources/To be used later/People_color_ghost_merge.png"
+                                alt="Adorable Collective" class="adorable-split-image" />
+                        </div>
+                    </div>
+
+                    <!-- "Keep Scrolling" Text -->
+                    <div class="scroll-note-text-adorable">Keep scrolling</div>
+                </div>
+            </div>
+        </section>
+
+
+
+
+
+
+
+
+
+        <!-- 
+            ============================================================================
+            BEAT MAKING SECTION
+            ============================================================================
+            Replaces the old Stats section. Showcases production skills and funnel to download.
+        -->
+        <section id="beat-making" class="beat-making-section">
+            <!-- Multilingual Banner -->
+            <div class="beat-making-banner">
+                <div class="beat-making-banner-track">
+                    <span class="beat-making-banner-item">Beatmaker</span>
+                    <span class="beat-making-banner-item">Producer</span>
+                    <span class="beat-making-banner-item">Produceur</span>
+                    <span class="beat-making-banner-item">Битмейкер</span>
+                    <span class="beat-making-banner-item">节拍制作人</span>
+                    <span class="beat-making-banner-item">Production</span>
+                    <span class="beat-making-banner-item">Продюсер</span>
+                    <span class="beat-making-banner-item">制作人</span>
+                    <span class="beat-making-banner-item">Beat Making</span>
+                    <span class="beat-making-banner-item">Продакшн</span>
+                    <span class="beat-making-banner-item">制作</span>
+                    <span class="beat-making-banner-item">Composer</span>
+                    <span class="beat-making-banner-item">Композитор</span>
+                    <span class="beat-making-banner-item">作曲家</span>
+                    <span class="beat-making-banner-item">Sound Design</span>
+                    <span class="beat-making-banner-item">Саунд-дизайн</span>
+                    <span class="beat-making-banner-item">声音设计</span>
+                    <span class="beat-making-banner-item">Μπιτμέικερ</span>
+                    <span class="beat-making-banner-item">ビートメーカー</span>
+                    <span class="beat-making-banner-item">บีทเมกเกอร์</span>
+                    <span class="beat-making-banner-item">Beatmaker</span>
+                    <span class="beat-making-banner-item">Producer</span>
+                    <span class="beat-making-banner-item">Produceur</span>
+                    <span class="beat-making-banner-item">Битмейкер</span>
+                    <span class="beat-making-banner-item">节拍制作人</span>
+                    <span class="beat-making-banner-item">Production</span>
+                    <span class="beat-making-banner-item">Продюсер</span>
+                    <span class="beat-making-banner-item">制作人</span>
+                    <span class="beat-making-banner-item">Beat Making</span>
+                    <span class="beat-making-banner-item">Продакшн</span>
+                    <span class="beat-making-banner-item">制作</span>
+                    <span class="beat-making-banner-item">Composer</span>
+                    <span class="beat-making-banner-item">Композитор</span>
+                    <span class="beat-making-banner-item">作曲家</span>
+                    <span class="beat-making-banner-item">Sound Design</span>
+                    <span class="beat-making-banner-item">Саунд-дизайн</span>
+                    <span class="beat-making-banner-item">声音设计</span>
+                    <span class="beat-making-banner-item">Μπιτμέικερ</span>
+                    <span class="beat-making-banner-item">ビートメーカー</span>
+                    <span class="beat-making-banner-item">บีทเมกเกอร์</span>
+                </div>
+            </div>
+
+            <div class="beat-making-container">
+                <div class="beat-making-grid">
+                    <!-- First Row: Title + Button (Left) | Paragraphs (Right) -->
+                    <div class="beat-making-first-row">
+                        <!-- Left Column: Title + Button -->
+                        <div class="beat-making-title-col">
+                            <h2 class="beat-making-title">I love Making beats</h2>
+                            <a href="music.html" class="beat-making-cta">
+                                Get Club Bangers for free
+                            </a>
+                        </div>
+                        <!-- Right Column: Paragraphs -->
+                        <div class="beat-making-text-col">
+                            <div class="beat-making-description">
+                                <p>
+                                    My journey into beat making started on SoundCloud, where I built my identity through
+                                    active engagement with online communities. I spent years crafting edits, remixes,
+                                    and original sounds, sharing them with a growing audience.
+                                </p>
+                                <p>
+                                    I've created countless editing sounds and tools for the class, always aiming to
+                                    push the boundaries of what's possible in production.
+                                </p>
+                                <p class="beat-making-highlight">
+                                    Now, I'm making these sounds available to you.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Second Row: SoundCloud Full Width -->
+                    <div class="beat-making-second-row">
+                        <div class="soundcloud-viewport">
+                            <iframe width="100%" height="450" scrolling="no" frameborder="no" allow="autoplay"
+                                src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/soundcloud%253Aplaylists%253A2152543130&color=%23040d0c&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 
+            ============================================================================
+            RELEASES SECTION - "ABOUT-STYLE" LAYOUT
+            ============================================================================
+            Pinned section with text overlay (mix-blend-mode: difference) and card stack
+            Big title on right, card in center, description text on left
+        -->
+
+        <section id="releases" class="releases-pinned-section">
+            <div class="releases-sticky-wrapper">
+
+                <!-- Split Layout Container -->
+                <div class="releases-content-layout">
+
+                    <!-- Left Side: Title -->
+                    <div class="releases-side-title">
+                        <h2 class="releases-big-title">RELEASES</h2>
+                    </div>
+
+                    <!-- Right Side: Card Stack -->
+                    <div class="releases-card-stack">
+                        <!-- Card 1: Places EP -->
+                        <div class="release-card active" data-release="places">
+                            <!-- Description moved INSIDE card (positioned above via CSS) -->
+                            <div class="release-desc-inner">
+                                <h3>Places EP</h3>
+                                <p>Cinematic electronics exploring self-discovery. (2024)</p>
+                            </div>
+
+                            <div class="release-card-inner">
+                                <div class="release-image-wrapper">
+                                    <img src="../resources/Producer and music making info/EP_COVER_PLACES_stickers.png"
+                                        alt="Places EP" class="release-image">
+                                </div>
+                                <div class="release-info">
+                                    <div class="release-header">
+                                        <h3 class="release-title">Places EP</h3>
+                                        <p class="release-year">2024</p>
+                                    </div>
+                                    <div class="release-social-icons">
+                                        <a href="#" class="social-icon spotify" aria-label="Listen on Spotify"
+                                            target="_blank" rel="noopener noreferrer">
+                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                                <path
+                                                    d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.42 1.56-.299.421-1.02.599-1.559.3z" />
+                                            </svg>
+                                        </a>
+                                        <a href="#" class="social-icon apple-music" aria-label="Listen on Apple Music"
+                                            target="_blank" rel="noopener noreferrer">
+                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                                <path
+                                                    d="M21.35 2.1c-.38 0-.76.23-.92.61l-3.41 6.98c-.09.19-.09.4 0 .59l3.41 6.98c.16.38.54.61.92.61.38 0 .76-.23.92-.61l3.41-6.98c.09-.19.09-.4 0-.59L22.27 2.71c-.16-.38-.54-.61-.92-.61zm-8.5 0c-.38 0-.76.23-.92.61l-3.41 6.98c-.09.19-.09.4 0 .59l3.41 6.98c.16.38.54.61.92.61.38 0 .76-.23.92-.61l3.41-6.98c.09-.19.09-.4 0-.59L13.77 2.71c-.16-.38-.54-.61-.92-.61zm-8.5 0c-.38 0-.76.23-.92.61L.02 9.69c-.09.19-.09.4 0 .59l3.41 6.98c.16.38.54.61.92.61.38 0 .76-.23.92-.61l3.41-6.98c.09-.19.09-.4 0-.59L5.27 2.71c-.16-.38-.54-.61-.92-.61z" />
+                                            </svg>
+                                        </a>
+                                        <a href="#" class="social-icon youtube" aria-label="Watch on YouTube"
+                                            target="_blank" rel="noopener noreferrer">
+                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                                <path
+                                                    d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+                                            </svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card 2: Géométrie EP -->
+                        <div class="release-card" data-release="geometrie">
+                            <div class="release-desc-inner">
+                                <h3>Géométrie EP</h3>
+                                <p>A blend of Future Beat, Hip Hop, and Cosmic Pop. (2019)</p>
+                            </div>
+                            <div class="release-card-inner">
+                                <div class="release-image-wrapper">
+                                    <img src="../resources/Producer and music making info/Loumana_Geometrie_FINAL-2.jpg"
+                                        alt="Géométrie EP" class="release-image">
+                                </div>
+                                <div class="release-info">
+                                    <div class="release-header">
+                                        <h3 class="release-title">Géométrie EP</h3>
+                                        <p class="release-year">2019</p>
+                                    </div>
+                                    <div class="release-social-icons">
+                                        <a href="#" class="social-icon spotify" aria-label="Listen on Spotify"
+                                            target="_blank" rel="noopener noreferrer">
+                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                                <path
+                                                    d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.42 1.56-.299.421-1.02.599-1.559.3z" />
+                                            </svg>
+                                        </a>
+                                        <a href="#" class="social-icon apple-music" aria-label="Listen on Apple Music"
+                                            target="_blank" rel="noopener noreferrer">
+                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                                <path
+                                                    d="M21.35 2.1c-.38 0-.76.23-.92.61l-3.41 6.98c-.09.19-.09.4 0 .59l3.41 6.98c.16.38.54.61.92.61.38 0 .76-.23.92-.61l3.41-6.98c.09-.19.09-.4 0-.59L22.27 2.71c-.16-.38-.54-.61-.92-.61zm-8.5 0c-.38 0-.76.23-.92.61l-3.41 6.98c-.09.19-.09.4 0 .59l3.41 6.98c.16.38.54.61.92.61.38 0 .76-.23.92-.61l3.41-6.98c.09-.19.09-.4 0-.59L13.77 2.71c-.16-.38-.54-.61-.92-.61zm-8.5 0c-.38 0-.76.23-.92.61L.02 9.69c-.09.19-.09.4 0 .59l3.41 6.98c.16.38.54.61.92.61.38 0 .76-.23.92-.61l3.41-6.98c.09-.19.09-.4 0-.59L5.27 2.71c-.16-.38-.54-.61-.92-.61z" />
+                                            </svg>
+                                        </a>
+                                        <a href="#" class="social-icon youtube" aria-label="Watch on YouTube"
+                                            target="_blank" rel="noopener noreferrer">
+                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                                <path
+                                                    d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+                                            </svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card 3: Nethaan -->
+                        <div class="release-card" data-release="nethaan">
+                            <div class="release-desc-inner">
+                                <h3>Nethaan</h3>
+                                <p>Hip Hop and Rap collaboration with Anthena. (2018)</p>
+                            </div>
+                            <div class="release-card-inner">
+                                <div class="release-image-wrapper">
+                                    <img src="../resources/Producer and music making info/http___gather.fandalism.com_2420727--6E9DBFAA-967C-43BD-B9893354019117FA--0--12767813--NETHAANFINALCORR2.jpg"
+                                        alt="Nethaan" class="release-image">
+                                </div>
+                                <div class="release-info">
+                                    <div class="release-header">
+                                        <h3 class="release-title">Nethaan (feat. Anthena)</h3>
+                                        <p class="release-year">2018</p>
+                                    </div>
+                                    <div class="release-social-icons">
+                                        <a href="#" class="social-icon spotify" aria-label="Listen on Spotify"
+                                            target="_blank" rel="noopener noreferrer">
+                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                                <path
+                                                    d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.42 1.56-.299.421-1.02.599-1.559.3z" />
+                                            </svg>
+                                        </a>
+                                        <a href="#" class="social-icon apple-music" aria-label="Listen on Apple Music"
+                                            target="_blank" rel="noopener noreferrer">
+                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                                <path
+                                                    d="M21.35 2.1c-.38 0-.76.23-.92.61l-3.41 6.98c-.09.19-.09.4 0 .59l3.41 6.98c.16.38.54.61.92.61.38 0 .76-.23.92-.61l3.41-6.98c.09-.19.09-.4 0-.59L22.27 2.71c-.16-.38-.54-.61-.92-.61zm-8.5 0c-.38 0-.76.23-.92.61l-3.41 6.98c-.09.19-.09.4 0 .59l3.41 6.98c.16.38.54.61.92.61.38 0 .76-.23.92-.61l3.41-6.98c.09-.19.09-.4 0-.59L13.77 2.71c-.16-.38-.54-.61-.92-.61zm-8.5 0c-.38 0-.76.23-.92.61L.02 9.69c-.09.19-.09.4 0 .59l3.41 6.98c.16.38.54.61.92.61.38 0 .76-.23.92-.61l3.41-6.98c.09-.19.09-.4 0-.59L5.27 2.71c-.16-.38-.54-.61-.92-.61z" />
+                                            </svg>
+                                        </a>
+                                        <a href="#" class="social-icon youtube" aria-label="Watch on YouTube"
+                                            target="_blank" rel="noopener noreferrer">
+                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                                <path
+                                                    d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+                                            </svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card 4: 6 Secondes EP -->
+                        <div class="release-card" data-release="six-secondes">
+                            <div class="release-desc-inner">
+                                <h3>6 Secondes</h3>
+                                <p>Electronic R&B fusion featuring Mahungu. (2021)</p>
+                            </div>
+                            <div class="release-card-inner">
+                                <div class="release-image-wrapper">
+                                    <img src="../resources/Producer and music making info/Cover 6 secondes EP mahugu-loumana.jpg"
+                                        alt="6 Secondes EP" class="release-image">
+                                </div>
+                                <div class="release-info">
+                                    <div class="release-header">
+                                        <h3 class="release-title">6 Secondes (feat. Mahungu)</h3>
+                                        <p class="release-year">2021</p>
+                                    </div>
+                                    <div class="release-social-icons">
+                                        <a href="#" class="social-icon spotify" aria-label="Listen on Spotify"
+                                            target="_blank" rel="noopener noreferrer">
+                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                                <path
+                                                    d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.42 1.56-.299.421-1.02.599-1.559.3z" />
+                                            </svg>
+                                        </a>
+                                        <a href="#" class="social-icon apple-music" aria-label="Listen on Apple Music"
+                                            target="_blank" rel="noopener noreferrer">
+                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                                <path
+                                                    d="M21.35 2.1c-.38 0-.76.23-.92.61l-3.41 6.98c-.09.19-.09.4 0 .59l3.41 6.98c.16.38.54.61.92.61.38 0 .76-.23.92-.61l3.41-6.98c.09-.19.09-.4 0-.59L22.27 2.71c-.16-.38-.54-.61-.92-.61zm-8.5 0c-.38 0-.76.23-.92.61l-3.41 6.98c-.09.19-.09.4 0 .59l3.41 6.98c.16.38.54.61.92.61.38 0 .76-.23.92-.61l3.41-6.98c.09-.19.09-.4 0-.59L13.77 2.71c-.16-.38-.54-.61-.92-.61zm-8.5 0c-.38 0-.76.23-.92.61L.02 9.69c-.09.19-.09.4 0 .59l3.41 6.98c.16.38.54.61.92.61.38 0 .76-.23.92-.61l3.41-6.98c.09-.19.09-.4 0-.59L5.27 2.71c-.16-.38-.54-.61-.92-.61z" />
+                                            </svg>
+                                        </a>
+                                        <a href="#" class="social-icon youtube" aria-label="Watch on YouTube"
+                                            target="_blank" rel="noopener noreferrer">
+                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                                <path
+                                                    d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+                                            </svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+        <!-- Release Modal -->
+        <div class="release-modal" id="release-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+            <div class="release-modal-backdrop"></div>
+            <div class="release-modal-content">
+                <button class="release-modal-close" aria-label="Close modal">&times;</button>
+                <div class="release-modal-body" id="modal-body">
+                    <!-- Content will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- 
+                    ============================================================================
+                    SOFTWARE SECTION – Stripe-Style Split Layout
+                    ============================================================================
+                -->
+        <section id="software" class="software-section">
+            <div class="software-split">
+                <!-- Left panel: Web Projects -->
+                <article class="software-panel software-panel--web">
+                    <!-- Background 3D computer video -->
+                    <div class="software-panel-video">
+                        <video autoplay loop muted playsinline>
+                            <source src="assets/media/landing-3d-computer-straight.mp4" type="video/mp4">
+                        </video>
+                    </div>
+
+                    <div class="software-panel-inner software-panel-content">
+                        <div class="software-panel-title-block">
+                            <h2 class="software-panel-title">
+                                Web<br>
+                                Projects
+                            </h2>
+                        </div>
+
+                        <div class="software-panel-meta-block">
+                            <p class="software-panel-meta">
+                                <span>Interactive sites, tools, and visuals</span>
+                                <span>Designed &amp; coded with vanilla JS, HTML &amp; CSS</span>
+                                <span>Exploring motion, storytelling &amp; UX flows</span>
+                            </p>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Right panel: Audio Dev Projects -->
+                <article class="software-panel software-panel--audio">
+                    <!-- Background synth video -->
+                    <div class="software-panel-video">
+                        <video autoplay loop muted playsinline>
+                            <source src="assets/media/landing-3d-keyboard-moog.mp4" type="video/mp4">
+                        </video>
+                    </div>
+
+                    <div class="software-panel-inner software-panel-content">
+                        <div class="software-panel-meta-block">
+                            <p class="software-panel-meta">
+                                <span>Audio dev projects &amp; experiments</span>
+                                <span>Plugins, synths, and interactive sound tools</span>
+                                <span>Bridging code, instruments &amp; performance</span>
+                            </p>
+                        </div>
+
+                        <div class="software-panel-title-block">
+                            <h2 class="software-panel-title">
+                                Audio Dev<br>
+                                Projects
+                            </h2>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <!-- Software Extension: Additional Info & CTAs -->
+            <div class="software-extension">
+                <div class="software-extension-split">
+
+                    <!-- Right Panel: Web Projects Info -->
+                    <div class="software-extension-panel software-extension-web">
+                        <div class="software-extension-content">
+                            <p>J'ai créé un template website en tant qu'étudiant en informatique. Technologies utilisées
+                                : ShaperScript, CSS, PHP, Java, Python et bien d'autres langages.</p>
+                        </div>
+                        <a href="#contact" class="software-extension-cta">I want a website by Loumana</a>
+                    </div>
+                    <!-- Left Panel: Audio Dev Info -->
+                    <div class="software-extension-panel software-extension-audio">
+                        <div class="software-extension-image">
+                            <img src="assets/images/Screenshot 2025-07-13 at 14.22.16.png" alt="808 Max Plugin"
+                                loading="lazy">
+                        </div>
+                        <div class="software-extension-content">
+                            <p>À force de produire 13 ans d'expérience, je me rends compte de ce qui manque dans la
+                                communauté. Mon premier plugin c'est 808 Max (l'image est au-dessus). J'aspire aussi à
+                                créer du hardware. Que les internautes restent au jus.</p>
+                        </div>
+                        <a href="software.html" class="software-extension-cta">Buy 808 Max</a>
+                    </div>
+
+
+                </div>
+            </div>
+        </section>
+
+
+
+
+
+
+        <!-- Contact Section - Work with me -->
+        <section id="contact" class="contact-section">
+            <div class="contact-container">
+                <h1 class="contact-title">Work with me</h1>
+
+                <div class="contact-info">
+                    <a href="mailto:loumana_@hotmail.com" class="contact-link">loumana_@hotmail.com</a>
+                    <a href="tel:+32249118536" class="contact-link">+32 249 118 5536</a>
+                </div>
+
+                <div class="contact-social">
+                    <a href="https://www.instagram.com/loumana" target="_blank" rel="noopener noreferrer"
+                        class="social-link">
+                        <div class="social-icon-wrap">
+                            <div class="social-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                    <path
+                                        d="M12.001 9C10.3436 9 9.00098 10.3431 9.00098 12C9.00098 13.6573 10.3441 15 12.001 15C13.6583 15 15.001 13.6569 15.001 12C15.001 10.3427 13.6579 9 12.001 9ZM12.001 7C14.7614 7 17.001 9.2371 17.001 12C17.001 14.7605 14.7639 17 12.001 17C9.24051 17 7.00098 14.7629 7.00098 12C7.00098 9.23953 9.23808 7 12.001 7ZM18.501 6.74915C18.501 7.43926 17.9402 7.99917 17.251 7.99917C16.5609 7.99917 16.001 7.4384 16.001 6.74915C16.001 6.0599 16.5617 5.5 17.251 5.5C17.9393 5.49913 18.501 6.0599 18.501 6.74915ZM12.001 4C9.5265 4 9.12318 4.00655 7.97227 4.0578C7.18815 4.09461 6.66253 4.20007 6.17416 4.38967C5.74016 4.55799 5.42709 4.75898 5.09352 5.09255C4.75867 5.4274 4.55804 5.73963 4.3904 6.17383C4.20036 6.66332 4.09493 7.18811 4.05878 7.97115C4.00703 9.0752 4.00098 9.46105 4.00098 12C4.00098 14.4745 4.00753 14.8778 4.05877 16.0286C4.0956 16.8124 4.2012 17.3388 4.39034 17.826C4.5591 18.2606 4.7605 18.5744 5.09246 18.9064C5.42863 19.2421 5.74179 19.4434 6.17187 19.6094C6.66619 19.8005 7.19148 19.9061 7.97212 19.9422C9.07618 19.9939 9.46203 20 12.001 20C14.4755 20 14.8788 19.9934 16.0296 19.9422C16.8117 19.9055 17.3385 19.7996 17.827 19.6106C18.2604 19.4423 18.5752 19.2402 18.9074 18.9085C19.2436 18.5718 19.4445 18.2594 19.6107 17.8283C19.8013 17.3358 19.9071 16.8098 19.9432 16.0289C19.9949 14.9248 20.001 14.5389 20.001 12C20.001 9.52552 19.9944 9.12221 19.9432 7.97137C19.9064 7.18906 19.8005 6.66149 19.6113 6.17318C19.4434 5.74038 19.2417 5.42635 18.9084 5.09255C18.573 4.75715 18.2616 4.55693 17.8271 4.38942C17.338 4.19954 16.8124 4.09396 16.0298 4.05781C14.9258 4.00605 14.5399 4 12.001 4ZM12.001 2C14.7176 2 15.0568 2.01 16.1235 2.06C17.1876 2.10917 17.9135 2.2775 18.551 2.525C19.2101 2.77917 19.7668 3.1225 20.3226 3.67833C20.8776 4.23417 21.221 4.7925 21.476 5.45C21.7226 6.08667 21.891 6.81333 21.941 7.8775C21.9885 8.94417 22.001 9.28333 22.001 12C22.001 14.7167 21.991 15.0558 21.941 16.1225C21.8918 17.1867 21.7226 17.9125 21.476 18.55C21.2218 19.2092 20.8776 19.7658 20.3226 20.3217C19.7668 20.8767 19.2076 21.22 18.551 21.475C17.9135 21.7217 17.1876 21.89 16.1235 21.94C15.0568 21.9875 14.7176 22 12.001 22C9.28431 22 8.94514 21.99 7.87848 21.94C6.81431 21.8908 6.08931 21.7217 5.45098 21.475C4.79264 21.2208 4.23514 20.8767 3.67931 20.3217C3.12348 19.7658 2.78098 19.2067 2.52598 18.55C2.27848 17.9125 2.11098 17.1867 2.06098 16.1225C2.01348 15.0558 2.00098 14.7167 2.00098 12C2.00098 9.28333 2.01098 8.94417 2.06098 7.8775C2.11014 6.8125 2.27848 6.0875 2.52598 5.45C2.78014 4.79167 3.12348 4.23417 3.67931 3.67833C4.23514 3.1225 4.79348 2.78 5.45098 2.525C6.08848 2.2775 6.81348 2.11 7.87848 2.06C8.94514 2.0125 9.28431 2 12.001 2Z">
+                                    </path>
+                                </svg>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="https://soundcloud.com/loumana" target="_blank" rel="noopener noreferrer"
+                        class="social-link">
+                        <div class="social-icon-wrap">
+                            <div class="social-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                    <path
+                                        d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.42 1.56-.299.421-1.02.599-1.559.3z">
+                                    </path>
+                                </svg>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="https://beacons.ai/loumana" target="_blank" rel="noopener noreferrer" class="social-link">
+                        <div class="social-icon-wrap">
+                            <div class="social-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                    <path
+                                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z">
+                                    </path>
+                                </svg>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="https://www.youtube.com/@loumana" target="_blank" rel="noopener noreferrer"
+                        class="social-link">
+                        <div class="social-icon-wrap">
+                            <div class="social-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                    <path
+                                        d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z">
+                                    </path>
+                                </svg>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="contact-action-buttons">
+                    <a href="book-me.html" class="contact-btn">Book a DJ
+                        Set</a>
+                    <a href="mailto:loumana_@hotmail.com?subject=Development%20Project" class="contact-btn">Hire for
+                        Dev</a>
+                    <a href="mailto:loumana_@hotmail.com?subject=Collaboration%20Proposal"
+                        class="contact-btn">Collaborate</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Floating Navigation Button -->
+    <div class="floating-nav">
+        <button class="floating-nav-toggle" id="floatingNavToggle" aria-label="Skip to section">
+            <span class="floating-nav-icon">Skip to</span>
+        </button>
+        <div class="floating-nav-menu" id="floatingNavMenu">
+            <a href="#dj-career" class="floating-nav-item">DJ</a>
+            <a href="#releases" class="floating-nav-item">Music Production</a>
+            <a href="#software" class="floating-nav-item">Developer</a>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-content">
+                <p class="footer-copyright">© 2025 Loumana. Crafted with layered scroll energy.</p>
+                <div class="footer-actions">
+                    <a href="#top" class="footer-btn footer-btn--back-top">Back to top ↑</a>
+                    <a href="legal.html" class="footer-btn footer-btn--legal">Legal Mentions</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
