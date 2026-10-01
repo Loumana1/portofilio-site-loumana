@@ -1,0 +1,5110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Loumana — Producer, DJ & Software Engineer</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Three.js CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+  <!-- GSAP & ScrollTrigger for Scroll Animations -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <!-- Pre-extracted 3D Point Cloud Data for Instant Auto-Loading (Zero CORS restrictions on file://) -->
+  <script src="../../assets/models/computer-model.js"></script>
+  <script src="../../assets/models/moog-model.js"></script>
+
+  <style>
+    /* Local Font Face Declarations */
+    @font-face {
+      font-family: 'BDO Grotesk';
+      src: url('../../assets/fonts/bdogrotesk-vf.ttf') format('truetype');
+      font-weight: 100 900;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'Cactus Jack';
+      src: url('../../assets/fonts/cactus-jack.ttf') format('truetype'),
+           url('../../assets/fonts/cactus-jack.otf') format('opentype');
+      font-weight: normal;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'Cactus Jack Alternate';
+      src: url('../../assets/fonts/cactus-jack-alternate.ttf') format('truetype'),
+           url('../../assets/fonts/cactus-jack-alternate.otf') format('opentype');
+      font-weight: normal;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    /* CSS Reset & Tokens */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --font-main: 'BDO Grotesk', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --font-display: 'Cactus Jack', 'Bebas Neue', sans-serif;
+      --font-mono: 'Space Grotesk', monospace;
+      
+      --text-dark: #121316;
+      --text-muted: #3d424a;
+      --glass-bg: rgba(255, 255, 255, 0.45);
+      --glass-card: rgba(255, 255, 255, 0.65);
+      --glass-pill: rgba(255, 255, 255, 0.7);
+      --glass-border: rgba(255, 255, 255, 0.75);
+      --border-dashed: rgba(18, 19, 22, 0.35);
+      --accent-blue: #1792cf;
+      --accent-yellow: #e8c94a;
+      --accent-teal: #47b1d4;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      background-color: #5fc0e4;
+      color: var(--text-dark);
+      font-family: var(--font-main);
+      line-height: 1.5;
+      min-height: 100vh;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Atmospheric Organic Gradient Background (Blue-Yellow Drift) */
+    .atmospheric-background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -2;
+      background-color: #5fc0e4;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .blob-1 {
+      position: absolute;
+      top: -30vh;
+      left: -20vw;
+      width: 100vw;
+      height: 120vh;
+      background: radial-gradient(circle, #1792cf 0%, transparent 70%);
+      opacity: 0.95;
+    }
+
+    .blob-2 {
+      position: absolute;
+      top: 15vh;
+      left: 30vw;
+      width: 80vw;
+      height: 90vh;
+      background: radial-gradient(circle, #7fd3db 0%, transparent 65%);
+      opacity: 0.85;
+      mix-blend-mode: overlay;
+    }
+
+    .blob-3 {
+      position: absolute;
+      bottom: -40vh;
+      right: -15vw;
+      width: 110vw;
+      height: 120vh;
+      background: radial-gradient(circle, #e8c94a 0%, transparent 70%);
+      opacity: 0.92;
+    }
+
+    .blob-4 {
+      position: absolute;
+      top: 5vh;
+      right: 10vw;
+      width: 60vw;
+      height: 70vh;
+      background: radial-gradient(circle, #ded16b 0%, transparent 70%);
+      opacity: 0.65;
+    }
+
+    /* Fractal Noise Grain Overlay */
+    .noise-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.5'/%3E%3C/svg%3E");
+      background-size: 200px 200px;
+      opacity: 0.22;
+      mix-blend-mode: overlay;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    /* Layout Structure */
+    .layout-container {
+      display: flex;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    /* Fixed Left Sidebar */
+    .sidebar-wrapper {
+      width: 360px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      padding: 24px;
+      z-index: 100;
+    }
+
+    .sidebar-box {
+      width: 100%;
+      height: calc(100vh - 48px);
+      border: 1px dashed var(--border-dashed);
+      border-radius: 8px;
+      padding: 28px 22px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      text-align: center;
+      background: var(--glass-bg);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+      overflow-y: auto;
+    }
+
+    .sidebar-box::-webkit-scrollbar {
+      width: 0;
+      display: none;
+    }
+
+    .sidebar-bio {
+      font-size: 0.95rem;
+      color: var(--text-dark);
+      font-weight: 400;
+      line-height: 1.45;
+      margin-bottom: 20px;
+    }
+
+    .sidebar-bio strong {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      letter-spacing: 0.04em;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .sidebar-section {
+      margin-bottom: 18px;
+    }
+
+    .sidebar-title {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: underline;
+      text-underline-offset: 4px;
+      margin-bottom: 8px;
+      color: var(--text-dark);
+    }
+
+    .sidebar-list {
+      list-style: none;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .sidebar-list li {
+      margin-bottom: 2px;
+    }
+
+    .sidebar-footer {
+      margin-top: auto;
+      padding-top: 14px;
+      border-top: 1px dashed rgba(0, 0, 0, 0.2);
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .sidebar-footer a {
+      color: var(--text-dark);
+      text-decoration: none;
+      font-weight: 600;
+      display: block;
+      margin-top: 3px;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    .sidebar-footer a:hover {
+      opacity: 0.7;
+      transform: translateY(-1px);
+    }
+
+    /* Main Content Column */
+    .main-wrapper {
+      margin-left: 360px;
+      flex: 1;
+      padding: 24px 48px 100px 48px;
+      max-width: 940px;
+    }
+
+    /* ==========================================================================
+       Top Sticky Nav Bar
+       ========================================================================== */
+    .top-nav-bar {
+      position: sticky;
+      top: 16px;
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      border: 1px solid var(--glass-border);
+      padding: 10px 18px;
+      border-radius: 40px;
+      margin-bottom: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      box-shadow: 0 10px 36px rgba(0, 0, 0, 0.08);
+    }
+
+    .top-nav-buttons {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 14px;
+      width: 100%;
+    }
+
+    /* Dropdown Group Container */
+    .nav-dropdown-group {
+      position: relative;
+      display: inline-block;
+    }
+
+    .nav-pill-btn {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--text-dark);
+      background: var(--glass-pill);
+      border: 1px solid rgba(255, 255, 255, 0.95);
+      padding: 10px 24px;
+      border-radius: 28px;
+      transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+    }
+
+    .nav-pill-btn .chevron {
+      font-size: 0.75rem;
+      opacity: 0.65;
+      transition: transform 0.2s ease;
+    }
+
+    .nav-dropdown-group:hover .nav-pill-btn,
+    .nav-dropdown-group.active .nav-pill-btn {
+      background: #121316;
+      color: #ffffff;
+      border-color: #121316;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+    }
+
+    .nav-dropdown-group:hover .nav-pill-btn .chevron,
+    .nav-dropdown-group.active .nav-pill-btn .chevron {
+      transform: rotate(180deg);
+      opacity: 1;
+    }
+
+    /* Glass Dropdown Menu */
+    .nav-dropdown-menu {
+      position: absolute;
+      top: calc(100% + 10px);
+      left: 50%;
+      transform: translateX(-50%) translateY(8px);
+      min-width: 250px;
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      border: 1px solid rgba(255, 255, 255, 0.95);
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.14), 0 4px 12px rgba(0, 0, 0, 0.05);
+      border-radius: 20px;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 1001;
+    }
+
+    .nav-dropdown-group:hover .nav-dropdown-menu,
+    .nav-dropdown-group.active .nav-dropdown-menu {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .nav-dropdown-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px 14px;
+      border-radius: 12px;
+      text-decoration: none;
+      color: var(--text-dark);
+      font-family: var(--font-main);
+      font-size: 0.95rem;
+      font-weight: 600;
+      transition: all 0.18s ease;
+    }
+
+    .nav-dropdown-item-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+
+    .nav-dropdown-item-icon {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      width: 18px;
+      text-align: center;
+      transition: color 0.18s ease;
+    }
+
+    .nav-dropdown-item-tag {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      background: rgba(0, 0, 0, 0.05);
+      padding: 2px 8px;
+      border-radius: 12px;
+    }
+
+    .nav-dropdown-item:hover {
+      background: #121316;
+      color: #ffffff;
+    }
+
+    .nav-dropdown-item:hover .nav-dropdown-item-icon {
+      color: #ffffff;
+    }
+
+    .nav-dropdown-item:hover .nav-dropdown-item-tag {
+      background: rgba(255, 255, 255, 0.22);
+      color: #ffffff;
+    }
+
+    /* ==========================================================================
+       Floaty 3D Hero Stage & Action Buttons Under Models
+       ========================================================================== */
+    .hero-3d-stage {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 24px;
+      position: relative;
+      width: 100%;
+    }
+
+    .hero-3d-column {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      width: 100%;
+      max-width: 680px;
+    }
+
+    .floaty-model-canvas {
+      width: 100%;
+      height: 290px;
+      position: relative;
+      cursor: grab;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s ease;
+    }
+
+    .floaty-model-canvas:active {
+      cursor: grabbing;
+    }
+
+    .floaty-model-canvas canvas {
+      width: 100% !important;
+      height: 100% !important;
+      display: block;
+    }
+
+    .hero-moog-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.4rem, 4.2vw, 3.8rem);
+      line-height: 1;
+      letter-spacing: 0.02em;
+      color: var(--text-dark);
+      text-transform: uppercase;
+      text-align: center;
+      margin-top: 4px;
+      margin-bottom: 6px;
+    }
+
+    .hero-moog-subtitle {
+      font-family: var(--font-main);
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      text-align: center;
+      max-width: 580px;
+      margin-bottom: 8px;
+    }
+
+    .model-actions-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      max-width: 620px;
+    }
+
+    .action-btn {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--text-dark);
+      background: rgba(255, 255, 255, 0.75);
+      border: 1.5px solid rgba(18, 19, 22, 0.25);
+      padding: 8px 16px;
+      border-radius: 20px;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+    }
+
+    .action-btn:hover {
+      background: #121316;
+      color: #ffffff;
+      border-color: #121316;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Thick Section Divider */
+    .section-divider {
+      width: 100%;
+      border: none;
+      border-top: 3px dashed rgba(18, 19, 22, 0.55);
+      margin: 44px 0 48px 0;
+    }
+
+    /* ==========================================================================
+       Split Screen: Tour Dates & Latest News (50 / 50 Grid)
+       ========================================================================== */
+    .split-section-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 56px;
+    }
+
+    .split-col {
+      background: var(--glass-card);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      padding: 24px 22px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .col-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px dashed var(--border-dashed);
+    }
+
+    .col-header h2 {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      letter-spacing: 0.03em;
+      line-height: 1;
+    }
+
+    .col-badge {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background: var(--text-dark);
+      color: #ffffff;
+      padding: 3px 8px;
+      border-radius: 12px;
+    }
+
+    /* Tour Dates List */
+    .tour-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .tour-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 12px;
+      background: rgba(255, 255, 255, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      border-radius: 10px;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    .tour-item:hover {
+      background: rgba(255, 255, 255, 0.85);
+      transform: translateX(3px);
+    }
+
+    .tour-date-box {
+      display: flex;
+      flex-direction: column;
+      min-width: 60px;
+    }
+
+    .tour-day {
+      font-family: var(--font-mono);
+      font-size: 1.15rem;
+      font-weight: 700;
+      line-height: 1;
+      color: var(--text-dark);
+    }
+
+    .tour-month {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .tour-info {
+      flex: 1;
+      padding: 0 12px;
+    }
+
+    .tour-venue {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      line-height: 1.2;
+    }
+
+    .tour-city {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .tour-btn {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 5px 12px;
+      border-radius: 14px;
+      background: var(--text-dark);
+      color: #ffffff;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    .tour-btn:hover {
+      opacity: 0.8;
+      transform: scale(1.04);
+    }
+
+    .tour-btn.on-air {
+      background: #ee382b;
+    }
+
+    /* Latest News Cards */
+    .news-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .news-card {
+      padding: 14px;
+      background: rgba(255, 255, 255, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      border-radius: 10px;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    .news-card:hover {
+      background: rgba(255, 255, 255, 0.85);
+      transform: translateY(-2px);
+    }
+
+    .news-meta {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .news-card h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+      color: var(--text-dark);
+      line-height: 1.3;
+    }
+
+    .news-card p {
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* Featured Carousel & Compact Tour Bar */
+    .news-carousel-container {
+      background: var(--glass-card);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+      position: relative;
+    }
+
+    .news-carousel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px dashed var(--border-dashed);
+    }
+
+    .news-carousel-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .carousel-nav-btn {
+      background: var(--text-dark);
+      color: #fff;
+      border: none;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .carousel-nav-btn:hover {
+      background: var(--primary-accent);
+      transform: scale(1.08);
+    }
+
+    .carousel-dots {
+      display: flex;
+      gap: 6px;
+    }
+
+    .carousel-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      transition: background 0.2s, width 0.2s;
+    }
+
+    .carousel-dot.active {
+      background: var(--text-dark);
+      width: 20px;
+      border-radius: 10px;
+    }
+
+    .news-carousel-track-wrapper {
+      overflow: hidden;
+      width: 100%;
+      position: relative;
+    }
+
+    .news-carousel-track {
+      display: flex;
+      transition: transform 0.4s ease-in-out;
+      width: 100%;
+    }
+
+    .news-slide-card {
+      min-width: 100%;
+      position: relative;
+      border-radius: 14px;
+      overflow: hidden;
+      aspect-ratio: 21/9;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      box-sizing: border-box;
+    }
+
+    @media (max-width: 768px) {
+      .news-slide-card {
+        aspect-ratio: 4/3;
+      }
+    }
+
+    .news-slide-img-wrap {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+
+    .news-slide-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .news-slide-img-wrap::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 70%;
+      background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.4) 50%, transparent 100%);
+      z-index: 2;
+    }
+
+    .news-slide-badge {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      background: rgba(0, 0, 0, 0.75);
+      color: #fff;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      padding: 6px 14px;
+      border-radius: 12px;
+      backdrop-filter: blur(4px);
+      z-index: 4;
+    }
+
+    .news-slide-body {
+      position: relative;
+      z-index: 3;
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-items: flex-start;
+      color: #fff;
+    }
+
+    .news-slide-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      line-height: 1.1;
+      color: #fff;
+      margin: 0;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+      max-width: 80%;
+    }
+
+    /* Compact Tour Bar Styles */
+    .compact-tour-bar {
+      background: var(--glass-card);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      padding: 16px 20px;
+    }
+
+    .compact-tour-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 12px;
+    }
+
+    @media (max-width: 640px) {
+      .compact-tour-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .tour-item-compact {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 12px;
+      background: rgba(255, 255, 255, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      border-radius: 10px;
+    }
+
+    /* ==========================================================================
+       Project Stream & Content Sections
+       ========================================================================== */
+    .project-stream {
+      display: flex;
+      flex-direction: column;
+      gap: 56px;
+    }
+
+    .project-item {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    /* ==========================================================================
+       Releases Section (Unwrapped Showcase Grid & Modal)
+       ========================================================================== */
+    .releases-showcase-container {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .releases-section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      border-bottom: 1px dashed var(--border-dashed);
+      padding-bottom: 14px;
+    }
+
+    .releases-main-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.4rem, 4.5vw, 3.8rem);
+      line-height: 0.9;
+      letter-spacing: 0.02em;
+      color: var(--text-dark);
+      text-transform: uppercase;
+    }
+
+    .releases-badge {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background: var(--text-dark);
+      color: #ffffff;
+      padding: 4px 12px;
+      border-radius: 14px;
+    }
+
+    /* 1 Column Layout (Albums Only) */
+    .releases-two-col-layout {
+      display: block;
+      width: 100%;
+    }
+
+    /* Interactive Releases Section */
+    .releases-interactive-container {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .releases-split-view {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    @media (max-width: 900px) {
+      .releases-split-view {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+    }
+
+    /* Left: Main Cover */
+    .releases-cover-left {
+      width: 100%;
+      max-width: 510px;
+      margin: 0 auto;
+      aspect-ratio: 1 / 1;
+      position: relative;
+      background: #000;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+      overflow: hidden; /* For slices to not overflow */
+    }
+
+    .main-release-cover {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: opacity 0.5s ease;
+    }
+
+    /* Right: Info Panel */
+    .releases-info-right {
+      position: relative;
+    }
+
+    .release-info-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      padding: 0;
+      color: #fff;
+      transition: opacity 0.4s ease;
+    }
+
+    .release-info-panel.fading {
+      opacity: 0;
+    }
+
+    .releases-header-dynamic {
+      width: 100%;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .release-title-dynamic {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 6vw, 5rem);
+      line-height: 1;
+      text-transform: uppercase;
+      margin: 0;
+      color: #fff;
+    }
+
+    .release-year-dynamic {
+      font-family: var(--font-mono);
+      font-size: 1.25rem;
+      color: #fff;
+      margin: 0;
+      font-weight: 700;
+    }
+
+    .release-desc-dynamic {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #fff;
+      margin: 0;
+      max-width: 500px;
+    }
+
+    .release-credits-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-top: 5px;
+    }
+
+    .credit-item {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .credit-item span {
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .release-links-wrapper {
+      display: flex;
+      gap: 16px;
+      margin-top: 10px;
+    }
+
+    .release-link-btn {
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.1);
+      transition: all 0.3s ease;
+    }
+
+    .release-link-btn:hover {
+      background: var(--text-dark);
+      color: #fff;
+      transform: scale(1.15);
+      border: 1px solid rgba(255,255,255,0.5);
+    }
+
+    /* Bottom Selectors */
+    .releases-selectors-bottom {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 40px;
+      flex-wrap: wrap;
+    }
+
+    .selector-item {
+      width: 70px;
+      height: 70px;
+      cursor: pointer;
+      position: relative;
+      border-radius: 4px;
+      overflow: visible;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+      opacity: 0.5;
+    }
+
+    .selector-item:hover, .selector-item.active {
+      opacity: 1;
+      transform: translateY(-5px);
+    }
+    
+    .selector-item.active {
+      box-shadow: 0 0 0 2px #fff;
+    }
+
+    .selector-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 4px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+
+    /* Tooltip */
+    .selector-tooltip {
+      position: absolute;
+      bottom: calc(100% + 12px);
+      left: 50%;
+      transform: translateX(-50%) translateY(10px);
+      background: #fff;
+      color: #000;
+      padding: 6px 12px;
+      border-radius: 4px;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 700;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s ease;
+    }
+
+    .selector-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border-width: 6px;
+      border-style: solid;
+      border-color: #fff transparent transparent transparent;
+    }
+
+    .selector-item:hover .selector-tooltip {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* ==========================================================================
+       Release Modal Styling
+       ========================================================================== */
+    .release-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 9999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+
+    .release-modal.active {
+      display: flex;
+      opacity: 1;
+    }
+
+    .release-modal-backdrop {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .release-modal-content {
+      position: relative;
+      width: 90%;
+      max-width: 720px;
+      max-height: 85vh;
+      background: #14151a;
+      color: #ffffff;
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      transform: scale(0.94);
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease;
+    }
+
+    .release-modal.active .release-modal-content {
+      transform: scale(1);
+    }
+
+    .release-modal-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      width: 36px;
+      height: 36px;
+      border: none;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 50%;
+      font-size: 1.4rem;
+      line-height: 1;
+      cursor: pointer;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      transition: all 0.2s ease;
+    }
+
+    .release-modal-close:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: rotate(90deg);
+    }
+
+    .release-modal-body {
+      padding: 2.2rem 2rem;
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    .release-modal-body h2 {
+      font-family: var(--font-display);
+      font-size: 2.6rem;
+      letter-spacing: 0.03em;
+      margin: 0 0 0.8rem 0;
+      color: #ffffff;
+      line-height: 1;
+    }
+
+    .release-modal-info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1.2rem;
+      margin: 1.4rem 0;
+      background: rgba(0, 0, 0, 0.25);
+      padding: 14px 18px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .release-modal-info-item {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .release-modal-info-label {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: rgba(255, 255, 255, 0.6);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-weight: 700;
+    }
+
+    .release-modal-info-value {
+      font-size: 0.95rem;
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    .release-modal-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 1.4rem 0;
+    }
+
+    .release-modal-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      background: rgba(255, 255, 255, 0.15);
+      color: #ffffff;
+      text-decoration: none;
+      border-radius: 20px;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 700;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: all 0.2s ease;
+    }
+
+    .release-modal-link:hover {
+      background: #ffffff;
+      color: #000000;
+      transform: translateY(-2px);
+    }
+
+    .release-modal-link.spotify:hover {
+      background: #1db954;
+      border-color: #1db954;
+      color: #ffffff;
+    }
+
+    .release-modal-link.apple-music:hover {
+      background: #fa243c;
+      border-color: #fa243c;
+      color: #ffffff;
+    }
+
+    .release-modal-link.youtube:hover {
+      background: #ff0000;
+      border-color: #ff0000;
+      color: #ffffff;
+    }
+
+    .release-modal-description {
+      margin-top: 1.2rem;
+    }
+
+    .release-modal-description h3 {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 6px;
+    }
+
+    .release-modal-description p {
+      font-size: 0.94rem;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .release-modal-cta-wrapper {
+      margin-top: 1.8rem;
+      padding-top: 1.2rem;
+      border-top: 1px dashed rgba(255, 255, 255, 0.2);
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .release-modal-cta {
+      display: inline-block;
+      padding: 10px 22px;
+      background: #ffffff;
+      color: #000000;
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      text-decoration: none;
+      border-radius: 20px;
+      transition: all 0.2s ease;
+    }
+
+    .release-modal-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255, 255, 255, 0.3);
+    }
+
+    /* ==========================================================================
+       Compact Beatmaking & SoundCloud Section (Shrunk Down)
+       ========================================================================== */
+    .beatmaking-compact-box {
+      margin-top: 14px;
+      padding: 24px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      width: 840px;
+      max-width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+      transform: translateX(20px);
+    }
+
+    .beatmaking-compact-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 14px;
+      border-bottom: 1px dashed var(--border-dashed);
+      padding-bottom: 14px;
+    }
+
+    .beatmaking-compact-title-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .beatmaking-tag {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent-blue);
+    }
+
+    .beatmaking-compact-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      line-height: 1;
+      letter-spacing: 0.02em;
+      color: var(--text-dark);
+      margin: 0;
+    }
+
+    .beatmaking-cta-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 18px;
+      background: var(--text-dark);
+      color: #ffffff;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      text-decoration: none;
+      border-radius: 20px;
+      transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .beatmaking-cta-pill:hover {
+      transform: translateY(-2px);
+      background: var(--accent-blue);
+      box-shadow: 0 6px 20px rgba(23, 146, 207, 0.35);
+    }
+
+    .beatmaking-compact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.25fr;
+      gap: 24px;
+      align-items: center;
+    }
+
+    @media (max-width: 900px) {
+      .beatmaking-compact-grid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+      }
+    }
+
+    .beatmaking-compact-text {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .beatmaking-compact-text p {
+      font-size: 0.92rem;
+      line-height: 1.5;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    .beatmaking-highlights-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .highlight-chip {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      font-weight: 600;
+      background: rgba(255, 255, 255, 0.45);
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      padding: 4px 10px;
+      border-radius: 12px;
+      color: var(--text-dark);
+    }
+
+    .beatmaking-pricing-disclaimer {
+      background: rgba(23, 146, 207, 0.08);
+      border: 1px solid rgba(23, 146, 207, 0.25);
+      border-radius: 12px;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .disclaimer-badge {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--accent-blue);
+      flex-shrink: 0;
+    }
+
+    .beatmaking-pricing-disclaimer p {
+      font-size: 0.85rem;
+      line-height: 1.4;
+      color: var(--text-dark);
+      margin: 0;
+      flex: 1 1 240px;
+    }
+
+    .beatmaking-pricing-disclaimer strong {
+      color: #050505;
+      font-weight: 700;
+    }
+
+    .beatmaking-listen-bangers-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      padding: 12px 20px;
+      background: var(--text-dark);
+      color: #ffffff;
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      text-decoration: none;
+      border-radius: 12px;
+      margin-top: 4px;
+      transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+    }
+
+    .beatmaking-listen-bangers-btn:hover {
+      transform: translateY(-2px);
+      background: var(--accent-blue);
+      box-shadow: 0 8px 24px rgba(23, 146, 207, 0.4);
+    }
+
+    .soundcloud-embed-container {
+      width: 100%;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #000000;
+      border: 1px solid rgba(0, 0, 0, 0.15);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+      line-height: 0;
+    }
+
+    .soundcloud-embed-container iframe {
+      width: 100%;
+      height: 260px;
+      border: none;
+      display: block;
+    }
+
+    /* ==========================================================================
+       Beats Store, Licensing & Audio Player Section
+       ========================================================================== */
+    .beat-store-box {
+      margin-top: 14px;
+      background: var(--glass-card);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      padding: 24px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+    }
+
+    .beat-store-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 16px;
+      border-bottom: 1px dashed var(--border-dashed);
+      padding-bottom: 16px;
+    }
+
+    .beat-store-title-wrap {
+      flex: 1 1 320px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .beat-store-tag {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent-blue);
+    }
+
+    .beat-store-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.5rem, 2.6vw, 2rem);
+      line-height: 1.05;
+      letter-spacing: 0.02em;
+      color: var(--text-dark);
+      margin: 0;
+    }
+
+    .beat-store-subtitle {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin: 4px 0 0 0;
+      line-height: 1.45;
+    }
+
+    .beat-store-commercial-notice {
+      flex: 1 1 260px;
+      background: rgba(23, 146, 207, 0.08);
+      border: 1px solid rgba(23, 146, 207, 0.25);
+      border-radius: 12px;
+      padding: 10px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .notice-badge {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--accent-blue);
+    }
+
+    .beat-store-commercial-notice p {
+      font-size: 0.8rem;
+      line-height: 1.4;
+      color: var(--text-dark);
+      margin: 0;
+    }
+
+    /* 3-Tier Licensing Grid */
+    .licensing-tiers-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    @media (max-width: 860px) {
+      .licensing-tiers-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .licensing-card {
+      background: rgba(255, 255, 255, 0.45);
+      border: 1px solid rgba(0, 0, 0, 0.09);
+      border-radius: 14px;
+      padding: 20px 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    }
+
+    .licensing-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.09);
+    }
+
+    .licensing-card.featured {
+      background: rgba(255, 255, 255, 0.85);
+      border: 2px solid var(--accent-blue);
+      box-shadow: 0 10px 25px rgba(23, 146, 207, 0.15);
+    }
+
+    .tier-highlight-ribbon {
+      position: absolute;
+      top: -10px;
+      right: 14px;
+      background: var(--accent-blue);
+      color: #ffffff;
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 3px 10px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(23, 146, 207, 0.3);
+    }
+
+    .licensing-card-header {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      margin-bottom: 14px;
+    }
+
+    .tier-type {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+    }
+
+    .tier-name {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      margin: 0;
+      color: var(--text-dark);
+      letter-spacing: 0.02em;
+    }
+
+    .tier-price {
+      font-family: var(--font-display);
+      font-size: 1.7rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-top: 4px;
+    }
+
+    .tier-unit {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+
+    .tier-features {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 18px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .tier-features li {
+      font-size: 0.82rem;
+      line-height: 1.35;
+      color: var(--text-dark);
+    }
+
+    .tier-features li.tier-disabled {
+      color: rgba(0, 0, 0, 0.35);
+      text-decoration: line-through;
+    }
+
+    .tier-cta-btn {
+      display: block;
+      text-align: center;
+      padding: 9px 14px;
+      border-radius: 20px;
+      font-family: var(--font-mono);
+      font-size: 0.76rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      text-decoration: none;
+      transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .btn-free {
+      background: rgba(0, 0, 0, 0.08);
+      color: var(--text-dark);
+    }
+
+    .btn-free:hover {
+      background: rgba(0, 0, 0, 0.15);
+      transform: translateY(-2px);
+    }
+
+    .btn-lease {
+      background: var(--accent-blue);
+      color: #ffffff;
+      box-shadow: 0 4px 14px rgba(23, 146, 207, 0.35);
+    }
+
+    .btn-lease:hover {
+      background: #1178a9;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(23, 146, 207, 0.5);
+    }
+
+    .btn-exclusive {
+      background: var(--text-dark);
+      color: #ffffff;
+    }
+
+    .btn-exclusive:hover {
+      background: #000000;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Beat Preview Strip & Audio Player */
+    .beat-player-section {
+      border-top: 1px dashed var(--border-dashed);
+      padding-top: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .beat-player-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .beat-player-header h4 {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      margin: 0;
+      color: var(--text-dark);
+    }
+
+    .player-hint {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+
+    .beat-tracks-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .beat-track-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      background: rgba(255, 255, 255, 0.4);
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      border-radius: 12px;
+      transition: background 0.2s ease, border-color 0.2s ease;
+    }
+
+    .beat-track-row:hover,
+    .beat-track-row.playing {
+      background: rgba(255, 255, 255, 0.85);
+      border-color: rgba(23, 146, 207, 0.4);
+    }
+
+    .track-play-btn {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: none;
+      background: var(--text-dark);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .track-play-btn:hover {
+      transform: scale(1.08);
+      background: var(--accent-blue);
+    }
+
+    .track-info {
+      display: flex;
+      flex-direction: column;
+      min-width: 140px;
+      flex: 1 1 auto;
+    }
+
+    .track-title {
+      font-family: var(--font-body);
+      font-weight: 700;
+      font-size: 0.88rem;
+      color: var(--text-dark);
+    }
+
+    .track-genre {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--text-muted);
+    }
+
+    .track-progress-bar {
+      flex: 2 1 120px;
+      height: 6px;
+      background: rgba(0, 0, 0, 0.1);
+      border-radius: 3px;
+      overflow: hidden;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .track-progress-fill {
+      width: 0%;
+      height: 100%;
+      background: var(--accent-blue);
+      transition: width 0.1s linear;
+    }
+
+    .track-time {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      width: 36px;
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    .track-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    .track-btn {
+      padding: 6px 12px;
+      border-radius: 14px;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .track-btn.dl-btn {
+      background: rgba(0, 0, 0, 0.08);
+      color: var(--text-dark);
+    }
+
+    .track-btn.dl-btn:hover {
+      background: rgba(0, 0, 0, 0.16);
+      transform: translateY(-1px);
+    }
+
+    .track-btn.lease-btn {
+      background: var(--accent-blue);
+      color: #ffffff;
+    }
+
+    .track-btn.lease-btn:hover {
+      background: #1178a9;
+      transform: translateY(-1px);
+    }
+
+    /* ==========================================================================
+       Sample Packs & VST Presets Section (~10€ Packs)
+       ========================================================================== */
+    .soundpacks-compact-box {
+      margin-top: 14px;
+      background: var(--glass-card);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      padding: 24px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+    }
+
+    .soundpacks-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 14px;
+      border-bottom: 1px dashed var(--border-dashed);
+      padding-bottom: 14px;
+    }
+
+    .soundpacks-title-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .soundpacks-tag {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent-blue);
+    }
+
+    .soundpacks-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.5rem, 2.6vw, 2rem);
+      line-height: 1.05;
+      letter-spacing: 0.02em;
+      color: var(--text-dark);
+      margin: 0;
+    }
+
+    .soundpacks-subtitle {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin: 4px 0 0 0;
+      line-height: 1.45;
+    }
+
+    .soundpacks-store-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 18px;
+      background: var(--text-dark);
+      color: #ffffff;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      text-decoration: none;
+      border-radius: 20px;
+      transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .soundpacks-store-link:hover {
+      transform: translateY(-2px);
+      background: var(--accent-blue);
+      box-shadow: 0 6px 20px rgba(23, 146, 207, 0.35);
+    }
+
+    .soundpacks-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    @media (max-width: 992px) {
+      .soundpacks-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 540px) {
+      .soundpacks-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .soundpack-card {
+      background: rgba(255, 255, 255, 0.45);
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      border-radius: 14px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      position: relative;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    }
+
+    .soundpack-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+      border-color: rgba(23, 146, 207, 0.4);
+    }
+
+    .soundpack-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 3px 8px;
+      border-radius: 8px;
+      background: rgba(0, 0, 0, 0.7);
+      color: #ffffff;
+      backdrop-filter: blur(8px);
+      z-index: 2;
+    }
+
+    .soundpack-badge.vst { background: #1792cf; }
+    .soundpack-badge.samples { background: #e85a4f; }
+    .soundpack-badge.loops { background: #8e44ad; }
+    .soundpack-badge.vocals { background: #27ae60; }
+
+    .soundpack-artwork {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #181c24, #0b0d13);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .soundpack-artwork::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 30%, rgba(23, 146, 207, 0.25), transparent 70%);
+      pointer-events: none;
+    }
+
+    .soundpack-art-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 4px;
+      z-index: 1;
+      padding: 10px;
+    }
+
+    .art-icon { font-size: 1.8rem; line-height: 1; }
+    .art-title {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: 0.04em;
+    }
+    .art-sub {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: rgba(255, 255, 255, 0.6);
+      text-transform: uppercase;
+    }
+
+    .soundpack-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .soundpack-name {
+      font-family: var(--font-body);
+      font-weight: 700;
+      font-size: 0.92rem;
+      margin: 0;
+      color: var(--text-dark);
+      line-height: 1.25;
+    }
+
+    .soundpack-desc {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.35;
+    }
+
+    .soundpack-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 6px;
+      padding-top: 8px;
+      border-top: 1px dashed rgba(0, 0, 0, 0.08);
+    }
+
+    .soundpack-price {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--text-dark);
+    }
+
+    .soundpack-btn {
+      padding: 6px 14px;
+      border-radius: 14px;
+      background: var(--text-dark);
+      color: #ffffff;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .soundpack-btn:hover {
+      background: var(--accent-blue);
+      transform: translateY(-1px);
+    }
+
+    /* ==========================================================================
+       Creative Discovery / Transition Section ("I Just Can't Choose")
+       ========================================================================== */
+    .section_discovery-container {
+      width: 100%;
+      position: relative;
+      margin-top: 36px;
+      margin-bottom: 24px;
+      z-index: 20;
+    }
+
+    .discovery-wrapper {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      height: 200vh;
+      position: relative;
+    }
+
+    .discovery-scroll-note {
+      position: absolute;
+      top: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: var(--font-main);
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      color: #ffffff;
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(12px);
+      padding: 6px 16px;
+      border-radius: 20px;
+      z-index: 30;
+      opacity: 0.9;
+      pointer-events: none;
+    }
+
+    .discovery-sticky {
+      position: sticky;
+      top: 90px;
+      width: 100%;
+      height: calc(100vh - 120px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      border-radius: 20px;
+    }
+
+    .discovery-component {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      width: 140px;
+      height: 90px;
+    }
+
+    .discovery-img-wrap {
+      border-radius: 1rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+      border: none;
+      box-shadow: none;
+    }
+
+    .discovery-img {
+      object-fit: cover;
+      width: 100%;
+      height: 100%;
+      max-width: none;
+    }
+
+    .discovery-heading {
+      font-family: var(--font-main);
+      font-size: clamp(1.1rem, 2.2vw, 1.85rem);
+      line-height: 1.1;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #ffffff;
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    .discovery-heading._1 {
+      right: calc(100% + 1.8rem);
+    }
+
+    .discovery-heading._2 {
+      left: calc(100% + 1.8rem);
+    }
+
+    .discovery-img-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: var(--font-main);
+      font-size: clamp(1.4rem, 2.8vw, 2.4rem);
+      line-height: 1.1;
+      font-weight: 500;
+      color: #ffffff;
+      text-align: center;
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+      z-index: 5;
+      opacity: 0;
+      pointer-events: none;
+      padding: 0 20px;
+    }
+
+    .discovery-img-hint {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: var(--font-main);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      color: #ffffff;
+      background: rgba(0, 0, 0, 0.45);
+      backdrop-filter: blur(8px);
+      padding: 4px 10px;
+      border-radius: 12px;
+      white-space: nowrap;
+      pointer-events: none;
+      z-index: 4;
+    }
+
+    @media (max-width: 900px) {
+      .discovery-heading {
+        font-size: clamp(0.95rem, 2.5vw, 1.35rem);
+      }
+      .discovery-heading._1 {
+        right: calc(100% + 0.8rem);
+      }
+      .discovery-heading._2 {
+        left: calc(100% + 0.8rem);
+      }
+      .discovery-img-text {
+        font-size: clamp(1.2rem, 3.5vw, 1.8rem);
+      }
+    }
+
+    .project-caption {
+      font-size: 1.35rem;
+      font-weight: 400;
+      color: var(--text-dark);
+      line-height: 1.38;
+      max-width: 95%;
+      letter-spacing: -0.01em;
+    }
+
+    .project-caption strong {
+      font-weight: 700;
+      color: #050505;
+    }
+
+    .media-card {
+      width: 100%;
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--glass-card);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.08);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      width: 840px;
+      max-width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+      transform: translateX(20px);
+    }
+
+    .media-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 18px 48px rgba(0, 0, 0, 0.12);
+    }
+
+    .media-hero {
+      width: 100%;
+      min-height: 340px;
+      padding: 44px 36px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      position: relative;
+      color: #ffffff;
+      background: linear-gradient(135deg, rgba(23, 146, 207, 0.88) 0%, rgba(18, 19, 22, 0.95) 100%);
+    }
+
+    .media-hero.dj-theme {
+      background: linear-gradient(135deg, rgba(232, 201, 74, 0.85) 0%, rgba(20, 20, 25, 0.95) 100%);
+    }
+
+    .media-hero.vst-theme {
+      background: linear-gradient(135deg, rgba(71, 177, 212, 0.85) 0%, rgba(10, 20, 28, 0.96) 100%);
+    }
+
+    .media-hero.games-theme {
+      background: linear-gradient(135deg, rgba(222, 209, 107, 0.85) 0%, rgba(20, 15, 30, 0.95) 100%);
+    }
+
+    .media-tag {
+      position: absolute;
+      top: 24px;
+      left: 24px;
+      padding: 6px 14px;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 20px;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .media-hero h3 {
+      font-family: var(--font-display);
+      font-size: 2.5rem;
+      letter-spacing: 0.02em;
+      line-height: 1.1;
+      margin-bottom: 10px;
+    }
+
+    .media-hero p {
+      font-size: 1rem;
+      opacity: 0.9;
+      max-width: 600px;
+      line-height: 1.5;
+    }
+
+    /* Contact Box */
+    .contact-box {
+      border: 1px dashed var(--border-dashed);
+      border-radius: 16px;
+      padding: 48px 32px;
+      background: var(--glass-card);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+      width: 840px;
+      max-width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+      transform: translateX(20px);
+    }
+
+    .contact-box h2 {
+      font-family: var(--font-display);
+      font-size: 2.8rem;
+      letter-spacing: 0.02em;
+      margin-bottom: 10px;
+    }
+
+    .contact-box p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      margin-bottom: 24px;
+    }
+
+    .btn-contact {
+      display: inline-block;
+      padding: 14px 36px;
+      background: var(--text-dark);
+      color: #ffffff;
+      font-family: var(--font-mono);
+      font-size: 0.88rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 30px;
+      transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .btn-contact:hover {
+      background: #000000;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    /* ==========================================================================
+       Art & Audio / 808 MAX Side-by-Side Showcase Sections
+       ========================================================================== */
+    .showcase-block {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 10px;
+      margin-bottom: 24px;
+    }
+
+    .showcase-card {
+      width: 100%;
+      background: var(--glass-card);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      padding: 32px;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.06);
+    }
+
+    .showcase-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.05fr;
+      gap: 32px;
+      align-items: center;
+    }
+
+    .showcase-grid.reverse {
+      grid-template-columns: 1.15fr 0.85fr;
+    }
+
+    .showcase-info {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .showcase-badge-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .showcase-pill {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 12px;
+      border-radius: 20px;
+      background: rgba(18, 19, 22, 0.08);
+      color: var(--text-dark);
+      border: 1px solid rgba(18, 19, 22, 0.12);
+    }
+
+    .showcase-pill.highlight {
+      background: #ee382b;
+      color: #ffffff;
+      border: none;
+    }
+
+    .showcase-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 3.4vw, 2.9rem);
+      line-height: 1.05;
+      letter-spacing: 0.02em;
+      color: var(--text-dark);
+      text-transform: uppercase;
+    }
+
+    .showcase-subtitle {
+      font-family: var(--font-main);
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-top: -6px;
+    }
+
+    .showcase-desc {
+      font-family: var(--font-main);
+      font-size: 0.94rem;
+      line-height: 1.6;
+      color: var(--text-muted);
+    }
+
+    .showcase-meta-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .showcase-tag {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--text-dark);
+      background: rgba(255, 255, 255, 0.65);
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid rgba(18, 19, 22, 0.08);
+      font-weight: 600;
+    }
+
+    .showcase-media-frame {
+      width: 100%;
+      border-radius: 14px;
+      overflow: hidden;
+      position: relative;
+      background: #000000;
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .showcase-media-frame:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.22);
+    }
+
+    .showcase-img {
+      width: 100%;
+      height: 100%;
+      max-height: 360px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+
+    .showcase-media-frame:hover .showcase-img {
+      transform: scale(1.02);
+    }
+
+    .showcase-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      width: fit-content;
+      margin-top: 6px;
+      padding: 10px 22px;
+      background: var(--text-dark);
+      color: #ffffff;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 24px;
+      transition: all 0.2s ease;
+    }
+
+    .showcase-btn:hover {
+      background: #000000;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+    }
+
+    /* ==========================================================================
+       Radio Residencies Section (Free-Floating DJ Drawing & Stacked Media Cards)
+       ========================================================================== */
+    .radio-split-showcase {
+      display: block;
+      margin-top: 16px;
+    }
+
+    /* Left Column: Pure Free-Floating Hand-Drawn DJ Sketch (No background, No border) */
+    .radio-free-drawing {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      padding: 0;
+    }
+
+    .radio-free-drawing-img {
+      width: 100%;
+      height: auto;
+      max-height: 520px;
+      object-fit: contain;
+      filter: drop-shadow(0 14px 32px rgba(0, 0, 0, 0.08));
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .radio-free-drawing:hover .radio-free-drawing-img {
+      transform: scale(1.02);
+    }
+
+    /* Right Column: Stacked Radio Residency Cards */
+    .radio-info-stack {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .radio-residency-card {
+      background: transparent;
+      border: none;
+      border-radius: 22px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: none;
+      transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .radio-residency-card:hover {
+      transform: translateY(-3px);
+    }
+
+    .radio-card-media-wrap {
+      position: relative;
+      width: 100%;
+      height: 140px;
+      overflow: hidden;
+      background: #111215;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .radio-card-media-wrap.kiosk-bg {
+      background: linear-gradient(135deg, #18191c 0%, #0d0e10 100%);
+      height: 130px;
+      padding: 12px;
+    }
+
+    .radio-card-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      transition: transform 0.4s ease;
+    }
+
+    .radio-residency-card:hover .radio-card-img {
+      transform: scale(1.04);
+    }
+
+    .radio-card-logo-img {
+      max-width: 170px;
+      max-height: 80px;
+      object-fit: contain;
+      filter: drop-shadow(0 6px 18px rgba(0, 0, 0, 0.6));
+      transition: transform 0.3s ease;
+    }
+
+    .radio-residency-card:hover .radio-card-logo-img {
+      transform: scale(1.06);
+    }
+
+    .radio-card-badge-overlay {
+      position: absolute;
+      bottom: 10px;
+      left: 12px;
+      z-index: 2;
+    }
+
+    .radio-card-body {
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .radio-card-header {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .radio-card-title {
+      font-family: var(--font-display);
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--text-dark);
+      margin: 0;
+      line-height: 1.15;
+    }
+
+    .radio-card-subtitle {
+      font-family: var(--font-main);
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    .radio-card-desc {
+      font-family: var(--font-main);
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: var(--text-dark);
+      margin: 0;
+    }
+
+    .radio-card-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 2px;
+      flex-wrap: wrap;
+    }
+
+    .radio-badge {
+      background: rgba(0, 0, 0, 0.78);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      color: #ffffff;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* ==========================================================================
+       Floating 3D Computer & Dev Projects Showcase Grid
+       ========================================================================== */
+    .dev-hero-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      margin-top: 20px;
+      margin-bottom: 28px;
+      position: relative;
+    }
+
+    .dev-computer-canvas {
+      width: 100%;
+      max-width: 680px;
+      height: 420px;
+      position: relative;
+      cursor: grab;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: -10px;
+    }
+
+    .dev-computer-canvas:active {
+      cursor: grabbing;
+    }
+
+    .dev-computer-canvas canvas {
+      width: 100% !important;
+      height: 100% !important;
+      display: block;
+    }
+
+    .dev-hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.4rem, 4.2vw, 3.8rem);
+      line-height: 1;
+      letter-spacing: 0.02em;
+      color: var(--text-dark);
+      text-transform: uppercase;
+      margin-top: 6px;
+      margin-bottom: 8px;
+    }
+
+    .dev-hero-subtitle {
+      font-family: var(--font-main);
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      max-width: 600px;
+    }
+
+    .dev-projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+      width: 100%;
+      margin-top: 14px;
+    }
+
+    .dev-card {
+      background: var(--glass-card);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      padding: 24px;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 16px;
+      text-decoration: none;
+      color: inherit;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .dev-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
+      border-color: rgba(18, 19, 22, 0.35);
+    }
+
+    .dev-card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .browser-dots {
+      display: flex;
+      gap: 5px;
+    }
+
+    .browser-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(18, 19, 22, 0.25);
+    }
+
+    .dev-card-pill {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      background: rgba(255, 255, 255, 0.6);
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+
+    .dev-card-icon-wrap {
+      width: 52px;
+      height: 52px;
+      border-radius: 12px;
+      background: rgba(18, 19, 22, 0.06);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      color: var(--text-dark);
+      margin-top: 4px;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .dev-card:hover .dev-card-icon-wrap {
+      transform: scale(1.08);
+      background: var(--text-dark);
+      color: #ffffff;
+    }
+
+    .dev-card-content h3 {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      letter-spacing: 0.02em;
+      line-height: 1.1;
+      color: var(--text-dark);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+
+    .dev-card-content p {
+      font-family: var(--font-main);
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+
+    .dev-card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px dashed var(--border-dashed);
+      padding-top: 12px;
+      margin-top: 4px;
+    }
+
+    .dev-card-tech {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .dev-card-arrow {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      transition: transform 0.2s ease;
+    }
+
+    .dev-card:hover .dev-card-arrow {
+      transform: translate(3px, -3px);
+    }
+
+    /* ==========================================================================
+       SnapToGrid-Inspired "PROFESSIONAL AT" Skills Bento Grid
+       ========================================================================== */
+    .skills-bento-container {
+      width: 100%;
+      background: var(--glass-card);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      padding: 36px 32px;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.06);
+      margin-top: 10px;
+      margin-bottom: 24px;
+    }
+
+    .skills-header-wrap {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      border-bottom: 1px dashed var(--border-dashed);
+      padding-bottom: 14px;
+      margin-bottom: 24px;
+    }
+
+    .skills-main-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.2rem, 3.8vw, 3.2rem);
+      letter-spacing: 0.02em;
+      line-height: 0.9;
+      color: var(--text-dark);
+      text-transform: uppercase;
+    }
+
+    .skills-groups-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+
+    .skill-family-card {
+      background: rgba(255, 255, 255, 0.55);
+      border: 1px solid rgba(18, 19, 22, 0.1);
+      border-radius: 14px;
+      padding: 18px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    .skill-family-card:hover {
+      background: rgba(255, 255, 255, 0.85);
+      transform: translateY(-2px);
+    }
+
+    .skill-family-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .skill-family-icon {
+      font-size: 1.1rem;
+      color: var(--text-dark);
+    }
+
+    .skill-family-name {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-dark);
+    }
+
+    .skill-badges-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .skill-chip {
+      font-family: var(--font-main);
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(18, 19, 22, 0.12);
+      padding: 4px 10px;
+      border-radius: 6px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+    }
+
+    /* ==========================================================================
+       Real Footer & Socials Hub
+       ========================================================================== */
+    .site-footer-real {
+      width: 100%;
+      border-top: 1px dashed var(--border-dashed);
+      padding: 48px 16px 36px 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    .footer-social-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .footer-social-pill {
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--text-dark);
+      background: rgba(255, 255, 255, 0.75);
+      border: 1px solid rgba(18, 19, 22, 0.2);
+      padding: 8px 18px;
+      border-radius: 20px;
+      backdrop-filter: blur(12px);
+      transition: all 0.2s ease;
+    }
+
+    .footer-social-pill:hover {
+      background: var(--text-dark);
+      color: #ffffff;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+    }
+
+    .footer-copy {
+      font-family: var(--font-main);
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+
+    /* Mobile Responsiveness */
+    @media (max-width: 960px) {
+      .layout-container {
+        flex-direction: column;
+      }
+
+      .sidebar-wrapper {
+        position: relative;
+        width: 100%;
+        height: auto;
+        padding: 16px;
+      }
+
+      .sidebar-box {
+        height: auto;
+      }
+
+      .main-wrapper {
+        margin-left: 0;
+        padding: 16px 16px 60px 16px;
+      }
+
+      .hero-3d-stage {
+        gap: 20px;
+      }
+
+      .floaty-model-canvas {
+        height: 240px;
+      }
+
+      .showcase-grid,
+      .showcase-grid.reverse {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .showcase-card {
+        padding: 24px 18px;
+      }
+
+      .dev-computer-canvas {
+        height: 220px;
+      }
+
+      .skills-bento-container {
+        padding: 24px 18px;
+      }
+
+      .top-nav-bar {
+        justify-content: center;
+        padding: 10px 14px;
+      }
+
+      .top-nav-buttons {
+        justify-content: center;
+      }
+
+      .nav-pill-btn {
+        font-size: 1.12rem;
+        padding: 8px 16px;
+      }
+
+      .nav-dropdown-menu {
+        min-width: 210px;
+        left: 50%;
+      }
+
+      .split-section-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .radio-info-stack {
+        grid-template-columns: 1fr;
+      }
+
+      .media-hero {
+        min-height: 280px;
+        padding: 28px 20px;
+      }
+
+      .media-hero h3 {
+        font-size: 1.8rem;
+      }
+
+      .project-caption {
+        font-size: 1.15rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Atmospheric Gradient & Noise Background -->
+  <div class="atmospheric-background">
+    <div class="blob-1"></div>
+    <div class="blob-2"></div>
+    <div class="blob-3"></div>
+    <div class="blob-4"></div>
+  </div>
+  <div class="noise-overlay"></div>
+
+  <div class="layout-container">
+
+    <!-- Fixed Left Sidebar (souajoana-inspired style) -->
+    <aside class="sidebar-wrapper">
+      <div class="sidebar-box">
+        
+        <!-- Bio Summary -->
+        <div class="sidebar-bio">
+          <strong>LOUMANA</strong>
+          Producer, DJ, VST developer, and software engineer based in Brussels. Blending club bangers, bass culture, and audio tech.
+        </div>
+
+        <!-- Working With -->
+        <div class="sidebar-section">
+          <div class="sidebar-title">Working With</div>
+          <ul class="sidebar-list">
+            <li>BRUZZ Radio (Residency)</li>
+            <li>Waffle Show</li>
+            <li>Adorable Collective</li>
+            <li>Vibe Studio</li>
+          </ul>
+        </div>
+
+        <!-- Found On Web -->
+        <div class="sidebar-section">
+          <div class="sidebar-title">Found On The Web</div>
+          <ul class="sidebar-list">
+            <li>SoundCloud</li>
+            <li>Spotify</li>
+            <li>Apple Music</li>
+            <li>GitHub</li>
+          </ul>
+        </div>
+
+        <!-- What I Do -->
+        <div class="sidebar-section">
+          <div class="sidebar-title">What I Do</div>
+          <ul class="sidebar-list">
+            <li>DJ Sets & Touring</li>
+            <li>Music Production & Beats</li>
+            <li>VST Plugin Engineering</li>
+            <li>Fullstack Web Engineering</li>
+          </ul>
+        </div>
+
+        <!-- Footer / Contact Links -->
+        <div class="sidebar-footer">
+          <div>stalk me on instagram</div>
+          <a href="https://instagram.com/loumana_" target="_blank">@loumana_</a>
+          <div style="margin-top: 10px;">reach me @</div>
+          <a href="mailto:booking@loumana.com">booking@loumana.com</a>
+        </div>
+
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-wrapper">
+
+      <!-- Top Sticky Navigation Bar with Dropdown Sub-Options -->
+      <nav class="top-nav-bar">
+        <div class="top-nav-buttons">
+          
+          <!-- Category 1: About -->
+          <div class="nav-dropdown-group">
+            <button class="nav-pill-btn" aria-expanded="false" aria-haspopup="true">
+              About <i class="fas fa-chevron-down chevron"></i>
+            </button>
+            <div class="nav-dropdown-menu">
+              <a href="#tour-dates" class="nav-dropdown-item">
+                <span class="nav-dropdown-item-title"><i class="fas fa-calendar-alt nav-dropdown-item-icon"></i> Tour Dates</span>
+                <span class="nav-dropdown-item-tag">Live</span>
+              </a>
+              <a href="#latest-news" class="nav-dropdown-item">
+                <span class="nav-dropdown-item-title"><i class="fas fa-newspaper nav-dropdown-item-icon"></i> Latest News</span>
+                <span class="nav-dropdown-item-tag">Press</span>
+              </a>
+              <a href="#radio-residencies" class="nav-dropdown-item">
+                <span class="nav-dropdown-item-title"><i class="fas fa-broadcast-tower nav-dropdown-item-icon"></i> Radio Residencies</span>
+                <span class="nav-dropdown-item-tag">BRUZZ & Kiosk</span>
+              </a>
+              <a href="#art-installation" class="nav-dropdown-item">
+                <span class="nav-dropdown-item-title"><i class="fas fa-landmark nav-dropdown-item-icon"></i> Musée Quai Branly</span>
+                <span class="nav-dropdown-item-tag">Paris</span>
+              </a>
+              <a href="#skills" class="nav-dropdown-item">
+                <span class="nav-dropdown-item-title"><i class="fas fa-tools nav-dropdown-item-icon"></i> Skills & Bio</span>
+                <span class="nav-dropdown-item-tag">Tech</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Category 2: Beats & Music -->
+          <div class="nav-dropdown-group">
+            <button class="nav-pill-btn" aria-expanded="false" aria-haspopup="true">
+              Beats <i class="fas fa-chevron-down chevron"></i>
+            </button>
+            <div class="nav-dropdown-menu">
+              <a href="#releases" class="nav-dropdown-item">
+                <span class="nav-dropdown-item-title"><i class="fas fa-compact-disc nav-dropdown-item-icon"></i> Releases</span>
+                <span class="nav-dropdown-item-tag">EPs</span>
+              </a>
+              <a href="#releases" class="nav-dropdown-item">
+                <span class="nav-dropdown-item-title"><i class="fas fa-shopping-bag nav-dropdown-item-icon"></i> Beats Store</span>
+                <span class="nav-dropdown-item-tag">Leases</span>
+              </a>
+              <a href="#releases" class="nav-dropdown-item">
+                <span class="nav-dropdown-item-title"><i class="fas fa-play-circle nav-dropdown-item-icon"></i> Audio Previews</span>
+                <span class="nav-dropdown-item-tag">Player</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Category 3: Dev & Tech -->
+          <div class="nav-dropdown-group">
+            <button class="nav-pill-btn" aria-expanded="false" aria-haspopup="true">
+              Dev <i class="fas fa-chevron-down chevron"></i>
+            </button>
+            <div class="nav-dropdown-menu">
+              <a href="#dev-projects" class="nav-dropdown-item">
+                <span class="nav-dropdown-item-title"><i class="fas fa-border-all nav-dropdown-item-icon"></i> Snap To Grid</span>
+                <span class="nav-dropdown-item-tag">Platform</span>
+              </a>
+              <a href="#audio-dev" class="nav-dropdown-item">
+                <span class="nav-dropdown-item-title"><i class="fas fa-plug nav-dropdown-item-icon"></i> 808 MAX VST</span>
+                <span class="nav-dropdown-item-tag">Synth</span>
+              </a>
+              <a href="#dev-games" class="nav-dropdown-item">
+                <span class="nav-dropdown-item-title"><i class="fas fa-gamepad nav-dropdown-item-icon"></i> Playable Games</span>
+                <span class="nav-dropdown-item-tag">Canvas</span>
+              </a>
+              <a href="#dev-games" class="nav-dropdown-item">
+                <span class="nav-dropdown-item-title"><i class="fab fa-github nav-dropdown-item-icon"></i> GitHub Repos</span>
+                <span class="nav-dropdown-item-tag">Code</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Category 4: Legal & Contact -->
+          <div class="nav-dropdown-group">
+            <button class="nav-pill-btn" aria-expanded="false" aria-haspopup="true">
+              Legal <i class="fas fa-chevron-down chevron"></i>
+            </button>
+            <div class="nav-dropdown-menu">
+              <a href="#releases" class="nav-dropdown-item">
+                <span class="nav-dropdown-item-title"><i class="fas fa-file-contract nav-dropdown-item-icon"></i> Licensing Terms</span>
+                <span class="nav-dropdown-item-tag">Policy</span>
+              </a>
+              <a href="#contact" class="nav-dropdown-item">
+                <span class="nav-dropdown-item-title"><i class="fas fa-envelope nav-dropdown-item-icon"></i> Booking & Inquiries</span>
+                <span class="nav-dropdown-item-tag">Contact</span>
+              </a>
+              <a href="#contact" class="nav-dropdown-item">
+                <span class="nav-dropdown-item-title"><i class="fas fa-share-alt nav-dropdown-item-icon"></i> Social Channels</span>
+                <span class="nav-dropdown-item-tag">Hub</span>
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </nav>
+
+      <!-- Floaty 3D Hero Stage & Action Buttons (Single Moog Synth) -->
+      <section class="hero-3d-stage">
+        <div class="hero-3d-column single-model">
+          <div class="floaty-model-canvas" id="viewer-moog"></div>
+          <h1 class="hero-moog-title">Welcome to Loumana's World</h1>
+          <p class="hero-moog-subtitle">Music Producer, DJ, Audio Developer & Creative Technologist</p>
+          <div class="model-actions-grid">
+            <a href="https://spotify.com" target="_blank" class="action-btn">Stream on Spotify</a>
+            <a href="#art-installation" class="action-btn">Art Installation</a>
+            <a href="#releases" class="action-btn">Buy Beats</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Featured Highlights & Tour Dates Section -->
+      <section class="news-carousel-section" id="featured-news" style="margin-top: 30px; margin-bottom: 30px;">
+        <div class="news-carousel-container">
+          <div class="news-carousel-header" style="justify-content: flex-end; border-bottom: none; margin-bottom: 12px; padding-bottom: 0;">
+            <div class="news-carousel-controls">
+              <button class="carousel-nav-btn prev" id="carousel-prev-btn" aria-label="Previous slide"><i class="fas fa-chevron-left"></i></button>
+              <div class="carousel-dots" id="carousel-dots">
+                <span class="carousel-dot active" data-slide="0"></span>
+                <span class="carousel-dot" data-slide="1"></span>
+              </div>
+              <button class="carousel-nav-btn next" id="carousel-next-btn" aria-label="Next slide"><i class="fas fa-chevron-right"></i></button>
+            </div>
+          </div>
+
+          <div class="news-carousel-track-wrapper">
+            <div class="news-carousel-track" id="news-carousel-track">
+              <!-- Slide 1: Beursschouwburg Release Party -->
+              <div class="news-slide-card active">
+                <div class="news-slide-img-wrap">
+                  <img src="https://beursschouwburg.be/site/assets/files/163416/loumana_anthena_no_typo.1200x630.jpeg" alt="Anthéna & Loumana Release Party" class="news-slide-img" />
+                </div>
+                <span class="news-slide-badge"><i class="fas fa-bolt"></i> Live Event / Release Party</span>
+                <div class="news-slide-body">
+                  <h3 class="news-slide-title">Anthéna & Loumana + O'Simmie</h3>
+                  <a href="https://beursschouwburg.be/nl/events/nethaan-release-party/" target="_blank" rel="noopener noreferrer" class="showcase-btn" style="background: rgba(255,255,255,0.25); color: #fff; border: 1px solid rgba(255,255,255,0.4); backdrop-filter: blur(8px);">Event Details ↗</a>
+                </div>
+              </div>
+
+              <!-- Slide 2: BX1 Rapol'OG Feature -->
+              <div class="news-slide-card">
+                <div class="news-slide-img-wrap">
+                  <img src="https://bx1.ams3.digitaloceanspaces.com/wp-content/uploads/2022/11/04145502/Loumana.jpg" alt="Loumana DJ Set Rapol'OG BX1" class="news-slide-img" />
+                </div>
+                <span class="news-slide-badge"><i class="fas fa-tv"></i> Media Feature / BX1</span>
+                <div class="news-slide-body">
+                  <h3 class="news-slide-title">Rapol'OG DJ Set Feature</h3>
+                  <a href="https://bx1.be/categories/culture/rapolog-fait-la-part-belle-aux-dj-durant-les-vacances-decouvrez-le-set-de-loumana-des-20h00/" target="_blank" rel="noopener noreferrer" class="showcase-btn" style="background: rgba(255,255,255,0.25); color: #fff; border: 1px solid rgba(255,255,255,0.4); backdrop-filter: blur(8px);">Watch Feature ↗</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Compact Tour Dates Bar Below -->
+        <div class="compact-tour-bar" style="margin-top: 20px;">
+          <div class="compact-tour-header">
+            <h4 style="font-family: var(--font-display); font-size: 1.1rem; text-transform: uppercase; margin: 0; color: var(--text-dark); display: flex; align-items: center; gap: 8px;">
+              <i class="fas fa-calendar-alt" style="color: var(--primary-accent);"></i> Upcoming Tour Dates
+            </h4>
+          </div>
+          <div class="compact-tour-grid">
+            <div class="tour-item-compact">
+              <div class="tour-date-box">
+                <span class="tour-day">18</span>
+                <span class="tour-month">Apr</span>
+              </div>
+              <div class="tour-info">
+                <div class="tour-venue">BRUZZ Radio Live</div>
+                <div class="tour-city">Brussels, BE</div>
+              </div>
+              <a href="#" class="tour-btn on-air">On Air</a>
+            </div>
+
+            <div class="tour-item-compact">
+              <div class="tour-date-box">
+                <span class="tour-day">02</span>
+                <span class="tour-month">May</span>
+              </div>
+              <div class="tour-info">
+                <div class="tour-venue">Fuse Club Night</div>
+                <div class="tour-city">Brussels, BE</div>
+              </div>
+              <a href="#" class="tour-btn">Tickets</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Category Showcases Stream -->
+      <section class="project-stream">
+
+
+        <!-- Section: Radio Residencies (Split Layout: DJ Sketch & Stacked Residencies) -->
+        <article class="project-item" id="radio-residencies">
+          <div class="skills-header-wrap" style="margin-bottom: 18px;">
+            <div>
+              <span class="showcase-pill">Airwaves & Live Broadcasts</span>
+              <h3 class="skills-main-title">Radio Residencies</h3>
+            </div>
+            
+          </div>
+
+          <div class="radio-split-showcase">
+
+            <!-- Radio Residency Cards -->
+            <div class="radio-info-stack">
+              
+              <!-- Card 1: BRUZZ Media -->
+              <div class="radio-residency-card">
+                <div class="radio-card-media-wrap">
+                  <img src="../../assets/images/bruzz_radio.jpg" alt="Loumana hosting The Waffle Show at BRUZZ Radio Studio" class="radio-card-img" />
+                  <div class="radio-card-badge-overlay">
+                    <span class="radio-badge"><i class="fas fa-broadcast-tower"></i> 98.8 FM Brussels</span>
+                  </div>
+                </div>
+                <div class="radio-card-body">
+                  <div class="radio-card-header">
+                    <span class="showcase-pill">Monthly Residency</span>
+                    <h3 class="radio-card-title">BRUZZ Media</h3>
+                    <h4 class="radio-card-subtitle">The Waffle Show & Live Curation</h4>
+                  </div>
+                  <p class="radio-card-desc">
+                    4+ years of monthly broadcasting on Brussels' premier cultural radio station. In-depth artist interviews, underground scene spotlights, and live guest DJ mixes with <strong>Dr. Peet</strong>, <strong>David Numwami</strong>, <strong>Blu Samu</strong>, and <strong>Izzy Kaya</strong>.
+                  </p>
+                  <div class="radio-card-actions">
+                    <div class="showcase-meta-tags">
+                      <span class="showcase-tag"><i class="fas fa-microphone-alt"></i> Interviews</span>
+                      <span class="showcase-tag"><i class="fas fa-music"></i> Scene Curation</span>
+                    </div>
+                    <a href="https://www.bruzz.be" target="_blank" class="showcase-btn">Listen on BRUZZ ↗</a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Card 2: Kiosk Radio -->
+              <div class="radio-residency-card">
+                <div class="radio-card-media-wrap kiosk-bg">
+                  <img src="../../assets/images/kiosk-radio.png" alt="Kiosk Radio Logo" class="radio-card-logo-img" />
+                  <div class="radio-card-badge-overlay">
+                    <span class="radio-badge"><i class="fas fa-tree"></i> Parc Royal, Brussels</span>
+                  </div>
+                </div>
+                <div class="radio-card-body">
+                  <div class="radio-card-header">
+                    <span class="showcase-pill highlight">Live Video Broadcast</span>
+                    <h3 class="radio-card-title">Kiosk Radio</h3>
+                    <h4 class="radio-card-subtitle">Parc Royal Resident & Guest Sets</h4>
+                  </div>
+                  <p class="radio-card-desc">
+                    Live video broadcasts streamed from the iconic wooden kiosk in Brussels' Parc Royal. Curating high-energy soundscapes: club edits, future beats, UK bass, and baile funk — streamed globally.
+                  </p>
+                  <div class="radio-card-actions">
+                    <div class="showcase-meta-tags">
+                      <span class="showcase-tag"><i class="fas fa-video"></i> Live Stream</span>
+                      <span class="showcase-tag"><i class="fas fa-globe"></i> Global Reach</span>
+                    </div>
+                    <a href="https://kioskradio.com" target="_blank" class="showcase-btn">Listen on Kiosk Radio ↗</a>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </article>
+
+        <!-- Category 1: Releases & Beats (Fully Unwrapped Static Layout) -->
+        <article class="project-item" id="releases">
+
+
+          <div class="releases-showcase-container" style="position: relative;">
+            <!-- Carousel will replace matrix, no SVG needed anymore -->
+
+            <div class="releases-section-header">
+              <h2 class="releases-main-title">RELEASES</h2>
+            </div>
+            
+            <!-- Interactive Releases Section -->
+            <div class="releases-interactive-container">
+              
+              <!-- Title on Top -->
+              <div class="releases-header-dynamic">
+                <h3 id="release-title" class="release-title-dynamic">Places EP</h3>
+              </div>
+
+              <!-- Split View (Left: Cover, Right: Info) -->
+              <div class="releases-split-view">
+                <div class="releases-cover-left" id="releases-cover-container">
+                  <img id="main-release-cover" src="../../../resources/Producer and music making info/EP_COVER_PLACES_stickers.png" alt="Places EP" class="main-release-cover">
+                </div>
+
+                <div class="releases-info-right" id="releases-info-container">
+                  <div class="release-info-panel" id="release-info-panel">
+                    <p id="release-year" class="release-year-dynamic">2024</p>
+                    <p id="release-desc" class="release-desc-dynamic">An exploration of self-discovery through cinematic electronics and deep grooves. A sonic journey connecting the mind and body.</p>
+                    
+                    <div id="release-credits" class="release-credits-list">
+                      <!-- Credits injected via JS -->
+                    </div>
+
+                    <div id="release-links" class="release-links-wrapper">
+                      <!-- Links injected via JS -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Bottom Selectors -->
+              <div class="releases-selectors-bottom">
+                <div class="selector-item active" data-id="places">
+                  <img src="../../../resources/Producer and music making info/EP_COVER_PLACES_stickers.png" alt="Places EP">
+                  <div class="selector-tooltip">Places EP</div>
+                </div>
+                <div class="selector-item" data-id="geometrie">
+                  <img src="../../../resources/Producer and music making info/Loumana_Geometrie_FINAL-2.jpg" alt="Géométrie EP">
+                  <div class="selector-tooltip">Géométrie EP</div>
+                </div>
+                <div class="selector-item" data-id="nethaan">
+                  <img src="../../../resources/Producer and music making info/http___gather.fandalism.com_2420727--6E9DBFAA-967C-43BD-B9893354019117FA--0--12767813--NETHAANFINALCORR2.jpg" alt="Nethaan">
+                  <div class="selector-tooltip">Nethaan</div>
+                </div>
+                <div class="selector-item" data-id="six-secondes">
+                  <img src="../../../resources/Producer and music making info/Cover 6 secondes EP mahugu-loumana.jpg" alt="6 Secondes EP">
+                  <div class="selector-tooltip">6 Secondes EP</div>
+                </div>
+              </div>
+            </div>
+
+              </div>
+
+
+            </div>
+
+            <!-- Compact Beatmaking & SoundCloud Section (Shrunk Down) -->
+            <div class="beatmaking-compact-box">
+              <div class="beatmaking-compact-header">
+                <div class="beatmaking-compact-title-wrap">
+                  <h3 class="beatmaking-compact-title" style="font-family: var(--font-display); font-size: clamp(2.2rem, 3.8vw, 3.2rem); line-height: 0.9; text-transform: uppercase; margin: 0; color: var(--text-dark);">BORN TO MAKE BEATS</h3>
+                </div>
+              </div>
+
+              <div class="beatmaking-compact-grid">
+                <div class="beatmaking-compact-text">
+                  <p style="font-size: 0.95rem; line-height: 1.5; margin-bottom: 24px; text-align: justify; font-family: var(--font-body); color: var(--text-dark);">
+                    I've been making beats since I was 13 years old, starting my journey back in 2011. SoundCloud has always been a space for me to freely express myself musically—my ultimate goal was to be featured on Soulection. Below, you can explore the archive of all the beats I've uploaded to SoundCloud over the years. You can also appreciate some of the beats I've produced for other artists over on my Spotify.
+                  </p>
+                  
+                  <div class="beatmaking-header-links" style="display: flex; gap: 12px; align-items: center; white-space: nowrap;">
+                    <a href="https://soundcloud.com/loumana" target="_blank" rel="noopener noreferrer" class="beatmaking-cta-pill" style="font-size: 1.05rem; padding: 10px 20px;">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 6px;"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.42 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+                      <span>SoundCloud ↗</span>
+                    </a>
+                    <a href="https://loumana.bandcamp.com" target="_blank" rel="noopener noreferrer" class="beatmaking-cta-pill" style="background: rgba(0,0,0,0.08); color: var(--text-dark); font-size: 1.05rem; padding: 10px 20px;">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 6px;"><path d="M0 18.75l7.437-13.5h16.563l-7.438 13.5z"/></svg>
+                      <span>Bandcamp ↗</span>
+                    </a>
+                  </div>
+                </div>
+
+                <!-- SoundCloud Embed Viewport -->
+                <div class="soundcloud-embed-container">
+                  <iframe width="100%" height="400" scrolling="no" frameborder="no" allow="autoplay"
+                    src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/soundcloud%253Aplaylists%253A2152543130&color=%23040d0c&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true">
+                  </iframe>
+                </div>
+              </div>
+            </div>
+
+            <!-- Simple Beats Preview Section -->
+            <div class="beat-preview-simple" style="margin-top: 60px; text-align: center; max-width: 800px; margin-left: auto; margin-right: auto; padding-bottom: 40px;">
+              <h3 style="font-family: var(--font-display); font-size: 2.2rem; text-transform: uppercase; margin-bottom: 24px; color: var(--text-dark);">Featured Beats</h3>
+              
+              <div class="beat-tracks-list" style="text-align: left; background: var(--glass-card); padding: 16px; border-radius: 20px; border: 1px solid var(--glass-border); box-shadow: 0 8px 24px rgba(0,0,0,0.04);">
+                
+                <!-- Track 1 -->
+                <div class="beat-track-row" data-src="../../assets/audio/Afro/BIG BUM MIX 1.mp3" data-title="Big Bum Mix (Afro Club Banger)" style="border-bottom: 1px solid var(--glass-border);">
+                  <img src="../../assets/images/MusicPageImages/Afro.png" alt="Afro Cover" style="width: 48px; height: 48px; border-radius: 8px; object-fit: cover;">
+                  <button class="track-play-btn" aria-label="Play track" style="margin-left: 12px;">
+                    <svg class="icon-play" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                    <svg class="icon-pause" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
+                  </button>
+                  <div class="track-info" style="margin-left: 12px;">
+                    <span class="track-title" style="font-size: 1.05rem;">Big Bum Mix 1</span>
+                    <span class="track-genre" style="font-size: 0.85rem;">Afro / Club Banger • 2024</span>
+                  </div>
+                </div>
+
+                <!-- Track 2 -->
+                <div class="beat-track-row" data-src="../../assets/audio/Afro/LOTUS GIFD Mix 1 v2.mp3" data-title="Lotus GIFD (Future Beat / Rap)">
+                  <img src="../../assets/images/MusicPageImages/Hiphop.png" alt="Hip Hop Cover" style="width: 48px; height: 48px; border-radius: 8px; object-fit: cover;">
+                  <button class="track-play-btn" aria-label="Play track" style="margin-left: 12px;">
+                    <svg class="icon-play" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                    <svg class="icon-pause" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
+                  </button>
+                  <div class="track-info" style="margin-left: 12px;">
+                    <span class="track-title" style="font-size: 1.05rem;">Lotus GIFD Mix 1 v2</span>
+                    <span class="track-genre" style="font-size: 0.85rem;">Future Beat / Rap • 2024</span>
+                  </div>
+                </div>
+                
+              </div>
+
+              <a href="../../music.html" class="showcase-btn" style="margin-top: 32px; font-size: 1.1rem; padding: 14px 36px; display: inline-flex; align-items: center; justify-content: center;">Listen to more ↗</a>
+            </div>
+            
+            <!-- COMMENTED OUT AS REQUESTED: Sample Packs & VST Presets Section (~10€ Packs) -->
+            <!--
+            <div class="soundpacks-compact-box">
+              <div class="soundpacks-header">
+                <div class="soundpacks-title-wrap">
+                  <span class="soundpacks-tag">Sound Design & VST</span>
+                  <h3 class="soundpacks-title">SAMPLE PACKS & VST PRESETS</h3>
+                  <p class="soundpacks-subtitle">Signature sound kits, 808 MAX synth presets, and loop libraries crafted for producers.</p>
+                </div>
+                <a href="../../beats-download.html" class="soundpacks-store-link">
+                  <span>Loumana Beats Store ↗</span>
+                </a>
+              </div>
+
+              <div class="soundpacks-grid">
+                <div class="soundpack-card">
+                  <div class="soundpack-badge vst">VST Presets</div>
+                  <div class="soundpack-artwork">
+                    <div class="soundpack-art-inner">
+                      <span class="art-icon">🎛️</span>
+                      <span class="art-title">808 MAX</span>
+                      <span class="art-sub">Synth & Sub Presets</span>
+                    </div>
+                  </div>
+                  <div class="soundpack-meta">
+                    <h4 class="soundpack-name">808 MAX Signature Bank</h4>
+                    <span class="soundpack-desc">50+ custom sub bass, glide 808s and saturation curves</span>
+                    <div class="soundpack-footer">
+                      <div class="soundpack-price">10 €</div>
+                      <a href="../../beats-download.html" class="soundpack-btn">Get Pack ↗</a>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="soundpack-card">
+                  <div class="soundpack-badge samples">Drum Kit</div>
+                  <div class="soundpack-artwork">
+                    <div class="soundpack-art-inner">
+                      <span class="art-icon">🥁</span>
+                      <span class="art-title">CLUB BANGERS</span>
+                      <span class="art-sub">Vol. 1 Drum Kit</span>
+                    </div>
+                  </div>
+                  <div class="soundpack-meta">
+                    <h4 class="soundpack-name">Club Bangers Drum Kit Vol. 1</h4>
+                    <span class="soundpack-desc">Pounding kicks, snappy claps, percussion loops & rims</span>
+                    <div class="soundpack-footer">
+                      <div class="soundpack-price">10 €</div>
+                      <a href="../../beats-download.html" class="soundpack-btn">Get Pack ↗</a>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="soundpack-card">
+                  <div class="soundpack-badge loops">Loops & Chops</div>
+                  <div class="soundpack-artwork">
+                    <div class="soundpack-art-inner">
+                      <span class="art-icon">🎹</span>
+                      <span class="art-title">FUTURE BEATS</span>
+                      <span class="art-sub">Melody & Chord Stacks</span>
+                    </div>
+                  </div>
+                  <div class="soundpack-meta">
+                    <h4 class="soundpack-name">Future Beats Loop Stack</h4>
+                    <span class="soundpack-desc">Warm Rhodes, analog poly synths & future bounce stems</span>
+                    <div class="soundpack-footer">
+                      <div class="soundpack-price">10 €</div>
+                      <a href="../../beats-download.html" class="soundpack-btn">Get Pack ↗</a>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="soundpack-card">
+                  <div class="soundpack-badge vocals">Vocal FX</div>
+                  <div class="soundpack-artwork">
+                    <div class="soundpack-art-inner">
+                      <span class="art-icon">🎙️</span>
+                      <span class="art-title">VOCAL CHOPS</span>
+                      <span class="art-sub">Acapella & FX Vault</span>
+                    </div>
+                  </div>
+                  <div class="soundpack-meta">
+                    <h4 class="soundpack-name">Vocal Chops & Club FX</h4>
+                    <span class="soundpack-desc">Processed vocal shots, riser FX, glitches and ad-libs</span>
+                    <div class="soundpack-footer">
+                      <div class="soundpack-price">10 €</div>
+                      <a href="../../beats-download.html" class="soundpack-btn">Get Pack ↗</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            -->
+
+          </div>
+        </article>
+
+        <!-- Release Detail Modal Container -->
+        <div class="release-modal" id="release-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+          <div class="release-modal-backdrop" id="modal-backdrop"></div>
+          <div class="release-modal-content" id="modal-content-box">
+            <button class="release-modal-close" id="modal-close-btn" aria-label="Close modal">&times;</button>
+            <div class="release-modal-body" id="modal-body">
+              <!-- Dynamically populated via JS -->
+            </div>
+          </div>
+        </div>
+
+
+        <!-- Section: Floating 3D Computer & Dev Projects Showcase -->
+        <article class="project-item" id="dev-projects" style="margin-top: 40px; width: 840px; max-width: 100%; margin-left: auto; margin-right: auto; transform: translateX(20px);">
+          <div class="dev-hero-container">
+            <!-- Interactive Floating 3D Computer Model -->
+            <div class="dev-computer-canvas" id="viewer-computer-dev"></div>
+            <h2 class="dev-hero-title">Here are all my dev projects</h2>
+            <p class="dev-hero-subtitle">
+              Selected web platforms, playable rhythmic games, interactive WebAudio synthesizers, and open source repositories.
+            </p>
+          </div>
+
+          <!-- Major Showcase Block: Snap To Grid (Side-by-side) -->
+          <div class="showcase-card" style="margin-top: 14px;">
+            <div class="showcase-grid">
+              <!-- Text Side -->
+              <div class="showcase-info">
+                <div class="showcase-badge-wrap">
+                  <span class="showcase-pill">Fullstack Web App</span>
+                  <span class="showcase-pill highlight">Live Platform</span>
+                </div>
+                <h3 class="showcase-title">Snap To Grid</h3>
+                <h4 class="showcase-subtitle">Interactive Rhythm Library & Sequencer Platform</h4>
+                <p class="showcase-desc">
+                  A modern web platform for beat discovery and rhythmic exploration. Features an interactive in-browser step sequencer, multi-track audio playback with real-time stem control, reference track comparisons (e.g. Fred again.. <em>"stayinit"</em>), instant BPM manipulation, and MIDI export.
+                </p>
+                <div class="showcase-meta-tags">
+                  <span class="showcase-tag"><i class="fas fa-drum"></i> In-Browser Sequencer</span>
+                  <span class="showcase-tag"><i class="fas fa-sliders-h"></i> Stem Playback & BPM</span>
+                  <span class="showcase-tag"><i class="fas fa-file-export"></i> MIDI Export</span>
+                  <span class="showcase-tag"><i class="fas fa-globe"></i> snaptogrid.org</span>
+                </div>
+                <a href="https://www.snaptogrid.org/#profile" target="_blank" class="showcase-btn">Launch Snap To Grid ↗</a>
+              </div>
+
+              <!-- Media Side (Uploaded Screenshot) -->
+              <div class="showcase-media-frame">
+                <img src="../../assets/images/snaptogrid_showcase.png" alt="Snap To Grid Sequencer Platform UI" class="showcase-img" />
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Section: Art / Audio Experiences (Musée du Quai Branly, Paris) -->
+        <article class="project-item showcase-block" id="art-installation" style="width: 840px; max-width: 100%; margin-left: auto; margin-right: auto; transform: translateX(20px);">
+          <div class="showcase-card">
+            <div class="showcase-grid">
+              <!-- Text Side -->
+              <div class="showcase-info">
+                <div class="showcase-badge-wrap">
+                  <span class="showcase-pill">Art & Spatial Audio</span>
+                  <span class="showcase-pill highlight">Paris 2025–2026</span>
+                </div>
+                <h3 class="showcase-title">Musée du Quai Branly</h3>
+                <h4 class="showcase-subtitle">Audio Installation & Sound Archives</h4>
+                <p class="showcase-desc">
+                  An immersive spatial audio installation in collaboration with poet <strong>Simon Shungu</strong>, exploring archival memory and contemporary sound synthesis. The work repurposes historical sound recordings from the <strong>Bibliothèque Nationale de France (BnF)</strong> sound archives, weaving multi-channel acoustic spatialization with live spoken-word and deep atmospheric textures.
+                </p>
+                <div class="showcase-meta-tags">
+                  <span class="showcase-tag"><i class="fas fa-feather-alt"></i> Simon Shungu (Poetry)</span>
+                  <span class="showcase-tag"><i class="fas fa-landmark"></i> BnF Sound Archives</span>
+                  <span class="showcase-tag"><i class="fas fa-volume-up"></i> Multi-Channel Spatialization</span>
+                  <span class="showcase-tag"><i class="fas fa-map-marker-alt"></i> Paris, France</span>
+                </div>
+              </div>
+
+              <!-- Media Side (Provided Installation Photo) -->
+              <div class="showcase-media-frame">
+                <img src="../../assets/images/quai_branly_installation.jpg" alt="Musée du Quai Branly Audio Installation by Loumana and Simon Shungu" class="showcase-img" />
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Section: 808 MAX VST Plugin Showcase -->
+        <article class="project-item showcase-block" id="audio-dev" style="width: 840px; max-width: 100%; margin-left: auto; margin-right: auto; transform: translateX(20px);">
+          <div class="showcase-card">
+            <div class="showcase-grid reverse">
+              <!-- Media Side (Provided Screenshot) -->
+              <div class="showcase-media-frame">
+                <img src="../../assets/images/vst_808_max_screenshot.png" alt="808 MAX VST Synthesizer UI Screenshot" class="showcase-img" />
+              </div>
+
+              <!-- Text Side -->
+              <div class="showcase-info">
+                <div class="showcase-badge-wrap">
+                  <span class="showcase-pill">VST Plugin Lab</span>
+                  <span class="showcase-pill highlight">In Development</span>
+                </div>
+                <h3 class="showcase-title">808 MAX</h3>
+                <h4 class="showcase-subtitle">Bass & Sub Harmonic Synthesizer</h4>
+                <p class="showcase-desc">
+                  Built from the ground up using <strong>HISE scripting</strong> and custom analog saturation algorithms, <strong>808 MAX</strong> reshapes how producers sculpt low frequencies. Featuring dynamic multi-stage distortion, precise AHDSR envelope shaping, versatile filter curves, and an instant-inspiration workflow.
+                </p>
+                <div class="showcase-meta-tags">
+                  <span class="showcase-tag"><i class="fas fa-code"></i> HISE Scripting</span>
+                  <span class="showcase-tag"><i class="fas fa-wave-square"></i> Saturation Algorithms</span>
+                  <span class="showcase-tag"><i class="fas fa-sliders-h"></i> Low-Frequency Control</span>
+                  <span class="showcase-tag"><i class="fas fa-plug"></i> VST3 / AU</span>
+                </div>
+                <a href="../../software.html#vst-section" class="showcase-btn">Explore Software Lab ↗</a>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Section: Interactive Games & Open Source Repositories -->
+        <article class="project-item" id="dev-games" style="width: 840px; max-width: 100%; margin-left: auto; margin-right: auto; transform: translateX(20px);">
+          <div class="skills-header-wrap" style="margin-bottom: 14px;">
+            <div>
+              <span class="showcase-pill">Playable Prototypes & Code</span>
+              <h3 class="skills-main-title">Games & Open Source</h3>
+            </div>
+            
+          </div>
+
+          <!-- Projects Grid (matching software lab prototype style) -->
+          <div class="dev-projects-grid">
+            
+            <!-- Project 1: Trap Machine -->
+            <a href="../../prototypes/Beat Mixer/index.html" target="_blank" class="dev-card">
+              <div class="dev-card-top">
+                <div class="browser-dots">
+                  <div class="browser-dot" style="background:#ee382b;"></div>
+                  <div class="browser-dot" style="background:#f3b43f;"></div>
+                  <div class="browser-dot" style="background:#28c840;"></div>
+                </div>
+                <span class="dev-card-pill">WebAudio</span>
+              </div>
+              <div class="dev-card-icon-wrap">
+                <i class="fas fa-drum"></i>
+              </div>
+              <div class="dev-card-content">
+                <h3>Trap Machine</h3>
+                <p>Interactive 16-step drum sequencer and beat mixer built with Web Audio API and custom DSP sample triggers.</p>
+              </div>
+              <div class="dev-card-footer">
+                <span class="dev-card-tech">JavaScript • Web Audio</span>
+                <span class="dev-card-arrow">↗</span>
+              </div>
+            </a>
+
+            <!-- Project 2: Rhythm Clicker -->
+            <a href="../../prototypes/Games/RhythmClicker/index.html" target="_blank" class="dev-card">
+              <div class="dev-card-top">
+                <div class="browser-dots">
+                  <div class="browser-dot" style="background:#ee382b;"></div>
+                  <div class="browser-dot" style="background:#f3b43f;"></div>
+                  <div class="browser-dot" style="background:#28c840;"></div>
+                </div>
+                <span class="dev-card-pill">Playable Game</span>
+              </div>
+              <div class="dev-card-icon-wrap">
+                <i class="fas fa-music"></i>
+              </div>
+              <div class="dev-card-content">
+                <h3>Rhythm Clicker</h3>
+                <p>Fast-paced rhythmic precision game testing timing and micro-groove accuracy against syncopated tempos.</p>
+              </div>
+              <div class="dev-card-footer">
+                <span class="dev-card-tech">HTML5 Canvas • Audio Sync</span>
+                <span class="dev-card-arrow">↗</span>
+              </div>
+            </a>
+
+            <!-- Project 3: Reaction Time -->
+            <a href="../../prototypes/Games/ReactionTime/index.html" target="_blank" class="dev-card">
+              <div class="dev-card-top">
+                <div class="browser-dots">
+                  <div class="browser-dot" style="background:#ee382b;"></div>
+                  <div class="browser-dot" style="background:#f3b43f;"></div>
+                  <div class="browser-dot" style="background:#28c840;"></div>
+                </div>
+                <span class="dev-card-pill">Benchmark</span>
+              </div>
+              <div class="dev-card-icon-wrap">
+                <i class="fas fa-bolt"></i>
+              </div>
+              <div class="dev-card-content">
+                <h3>Reaction Time</h3>
+                <p>Millisecond-accurate neuro-reflex benchmark measuring visual and auditory trigger response times.</p>
+              </div>
+              <div class="dev-card-footer">
+                <span class="dev-card-tech">DOM API • Precision Timers</span>
+                <span class="dev-card-arrow">↗</span>
+              </div>
+            </a>
+
+            <!-- Project 4: GitHub Codebase -->
+            <a href="https://github.com/Loumana1" target="_blank" class="dev-card">
+              <div class="dev-card-top">
+                <div class="browser-dots">
+                  <div class="browser-dot" style="background:#ee382b;"></div>
+                  <div class="browser-dot" style="background:#f3b43f;"></div>
+                  <div class="browser-dot" style="background:#28c840;"></div>
+                </div>
+                <span class="dev-card-pill">Open Source</span>
+              </div>
+              <div class="dev-card-icon-wrap">
+                <i class="fab fa-github"></i>
+              </div>
+              <div class="dev-card-content">
+                <h3>GitHub Repositories</h3>
+                <p>Explore public code repositories, WebGL experiments, DSP algorithms, and creative web utilities.</p>
+              </div>
+              <div class="dev-card-footer">
+                <span class="dev-card-tech">github.com/Loumana1</span>
+                <span class="dev-card-arrow">↗</span>
+              </div>
+            </a>
+
+          </div>
+        </article>
+
+        <!-- Creative Transition Section ("Songwriting, VST / Art, Computers" - "I Just Can't Choose") -->
+        <article class="project-item">
+          <div class="section_discovery-container">
+            <div class="discovery-wrapper">
+              <div class="discovery-scroll-note">Scroll down ↓</div>
+              <div class="discovery-sticky">
+                <div class="discovery-component">
+                  <h2 class="discovery-heading _1">Songwriting, VST</h2>
+                  <div class="discovery-img-wrap">
+                    <img src="../../assets/images/Loumana_house_party.jpg" loading="lazy" alt="Loumana Creative Space" class="discovery-img" />
+                    <div class="discovery-img-hint">Scroll down ↓</div>
+                    <h2 class="discovery-img-text">I just can't choose</h2>
+                  </div>
+                  <h2 class="discovery-heading _2">Art, Computers</h2>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Section: Developer Skills Bento (SnapToGrid "Professional at" style) -->
+        <article class="project-item" id="skills" style="width: 840px; max-width: 100%; margin-left: auto; margin-right: auto; transform: translateX(20px);">
+          <div class="skills-bento-container">
+            <div class="skills-header-wrap">
+              <div>
+                <span class="showcase-pill">Technical Toolkit</span>
+                <h3 class="skills-main-title">Creative Stack</h3>
+              </div>
+              
+            </div>
+
+            <div class="skills-groups-grid">
+              
+              <!-- Family 1: JavaScript & Web Family -->
+              <div class="skill-family-card">
+                <div class="skill-family-header">
+                  <i class="fab fa-js skill-family-icon" style="color: #f7df1e;"></i>
+                  <span class="skill-family-name">JavaScript Family</span>
+                </div>
+                <div class="skill-badges-list">
+                  <span class="skill-chip">Vanilla JS</span>
+                  <span class="skill-chip">AJAX / Fetch</span>
+                  <span class="skill-chip">React</span>
+                  <span class="skill-chip">Node.js</span>
+                  <span class="skill-chip">HTML5 / CSS3</span>
+                </div>
+              </div>
+
+              <!-- Family 2: Mobile & App Stack -->
+              <div class="skill-family-card">
+                <div class="skill-family-header">
+                  <i class="fas fa-mobile-alt skill-family-icon" style="color: #02569B;"></i>
+                  <span class="skill-family-name">Mobile & Cross-Platform</span>
+                </div>
+                <div class="skill-badges-list">
+                  <span class="skill-chip">Flutter</span>
+                  <span class="skill-chip">Dart</span>
+                  <span class="skill-chip">Responsive UI</span>
+                  <span class="skill-chip">Native APIs</span>
+                </div>
+              </div>
+
+              <!-- Family 3: ERP & Business Systems -->
+              <div class="skill-family-card">
+                <div class="skill-family-header">
+                  <i class="fas fa-layer-group skill-family-icon" style="color: #714B67;"></i>
+                  <span class="skill-family-name">ERP & Enterprise</span>
+                </div>
+                <div class="skill-badges-list">
+                  <span class="skill-chip">Odoo</span>
+                  <span class="skill-chip">SQL / PostgreSQL</span>
+                  <span class="skill-chip">Database Modeling</span>
+                  <span class="skill-chip">Bash / Terminal</span>
+                </div>
+              </div>
+
+              <!-- Family 4: Audio Tech & DSP -->
+              <div class="skill-family-card">
+                <div class="skill-family-header">
+                  <i class="fas fa-wave-square skill-family-icon" style="color: #1792cf;"></i>
+                  <span class="skill-family-name">Audio & DSP</span>
+                </div>
+                <div class="skill-badges-list">
+                  <span class="skill-chip">C++</span>
+                  <span class="skill-chip">JUCE</span>
+                  <span class="skill-chip">HISE</span>
+                  <span class="skill-chip">Web Audio API</span>
+                </div>
+              </div>
+
+              <!-- Family 5: 3D & Graphics -->
+              <div class="skill-family-card">
+                <div class="skill-family-header">
+                  <i class="fas fa-cube skill-family-icon" style="color: #ea7600;"></i>
+                  <span class="skill-family-name">3D & Creative Coding</span>
+                </div>
+                <div class="skill-badges-list">
+                  <span class="skill-chip">Three.js</span>
+                  <span class="skill-chip">WebGL</span>
+                  <span class="skill-chip">3D Gaussian Splats</span>
+                  <span class="skill-chip">Blender</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </article>
+
+        <!-- Section: Work With Me / Contact -->
+        <article class="project-item" id="contact">
+          <div class="contact-box">
+            <h2>Let's Create Together</h2>
+            <p>Open for DJ bookings, production collaborations, and custom software development projects.</p>
+            <a href="mailto:booking@loumana.com" class="btn-contact">Send an Email</a>
+          </div>
+        </article>
+
+        <!-- Real Footer & Social Hub -->
+        <footer class="site-footer-real">
+          <div class="footer-social-links">
+            <a href="https://instagram.com/loumana_" target="_blank" class="footer-social-pill"><i class="fab fa-instagram"></i> Instagram (@loumana_)</a>
+            <a href="https://github.com/Loumana1" target="_blank" class="footer-social-pill"><i class="fab fa-github"></i> GitHub</a>
+            <a href="https://open.spotify.com" target="_blank" class="footer-social-pill"><i class="fab fa-spotify"></i> Spotify</a>
+            <a href="https://soundcloud.com" target="_blank" class="footer-social-pill"><i class="fab fa-soundcloud"></i> SoundCloud</a>
+            <a href="mailto:booking@loumana.com" class="footer-social-pill"><i class="fas fa-envelope"></i> booking@loumana.com</a>
+          </div>
+          <div class="footer-copy">
+            <p>© 2026 Loumana. Sound, Code & Art. All Rights Reserved.</p>
+          </div>
+        </footer>
+
+      </section>
+
+    </main>
+
+  </div>
+
+  <!-- 3D PLY Gaussian Splat & Point Cloud Viewers Logic (Three.js) -->
+  <script>
+    /**
+     * Generate a soft circular radial splat particle texture to fill gaps into a continuous solid surface
+     */
+    function createSplatTexture() {
+      const canvas = document.createElement('canvas');
+      canvas.width = 64;
+      canvas.height = 64;
+      const ctx = canvas.getContext('2d');
+      const grad = ctx.createRadialGradient(32, 32, 0, 32, 32, 32);
+      grad.addColorStop(0, 'rgba(255,255,255,1.0)');
+      grad.addColorStop(0.55, 'rgba(255,255,255,0.98)');
+      grad.addColorStop(0.85, 'rgba(255,255,255,0.6)');
+      grad.addColorStop(1, 'rgba(255,255,255,0)');
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      ctx.arc(32, 32, 32, 0, Math.PI * 2);
+      ctx.fill();
+      const tex = new THREE.CanvasTexture(canvas);
+      tex.generateMipmaps = false;
+      tex.minFilter = THREE.LinearFilter;
+      return tex;
+    }
+
+    const splatTexture = createSplatTexture();
+
+    /**
+     * Decode base64 model data directly into Three.js dense Points with solid surface filling
+     */
+    function createModelFromData(modelData) {
+      if (!modelData || !modelData.pos || !modelData.col) return null;
+      try {
+        const posBinary = atob(modelData.pos);
+        const posBytes = new Uint8Array(posBinary.length);
+        for (let i = 0; i < posBinary.length; i++) {
+          posBytes[i] = posBinary.charCodeAt(i);
+        }
+        const positions = new Float32Array(posBytes.buffer);
+
+        const colBinary = atob(modelData.col);
+        const colors = new Float32Array(modelData.count * 3);
+        for (let i = 0; i < modelData.count * 3; i++) {
+          colors[i] = colBinary.charCodeAt(i) / 255.0;
+        }
+
+        const geometry = new THREE.BufferGeometry();
+        geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+        geometry.center();
+        geometry.computeBoundingSphere();
+
+        // Solid continuous point material with overlapping soft splats
+        const material = new THREE.PointsMaterial({
+          size: 0.042,
+          map: splatTexture,
+          vertexColors: true,
+          sizeAttenuation: true,
+          transparent: true,
+          opacity: 0.98,
+          alphaTest: 0.02,
+          depthWrite: true
+        });
+
+        return new THREE.Points(geometry, material);
+      } catch (err) {
+        console.error("Error creating model from data:", err);
+        return null;
+      }
+    }
+
+    /**
+     * Parse raw 3D Gaussian Splat PLY buffer fallback
+     */
+    function parseGaussianSplatBuffer(buffer, defaultColor) {
+      const u8 = new Uint8Array(buffer);
+      let headerEnd = 0;
+      const headerSearchLimit = Math.min(u8.length, 3000);
+      for (let i = 0; i < headerSearchLimit; i++) {
+        if (u8[i] === 10) {
+          const line = new TextDecoder().decode(u8.subarray(Math.max(0, i - 15), i));
+          if (line.includes('end_header')) {
+            headerEnd = i + 1;
+            break;
+          }
+        }
+      }
+
+      const headerStr = new TextDecoder().decode(u8.subarray(0, headerEnd));
+      const countMatch = headerStr.match(/element vertex (\d+)/);
+      const count = countMatch ? parseInt(countMatch[1], 10) : 0;
+      if (count === 0) throw new Error("Invalid or empty PLY header");
+
+      const isGaussian = headerStr.includes('f_dc_0');
+      const dataView = new DataView(buffer, headerEnd);
+      const stride = isGaussian ? 68 : (headerStr.includes('nx') ? 24 : 12);
+      
+      const positions = new Float32Array(count * 3);
+      const colors = new Float32Array(count * 3);
+      const SH_C0 = 0.28209479177387814;
+
+      for (let i = 0; i < count; i++) {
+        const offset = i * stride;
+        const x = dataView.getFloat32(offset, true);
+        const y = dataView.getFloat32(offset + 4, true);
+        const z = dataView.getFloat32(offset + 8, true);
+
+        positions[i * 3] = x;
+        positions[i * 3 + 1] = y;
+        positions[i * 3 + 2] = z;
+
+        if (isGaussian) {
+          const f_dc_0 = dataView.getFloat32(offset + 24, true);
+          const f_dc_1 = dataView.getFloat32(offset + 28, true);
+          const f_dc_2 = dataView.getFloat32(offset + 32, true);
+
+          colors[i * 3] = Math.min(Math.max(0.5 + SH_C0 * f_dc_0, 0), 1);
+          colors[i * 3 + 1] = Math.min(Math.max(0.5 + SH_C0 * f_dc_1, 0), 1);
+          colors[i * 3 + 2] = Math.min(Math.max(0.5 + SH_C0 * f_dc_2, 0), 1);
+        } else {
+          colors[i * 3] = 0.9;
+          colors[i * 3 + 1] = 0.9;
+          colors[i * 3 + 2] = 0.9;
+        }
+      }
+
+      const geometry = new THREE.BufferGeometry();
+      geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+      geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+      geometry.center();
+      geometry.computeBoundingSphere();
+
+      const material = new THREE.PointsMaterial({
+        size: 0.042,
+        map: splatTexture,
+        vertexColors: true,
+        sizeAttenuation: true,
+        transparent: true,
+        opacity: 0.98,
+        alphaTest: 0.02,
+        depthWrite: true
+      });
+
+      return new THREE.Points(geometry, material);
+    }
+
+    /**
+     * Initializes multi-axis interactive 3D viewer with static resting position (no constant spinning)
+     */
+    function initPlyViewer(containerId, plyPath, dataKey, defaultRotX, defaultRotY, defaultColor) {
+      const container = document.getElementById(containerId);
+      if (!container) return;
+
+      const width = container.clientWidth || 360;
+      const height = container.clientHeight || 260;
+
+      // 1. Scene setup
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(34, width / height, 0.1, 1000);
+      camera.position.set(0, -0.15, 4.4);
+
+      const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+      renderer.setSize(width, height);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      container.appendChild(renderer.domElement);
+
+      const ambientLight = new THREE.AmbientLight(0xffffff, 1.4);
+      scene.add(ambientLight);
+
+      let modelObject = null;
+      let isDragging = false;
+      let previousX = 0;
+      let previousY = 0;
+      let velocityX = 0;
+      let velocityY = 0;
+      let lastInteractionTime = Date.now();
+
+      function setModel(obj) {
+        if (modelObject) scene.remove(modelObject);
+        modelObject = obj;
+        if (modelObject.geometry && modelObject.geometry.boundingSphere) {
+          const radius = modelObject.geometry.boundingSphere.radius || 1.0;
+          let scaleMultiplier = 1.35;
+          if (containerId === 'viewer-computer-dev') {
+             scaleMultiplier = 1.21; // roughly 10% smaller
+          }
+          const scale = scaleMultiplier / radius;
+          modelObject.scale.set(scale, scale, scale);
+        }
+        // Set exact default static orientation
+        modelObject.rotation.x = defaultRotX;
+        modelObject.rotation.y = defaultRotY;
+        scene.add(modelObject);
+      }
+
+      // Auto-load instantly from pre-extracted JS data (Zero CORS issues on file://)
+      if (dataKey && window[dataKey]) {
+        const pointsMesh = createModelFromData(window[dataKey]);
+        if (pointsMesh) {
+          setModel(pointsMesh);
+        }
+      } else {
+        // Fallback to fetch
+        fetch(plyPath)
+          .then(res => res.arrayBuffer())
+          .then(buffer => {
+            const pointsMesh = parseGaussianSplatBuffer(buffer, defaultColor);
+            setModel(pointsMesh);
+          })
+          .catch(err => console.warn("Fetch fallback notice:", err));
+      }
+
+      // Multi-Axis Drag Interaction (No continuous rotation)
+      function handleDown(e) {
+        isDragging = true;
+        previousX = e.clientX || (e.touches && e.touches[0].clientX) || 0;
+        previousY = e.clientY || (e.touches && e.touches[0].clientY) || 0;
+        velocityX = 0;
+        velocityY = 0;
+        lastInteractionTime = Date.now();
+      }
+
+      function handleMove(e) {
+        if (!isDragging || !modelObject) return;
+        const currentX = e.clientX || (e.touches && e.touches[0].clientX) || 0;
+        const currentY = e.clientY || (e.touches && e.touches[0].clientY) || 0;
+        
+        const deltaX = currentX - previousX;
+        const deltaY = currentY - previousY;
+        previousX = currentX;
+        previousY = currentY;
+
+        // Direct responsive rotation (drag)
+        // Direct responsive rotation (drag)
+        modelObject.rotation.y += deltaX * 0.014;
+        modelObject.rotation.x += deltaY * 0.014;
+        modelObject.rotation.x = Math.max(-1.5, Math.min(1.5, modelObject.rotation.x));
+        velocityX = deltaX * 0.006;
+        velocityY = deltaY * 0.006;
+        
+        // Update target rotation so it doesn't snap back immediately
+        if (containerId === 'viewer-computer-dev') {
+            targetRotX = modelObject.rotation.x;
+            targetRotY = modelObject.rotation.y;
+        }
+        
+        lastInteractionTime = Date.now();
+      }
+
+      function handleUp() {
+        isDragging = false;
+        lastInteractionTime = Date.now();
+      }
+
+      container.addEventListener('mousedown', handleDown);
+      window.addEventListener('mousemove', handleMove);
+      window.addEventListener('mouseup', handleUp);
+
+      container.addEventListener('touchstart', handleDown, { passive: true });
+      window.addEventListener('touchmove', handleMove, { passive: true });
+      window.addEventListener('touchend', handleUp);
+
+      // Add passive mouse tracking for computer model
+      let targetRotX = defaultRotX;
+      let targetRotY = defaultRotY;
+      
+      if (containerId === 'viewer-computer-dev') {
+        window.addEventListener('mousemove', (e) => {
+          if (!modelObject || isDragging) return;
+          const mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+          const mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
+          
+          targetRotY = defaultRotY + (mouseX * 1.2);
+          targetRotX = defaultRotX - (mouseY * 1.2);
+        });
+      }
+
+      // Render Loop: Friction damping -> stays in place -> slow ease back to default after idle
+      function animate() {
+        requestAnimationFrame(animate);
+
+        if (modelObject) {
+          if (!isDragging) {
+             // Apply inertia decay for dragging
+             modelObject.rotation.y += velocityX;
+             modelObject.rotation.x += velocityY;
+             velocityX *= 0.90;
+             velocityY *= 0.90;
+             
+             const isMovingSlowly = Math.abs(velocityX) < 0.0002 && Math.abs(velocityY) < 0.0002;
+             
+             if (containerId === 'viewer-computer-dev' && isMovingSlowly) {
+                // Passive tracking lerp takes over after drag inertia finishes
+                modelObject.rotation.x = THREE.MathUtils.lerp(modelObject.rotation.x, targetRotX, 0.05);
+                modelObject.rotation.y = THREE.MathUtils.lerp(modelObject.rotation.y, targetRotY, 0.05);
+             } else if (containerId !== 'viewer-computer-dev' && isMovingSlowly) {
+                // For moog, return to default position after 3.5s idle
+                const timeSinceInteraction = Date.now() - lastInteractionTime;
+                if (timeSinceInteraction > 3500) {
+                  modelObject.rotation.x = THREE.MathUtils.lerp(modelObject.rotation.x, defaultRotX, 0.018);
+                  modelObject.rotation.y = THREE.MathUtils.lerp(modelObject.rotation.y, defaultRotY, 0.018);
+                }
+             }
+          }
+        }
+
+        renderer.render(scene, camera);
+      }
+      animate();
+
+      window.addEventListener('resize', () => {
+        const w = container.clientWidth;
+        const h = container.clientHeight;
+        camera.aspect = w / h;
+        camera.updateProjectionMatrix();
+        renderer.setSize(w, h);
+      });
+    }
+
+    // Launch custom 3D point-cloud models on load:
+    // 1. Hero Moog Synth: Isometric tilt (0.35 rad X, -0.4 rad Y)
+    // 2. Dev Projects Computer: 0 deg around Y and 90 deg up on X (-1.35 rad)
+    window.addEventListener('DOMContentLoaded', () => {
+      initPlyViewer('viewer-moog', '../../assets/models/moog.ply', 'MOOG_MODEL_DATA', 0.35, -0.4, 0xe8c94a);
+      initPlyViewer('viewer-computer-dev', '../../assets/models/computer.ply', 'COMPUTER_MODEL_DATA', -1.35, 0, 0x1792cf);
+
+      // Dropdown Navigation Handler (Desktop hover & Mobile tap/click)
+      const dropdownGroups = document.querySelectorAll('.nav-dropdown-group');
+      dropdownGroups.forEach(group => {
+        const btn = group.querySelector('.nav-pill-btn');
+        const menu = group.querySelector('.nav-dropdown-menu');
+
+        if (btn) {
+          btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isActive = group.classList.contains('active');
+            dropdownGroups.forEach(g => {
+              if (g !== group) g.classList.remove('active');
+            });
+            group.classList.toggle('active', !isActive);
+          });
+        }
+
+        if (menu) {
+          menu.querySelectorAll('.nav-dropdown-item').forEach(item => {
+            item.addEventListener('click', () => {
+              group.classList.remove('active');
+            });
+          });
+        }
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!e.target.closest('.nav-dropdown-group')) {
+          dropdownGroups.forEach(g => g.classList.remove('active'));
+        }
+      });
+    });
+
+    /* ==========================================================================
+       Release Cards & Modal Interaction Logic (Pure Vanilla JS, No GSAP)
+       ========================================================================== */
+    const releaseData = {
+      'places': {
+        title: 'Places EP',
+        year: '2024',
+        producedBy: 'Loumana',
+        mixedBy: 'Loumana',
+        masteredBy: 'Studio Master',
+        collaborators: 'ROCA MORA',
+        label: 'Waffle Street',
+        dominantColor: '#1c3312',
+        spotify: 'https://open.spotify.com/album/7Hp66JUF1jvDwjZKGvsMr9?si=--9KZbzoSY6FEb-pQeKZXA',
+        appleMusic: 'https://music.apple.com',
+        youtube: 'https://www.youtube.com/watch?v=as5XelcZa38&list=PLZQ7cwTfoiEr68lT5mC2YwnJZ-idZOatA',
+        bandcamp: 'https://loumana.bandcamp.com/album/ep-places',
+        description: '‘Places’, the second EP by Brussels-based artist Loumana, offers a captivating sonic journey that goes beyond pure musical expression. Through a delicate fusion of electronic and orchestral elements, Loumana explores the theme of self-discovery and the pursuit of a space that is uniquely one’s own. The EP unfolds as a poetic exploration of the desire to be somewhere else, a personal sanctuary.'
+      },
+      'geometrie': {
+        title: 'Géométrie EP',
+        year: '2019',
+        producedBy: 'Loumana',
+        mixedBy: 'Loumana',
+        masteredBy: 'Dr Blaster',
+        collaborators: 'Roxy Rose',
+        label: 'Cosmic Pop Records',
+        dominantColor: '#381347',
+        spotify: 'https://open.spotify.com/album/6oFQCKzK0Lhwi1tA7wtncX',
+        appleMusic: 'https://music.apple.com',
+        youtube: 'https://www.youtube.com/watch?v=UOQmkozfGkM&list=OLAK5uy_k21zg-b7DPIVqrMS0voKgCWF_qUlrmM9Y',
+        bandcamp: 'https://cosmicpoprecords.bandcamp.com/album/cpr020-g-om-trie',
+        description: '« Est-ce qu\'il y a des migrants dans l\'espace ? On les appelle extra-terrestres, les migrants de l\'espace ! » Entre paroles sensées et gros beat, Loumana nous invite directement et intimement dans sa bulle dès le premier track, Ligne. Un univers riche mêlant future beat, hip-hop atmosphérique et synthèses cosmiques.'
+      },
+      'nethaan': {
+        title: 'Nethaan (feat. Anthena)',
+        year: '2018',
+        producedBy: 'Loumana',
+        mixedBy: 'PHASM',
+        masteredBy: 'Peter DeWachter',
+        collaborators: 'ANTHENA (Rap Vocals)',
+        label: 'Cosmic Pop Records',
+        dominantColor: '#52290e',
+        spotify: 'https://open.spotify.com/album/33wW9SW1ABNv51zOcySkk2',
+        appleMusic: 'https://music.apple.com',
+        youtube: 'https://www.youtube.com',
+        bandcamp: 'https://x-pert.bandcamp.com/album/nethaan',
+        description: 'Loumana et Anthéna unissent leurs forces pour créer "Nethaan", un EP qui fusionne musique électronique et rap. À travers des récits inspirés de leurs expériences personnelles d\'Anthéna et d\'histoires fictives, ce projet aborde des sujets tels que la quête de soi, l\'amour, et la sobriété dans le milieu du clubbing.'
+      },
+      'six-secondes': {
+        title: '6 Secondes (feat. Mahungu)',
+        year: '2021',
+        producedBy: 'Loumana',
+        mixedBy: 'KK',
+        masteredBy: 'Peter DeWachter',
+        collaborators: 'MAHUNGU (Rap Vocals)',
+        label: 'Cosmic Pop Records',
+        dominantColor: '#6e360f',
+        spotify: 'https://open.spotify.com',
+        appleMusic: 'https://music.apple.com',
+        youtube: 'https://www.youtube.com',
+        bandcamp: 'https://wafflestreetrecords.bandcamp.com/album/6-secondes',
+        description: 'Cet EP est le résultat d\'un travail collaboratif entre un Beatmaker et un Rappeur. Partageant une vision artistique commune, Loumana et Mahungu abordent le temps qui s\'écoule, la dualité Afrique-Europe, les questionnements sur la colonisation et les ruptures amoureuses sur des productions percutantes.'
+      }
+    };
+
+    const modal = document.getElementById('release-modal');
+    const modalBody = document.getElementById('modal-body');
+    const modalContentBox = document.getElementById('modal-content-box');
+    const modalCloseBtn = document.getElementById('modal-close-btn');
+    const modalBackdrop = document.getElementById('modal-backdrop');
+
+    function openReleaseModal(releaseKey) {
+      const data = releaseData[releaseKey];
+      if (!data || !modal || !modalBody) return;
+
+      if (modalContentBox) {
+        modalContentBox.style.backgroundColor = data.dominantColor;
+      }
+
+      let html = `<h2 id="modal-title">${data.title}</h2>`;
+
+      html += `<div class="release-modal-info-grid">`;
+      html += `<div class="release-modal-info-item"><span class="release-modal-info-label">Year</span><span class="release-modal-info-value">${data.year}</span></div>`;
+      html += `<div class="release-modal-info-item"><span class="release-modal-info-label">Produced By</span><span class="release-modal-info-value">${data.producedBy}</span></div>`;
+      if (data.mixedBy) html += `<div class="release-modal-info-item"><span class="release-modal-info-label">Mixed By</span><span class="release-modal-info-value">${data.mixedBy}</span></div>`;
+      if (data.masteredBy) html += `<div class="release-modal-info-item"><span class="release-modal-info-label">Mastered By</span><span class="release-modal-info-value">${data.masteredBy}</span></div>`;
+      if (data.collaborators) html += `<div class="release-modal-info-item"><span class="release-modal-info-label">Collaborators</span><span class="release-modal-info-value">${data.collaborators}</span></div>`;
+      if (data.label) html += `<div class="release-modal-info-item"><span class="release-modal-info-label">Label</span><span class="release-modal-info-value">${data.label}</span></div>`;
+      html += `</div>`;
+
+      html += `<div class="release-modal-links">`;
+      if (data.spotify) {
+        html += `<a href="${data.spotify}" target="_blank" rel="noopener noreferrer" class="release-modal-link spotify">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.42 1.56-.299.421-1.02.599-1.559.3z"/></svg> Spotify
+        </a>`;
+      }
+      if (data.appleMusic) {
+        html += `<a href="${data.appleMusic}" target="_blank" rel="noopener noreferrer" class="release-modal-link apple-music">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.88-3.08.4-1.09-.5-2.08-.48-3.24 0-1.44.62-2.2.44-3.06-.4C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg> Apple Music
+        </a>`;
+      }
+      if (data.youtube) {
+        html += `<a href="${data.youtube}" target="_blank" rel="noopener noreferrer" class="release-modal-link youtube">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg> YouTube
+        </a>`;
+      }
+      if (data.bandcamp) {
+        html += `<a href="${data.bandcamp}" target="_blank" rel="noopener noreferrer" class="release-modal-link bandcamp">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M0 18.75l7.437-13.5h16.563l-7.438 13.5z"/></svg> Bandcamp
+        </a>`;
+      }
+      html += `</div>`;
+
+      if (data.description) {
+        html += `<div class="release-modal-description">`;
+        html += `<h3>About the Release</h3>`;
+        html += `<p>${data.description}</p>`;
+        html += `</div>`;
+      }
+
+      html += `<div class="release-modal-cta-wrapper">`;
+      html += `<a href="#contact" class="release-modal-cta" onclick="closeReleaseModal()">Inquire Beat / Collab</a>`;
+      html += `</div>`;
+
+      modalBody.innerHTML = html;
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeReleaseModal() {
+      if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    }
+
+    // Attach click events to all cards
+    document.querySelectorAll('.release-card-item').forEach(card => {
+      card.addEventListener('click', () => {
+        const key = card.getAttribute('data-release');
+        if (key) openReleaseModal(key);
+      });
+    });
+
+    if (modalCloseBtn) modalCloseBtn.addEventListener('click', closeReleaseModal);
+    if (modalBackdrop) modalBackdrop.addEventListener('click', closeReleaseModal);
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal && modal.classList.contains('active')) {
+        closeReleaseModal();
+      }
+    });
+
+    /* ==========================================================================
+       Interactive Audio Preview Player Engine (Vanilla HTML5 Audio)
+       ========================================================================== */
+    const beatPlayer = new Audio();
+    let currentActiveRow = null;
+
+    function formatBeatTime(seconds) {
+      if (isNaN(seconds) || seconds === Infinity || !isFinite(seconds)) return '00:00';
+      const m = Math.floor(seconds / 60);
+      const s = Math.floor(seconds % 60);
+      return `${m < 10 ? '0' : ''}${m}:${s < 10 ? '0' : ''}${s}`;
+    }
+
+    document.querySelectorAll('.beat-track-row').forEach(row => {
+      const playBtn = row.querySelector('.track-play-btn');
+      const iconPlay = row.querySelector('.icon-play');
+      const iconPause = row.querySelector('.icon-pause');
+      const progressBar = row.querySelector('.track-progress-bar');
+      const progressFill = row.querySelector('.track-progress-fill');
+      const timeDisplay = row.querySelector('.track-time');
+      const audioSrc = row.getAttribute('data-src');
+
+      function togglePlay() {
+        if (currentActiveRow === row && !beatPlayer.paused) {
+          beatPlayer.pause();
+          row.classList.remove('playing');
+          if (iconPlay) iconPlay.style.display = 'block';
+          if (iconPause) iconPause.style.display = 'none';
+        } else {
+          // Pause any previously playing track and reset its icons
+          if (currentActiveRow && currentActiveRow !== row) {
+            const prevPlay = currentActiveRow.querySelector('.icon-play');
+            const prevPause = currentActiveRow.querySelector('.icon-pause');
+            currentActiveRow.classList.remove('playing');
+            if (prevPlay) prevPlay.style.display = 'block';
+            if (prevPause) prevPause.style.display = 'none';
+          }
+
+          if (beatPlayer.src !== new URL(audioSrc, window.location.href).href) {
+            beatPlayer.src = audioSrc;
+          }
+
+          beatPlayer.play().then(() => {
+            currentActiveRow = row;
+            row.classList.add('playing');
+            if (iconPlay) iconPlay.style.display = 'none';
+            if (iconPause) iconPause.style.display = 'block';
+          }).catch(err => {
+            console.warn("Audio playback notice:", err);
+          });
+        }
+      }
+
+      if (playBtn) {
+        playBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          togglePlay();
+        });
+      }
+
+      // Seek / scrub on progress bar click
+      if (progressBar) {
+        progressBar.addEventListener('click', (e) => {
+          e.stopPropagation();
+          if (beatPlayer.duration) {
+            const rect = progressBar.getBoundingClientRect();
+            const pos = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+            if (currentActiveRow !== row) {
+              togglePlay();
+            }
+            beatPlayer.currentTime = pos * beatPlayer.duration;
+          }
+        });
+      }
+    });
+
+    // Global audio update listeners
+    beatPlayer.addEventListener('timeupdate', () => {
+      if (currentActiveRow) {
+        const progressFill = currentActiveRow.querySelector('.track-progress-fill');
+        const timeDisplay = currentActiveRow.querySelector('.track-time');
+        if (progressFill && beatPlayer.duration) {
+          const pct = (beatPlayer.currentTime / beatPlayer.duration) * 100;
+          progressFill.style.width = `${pct}%`;
+        }
+        if (timeDisplay) {
+          timeDisplay.textContent = formatBeatTime(beatPlayer.currentTime);
+        }
+      }
+    });
+
+    beatPlayer.addEventListener('ended', () => {
+      if (currentActiveRow) {
+        const iconPlay = currentActiveRow.querySelector('.icon-play');
+        const iconPause = currentActiveRow.querySelector('.icon-pause');
+        const progressFill = currentActiveRow.querySelector('.track-progress-fill');
+        const timeDisplay = currentActiveRow.querySelector('.track-time');
+        currentActiveRow.classList.remove('playing');
+        if (iconPlay) iconPlay.style.display = 'block';
+        if (iconPause) iconPause.style.display = 'none';
+        if (progressFill) progressFill.style.width = '0%';
+        if (timeDisplay) timeDisplay.textContent = '00:00';
+        currentActiveRow = null;
+      }
+    });
+
+    /* ==========================================================================
+       Creative Discovery ("I Just Can't Choose") GSAP ScrollTrigger Animation
+       ========================================================================== */
+    window.addEventListener('DOMContentLoaded', () => {
+      if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+        gsap.registerPlugin(ScrollTrigger);
+
+        const discoverySection = document.querySelector('.section_discovery-container');
+        if (discoverySection) {
+          const wrapper = discoverySection.querySelector('.discovery-wrapper');
+          const component = discoverySection.querySelector('.discovery-component');
+          const imgWrap = discoverySection.querySelector('.discovery-img-wrap');
+          const heading1 = discoverySection.querySelector('.discovery-heading._1');
+          const heading2 = discoverySection.querySelector('.discovery-heading._2');
+          const imgText = discoverySection.querySelector('.discovery-img-text');
+          const imgHint = discoverySection.querySelector('.discovery-img-hint');
+          const img = discoverySection.querySelector('.discovery-img');
+          const scrollNote = discoverySection.querySelector('.discovery-scroll-note');
+
+          // Initial small keyhole box
+          gsap.set(component, {
+            width: '140px',
+            height: '90px'
+          });
+          gsap.set(img, { scale: 1.45 });
+          if (imgHint) gsap.set(imgHint, { opacity: 1 });
+          gsap.set(imgText, { opacity: 0, scale: 0.95, y: 15 });
+          gsap.set(heading1, { x: 0, opacity: 1 });
+          gsap.set(heading2, { x: 0, opacity: 1 });
+
+          const tl = gsap.timeline({
+            scrollTrigger: {
+              trigger: wrapper,
+              start: 'top top',
+              end: 'bottom bottom',
+              scrub: 1,
+            }
+          });
+
+          tl.to(component, {
+            width: '100%',
+            height: '100%',
+            ease: 'power1.inOut',
+            duration: 1
+          })
+          .to(img, {
+            scale: 1,
+            ease: 'power1.inOut',
+            duration: 1
+          }, '<');
+
+          if (imgHint) {
+            tl.to(imgHint, {
+              opacity: 0,
+              duration: 0.35,
+              ease: 'power1.out'
+            }, '<');
+          }
+
+          tl.to(heading1, {
+            x: -140,
+            opacity: 0,
+            duration: 0.7,
+            ease: 'power1.out'
+          }, '<')
+          .to(heading2, {
+            x: 140,
+            opacity: 0,
+            duration: 0.7,
+            ease: 'power1.out'
+          }, '<')
+          .to(imgText, {
+            opacity: 1,
+            scale: 1,
+            y: 0,
+            duration: 0.6,
+            ease: 'power2.out'
+          }, '<0.3');
+        }
+      }
+    });
+
+    // Featured Highlights Carousel Initialization
+    (function initNewsCarousel() {
+      const track = document.getElementById('news-carousel-track');
+      const prevBtn = document.getElementById('carousel-prev-btn');
+      const nextBtn = document.getElementById('carousel-next-btn');
+      const dots = document.querySelectorAll('.carousel-dot');
+      if (!track || !prevBtn || !nextBtn) return;
+
+      let currentSlide = 0;
+      const totalSlides = dots.length;
+
+      function updateSlide(index) {
+        currentSlide = (index + totalSlides) % totalSlides;
+        track.style.transform = `translateX(-${currentSlide * 100}%)`;
+        dots.forEach((dot, idx) => {
+          dot.classList.toggle('active', idx === currentSlide);
+        });
+      }
+
+      prevBtn.addEventListener('click', () => updateSlide(currentSlide - 1));
+      nextBtn.addEventListener('click', () => updateSlide(currentSlide + 1));
+      dots.forEach((dot, idx) => {
+        dot.addEventListener('click', () => updateSlide(idx));
+      });
+
+      // Auto play every 6 seconds
+      let autoPlayTimer = setInterval(() => updateSlide(currentSlide + 1), 6000);
+      const container = document.querySelector('.news-carousel-container');
+      if (container) {
+        container.addEventListener('mouseenter', () => clearInterval(autoPlayTimer));
+        container.addEventListener('mouseleave', () => {
+          autoPlayTimer = setInterval(() => updateSlide(currentSlide + 1), 6000);
+        });
+      }
+    })();
+    // Interactive Releases Section Logic without GSAP
+    (function initInteractiveReleases() {
+      const albumData = {
+        'places': {
+          title: 'Places EP',
+          year: '2024',
+          desc: 'An exploration of self-discovery through cinematic electronics and deep grooves. A sonic journey connecting the mind and body.',
+          credits: [
+            { role: 'Artists', name: 'Loumana' },
+            { role: 'Mix Engineer', name: 'TBD' },
+            { role: 'Master Engineer', name: 'TBD' }
+          ],
+          cover: '../../../resources/Producer and music making info/EP_COVER_PLACES_stickers.png',
+          links: [
+            { icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.42 1.56-.299.421-1.02.599-1.559.3z"/></svg>', url: 'https://open.spotify.com/album/7Hp66JUF1jvDwjZKGvsMr9' },
+            { icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.88-3.08.4-1.09-.5-2.08-.48-3.24 0-1.44.62-2.2.44-3.06-.4C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>', url: 'https://music.apple.com' },
+            { icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>', url: 'https://www.youtube.com/watch?v=as5XelcZa38' }
+          ]
+        },
+        'geometrie': {
+          title: 'Géométrie EP',
+          year: '2019',
+          desc: 'A fusion of sharp rhythmic structures and melodic soundscapes, setting the foundation for future sonic explorations.',
+          credits: [
+            { role: 'Artists', name: 'Loumana' },
+            { role: 'Mix Engineer', name: 'TBD' },
+            { role: 'Master Engineer', name: 'TBD' }
+          ],
+          cover: '../../../resources/Producer and music making info/Loumana_Geometrie_FINAL-2.jpg',
+          links: [
+            { icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.42 1.56-.299.421-1.02.599-1.559.3z"/></svg>', url: 'https://open.spotify.com/album/6oFQCKzK0Lhwi1tA7wtncX' },
+            { icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.88-3.08.4-1.09-.5-2.08-.48-3.24 0-1.44.62-2.2.44-3.06-.4C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>', url: 'https://music.apple.com' },
+            { icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>', url: 'https://www.youtube.com/watch?v=UOQmkozfGkM' }
+          ]
+        },
+        'nethaan': {
+          title: 'Nethaan (ft. Anthena)',
+          year: '2018',
+          desc: 'A collaborative project showcasing soulful vocals floating over intricately produced modern beats.',
+          credits: [
+            { role: 'Artists', name: 'Loumana, Anthena' },
+            { role: 'Mix Engineer', name: 'TBD' },
+            { role: 'Master Engineer', name: 'TBD' }
+          ],
+          cover: '../../../resources/Producer and music making info/http___gather.fandalism.com_2420727--6E9DBFAA-967C-43BD-B9893354019117FA--0--12767813--NETHAANFINALCORR2.jpg',
+          links: [
+            { icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.42 1.56-.299.421-1.02.599-1.559.3z"/></svg>', url: 'https://open.spotify.com/album/33wW9SW1ABNv51zOcySkk2' },
+            { icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.88-3.08.4-1.09-.5-2.08-.48-3.24 0-1.44.62-2.2.44-3.06-.4C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>', url: 'https://music.apple.com' },
+            { icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M0 18.75l7.437-13.5h16.563l-7.438 13.5z"/></svg>', url: 'https://x-pert.bandcamp.com/album/nethaan' }
+          ]
+        },
+        'six-secondes': {
+          title: '6 Secondes (ft. Mahungu)',
+          year: '2021',
+          desc: 'A punchy and precise release reflecting the rapid pace of inspiration, featuring sharp verses by Mahungu.',
+          credits: [
+            { role: 'Artists', name: 'Loumana, Mahungu' },
+            { role: 'Mix Engineer', name: 'TBD' },
+            { role: 'Master Engineer', name: 'TBD' }
+          ],
+          cover: '../../../resources/Producer and music making info/Cover 6 secondes EP mahugu-loumana.jpg',
+          links: [
+            { icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M0 18.75l7.437-13.5h16.563l-7.438 13.5z"/></svg>', url: 'https://wafflestreetrecords.bandcamp.com/album/6-secondes' }
+          ]
+        }
+      };
+
+      const selectors = document.querySelectorAll('.selector-item');
+      const cover = document.getElementById('main-release-cover');
+      const infoPanel = document.getElementById('release-info-panel');
+      const title = document.getElementById('release-title');
+      const year = document.getElementById('release-year');
+      const desc = document.getElementById('release-desc');
+      const creditsContainer = document.getElementById('release-credits');
+      const linksContainer = document.getElementById('release-links');
+
+      if (!selectors.length || !cover || !infoPanel) return;
+
+      // Initialize credits on first load
+      const initialId = document.querySelector('.selector-item.active')?.dataset.id || 'places';
+      if(albumData[initialId] && creditsContainer) {
+        creditsContainer.innerHTML = '';
+        albumData[initialId].credits.forEach(credit => {
+          const div = document.createElement('div');
+          div.className = 'credit-item';
+          div.innerHTML = `<span>${credit.role}:</span> ${credit.name}`;
+          creditsContainer.appendChild(div);
+        });
+      }
+
+      selectors.forEach(selector => {
+        selector.addEventListener('click', () => {
+          const id = selector.dataset.id;
+          if (selector.classList.contains('active')) return;
+          
+          selectors.forEach(s => s.classList.remove('active'));
+          selector.classList.add('active');
+
+          infoPanel.classList.add('fading');
+          cover.style.opacity = '0';
+          
+          setTimeout(() => {
+            const data = albumData[id];
+            if(data) {
+              cover.src = data.cover;
+              
+              title.textContent = data.title;
+              year.textContent = data.year;
+              desc.textContent = data.desc;
+
+              if(creditsContainer) {
+                creditsContainer.innerHTML = '';
+                data.credits.forEach(credit => {
+                  const div = document.createElement('div');
+                  div.className = 'credit-item';
+                  div.innerHTML = `<span>${credit.role}:</span> ${credit.name}`;
+                  creditsContainer.appendChild(div);
+                });
+              }
+
+              linksContainer.innerHTML = '';
+              data.links.forEach(link => {
+                const a = document.createElement('a');
+                a.href = link.url;
+                a.className = 'release-link-btn';
+                a.innerHTML = link.icon;
+                a.target = '_blank';
+                a.rel = 'noopener noreferrer';
+                linksContainer.appendChild(a);
+              });
+            }
+            
+            infoPanel.classList.remove('fading');
+            cover.style.opacity = '1';
+          }, 400); 
+        });
+      });
+    })();
+
+  </script>
+
+</body>
+</html>

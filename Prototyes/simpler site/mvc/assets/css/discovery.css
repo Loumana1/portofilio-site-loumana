@@ -1,0 +1,170 @@
+/* ==========================================================================
+   Creative Discovery / Transition Section ("I Just Can't Choose")
+   ========================================================================== */
+    }
+
+    /* ==========================================================================
+       Creative Discovery / Transition Section ("I Just Can't Choose")
+       ========================================================================== */
+    .section_discovery-container {
+      width: 100%;
+      position: relative;
+      margin-top: 36px;
+      margin-bottom: 24px;
+      z-index: 20;
+    }
+
+    .discovery-wrapper {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      height: 200vh;
+      position: relative;
+    }
+
+    .discovery-scroll-note {
+      position: absolute;
+      top: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: var(--font-main);
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      color: #ffffff;
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(12px);
+      padding: 6px 16px;
+      border-radius: 20px;
+      z-index: 30;
+      opacity: 0.9;
+      pointer-events: none;
+    }
+
+    .discovery-sticky {
+      position: sticky;
+      top: 90px;
+      width: 100%;
+      height: calc(100vh - 120px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      border-radius: 20px;
+    }
+
+    .discovery-component {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      width: 140px;
+      height: 90px;
+    }
+
+    .discovery-img-wrap {
+      border-radius: 1rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+      border: none;
+      box-shadow: none;
+    }
+
+    .discovery-img {
+      object-fit: cover;
+      width: 100%;
+      height: 100%;
+      max-width: none;
+    }
+
+    .discovery-heading {
+      font-family: var(--font-main);
+      font-size: clamp(1.1rem, 2.2vw, 1.85rem);
+      line-height: 1.1;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #ffffff;
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    .discovery-heading._1 {
+      right: calc(100% + 1.8rem);
+    }
+
+    .discovery-heading._2 {
+      left: calc(100% + 1.8rem);
+    }
+
+    .discovery-img-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: var(--font-main);
+      font-size: clamp(1.4rem, 2.8vw, 2.4rem);
+      line-height: 1.1;
+      font-weight: 500;
+      color: #ffffff;
+      text-align: center;
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+      z-index: 5;
+      opacity: 0;
+      pointer-events: none;
+      padding: 0 20px;
+    }
+
+    .discovery-img-hint {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: var(--font-main);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      color: #ffffff;
+      background: rgba(0, 0, 0, 0.45);
+      backdrop-filter: blur(8px);
+      padding: 4px 10px;
+      border-radius: 12px;
+      white-space: nowrap;
+      pointer-events: none;
+      z-index: 4;
+    }
+
+    @media (max-width: 900px) {
+      .discovery-heading {
+        font-size: clamp(0.95rem, 2.5vw, 1.35rem);
+      }
+      .discovery-heading._1 {
+        right: calc(100% + 0.8rem);
+      }
+      .discovery-heading._2 {
+        left: calc(100% + 0.8rem);
+      }
+      .discovery-img-text {
+        font-size: clamp(1.2rem, 3.5vw, 1.8rem);
+      }
+    }
+
+    .project-caption {
+      font-size: 1.35rem;
+      font-weight: 400;
+      color: var(--text-dark);
+      line-height: 1.38;
+      max-width: 95%;
+      letter-spacing: -0.01em;
+    }
+

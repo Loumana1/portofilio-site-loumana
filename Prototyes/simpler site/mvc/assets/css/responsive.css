@@ -1,0 +1,90 @@
+/* ==========================================================================
+   Mobile Responsiveness
+   ========================================================================== */
+    @media (max-width: 960px) {
+      .layout-container {
+        flex-direction: column;
+      }
+
+      .sidebar-wrapper {
+        position: relative;
+        width: 100%;
+        height: auto;
+        padding: 16px;
+      }
+
+      .sidebar-box {
+        height: auto;
+      }
+
+      .main-wrapper {
+        margin-left: 0;
+        padding: 16px 16px 60px 16px;
+      }
+
+      .hero-3d-stage {
+        gap: 20px;
+      }
+
+      .floaty-model-canvas {
+        height: 240px;
+      }
+
+      .showcase-grid,
+      .showcase-grid.reverse {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .showcase-card {
+        padding: 24px 18px;
+      }
+
+      .dev-computer-canvas {
+        height: 220px;
+      }
+
+      .skills-bento-container {
+        padding: 24px 18px;
+      }
+
+      .top-nav-bar {
+        justify-content: center;
+        padding: 10px 14px;
+      }
+
+      .top-nav-buttons {
+        justify-content: center;
+      }
+
+      .nav-pill-btn {
+        font-size: 1.12rem;
+        padding: 8px 16px;
+      }
+
+      .nav-dropdown-menu {
+        min-width: 210px;
+        left: 50%;
+      }
+
+      .split-section-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .radio-info-stack {
+        grid-template-columns: 1fr;
+      }
+
+      .media-hero {
+        min-height: 280px;
+        padding: 28px 20px;
+      }
+
+      .media-hero h3 {
+        font-size: 1.8rem;
+      }
+
+      .project-caption {
+        font-size: 1.15rem;
+      }
+    }

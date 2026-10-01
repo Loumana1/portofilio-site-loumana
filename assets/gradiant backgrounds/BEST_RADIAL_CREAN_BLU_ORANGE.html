@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Final Prototype - Cream Nuance Drift</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            overflow-x: auto;
+            overflow-y: hidden;
+            height: 100vh;
+            background: #fff;
+        }
+
+        .scroll-container {
+            width: 200vw;
+            height: 100vh;
+            position: relative;
+            display: flex;
+        }
+
+        /* 
+           FINAL DESIGN MODIFICATION:
+           - User requested "cream shade on section 1 at the place of the 'white'".
+           - We use #FFF8E7 (Cream) as the base base nuance for the top-left area.
+        */
+        .atmospheric-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            /* Changed base from Pale Blue to a warm Cream to provide that "nuance" */
+            background-color: #FFF8E7;
+            overflow: hidden;
+        }
+
+        /* 
+           ORGANIC BLOBS (Giant Radial Gradients)
+        */
+
+        /* 1. Deep Blue Cloud (Top Left - Start) */
+        /* Slightly reduced opacity to let the Cream Nuance shine through */
+        .blob-blue {
+            position: absolute;
+            top: -50vh;
+            left: -20vw;
+            width: 80vmax;
+            height: 80vmax;
+            background: radial-gradient(circle,
+                    #87CEEB 0%,
+                    #6BB6E0 25%,
+                    #4FA3D5 50%,
+                    transparent 70%);
+            opacity: 0.85;
+            /* Reduced from 0.9 */
+            mix-blend-mode: multiply;
+            /* Allows cream background to warm it up */
+        }
+
+        /* 1.5 NEW NUANCE BLOB: Cream Highlight in Section 1 */
+        /* This specifically targets the "white/empty" space in Section 1 */
+        .blob-nuance {
+            position: absolute;
+            top: 10vh;
+            left: 10vw;
+            width: 50vmax;
+            height: 50vmax;
+            background: radial-gradient(circle,
+                    #FFF8E7 0%,
+                    #FFE8C8 40%,
+                    transparent 70%);
+            opacity: 0.9;
+            mix-blend-mode: lighten;
+            z-index: 2;
+            /* Sits on top of the blue to "bleach" it slightly into cream */
+        }
+
+        /* 2. Light Blue/Cyan Drift (Middle Transition) */
+        .blob-cyan {
+            position: absolute;
+            top: 10vh;
+            left: 40vw;
+            width: 60vmax;
+            height: 60vmax;
+            background: radial-gradient(circle,
+                    #A8D8F0 0%,
+                    #C8E8F8 30%,
+                    transparent 60%);
+            opacity: 0.7;
+            mix-blend-mode: overlay;
+        }
+
+        /* 3. Cream/Transition Blob (Bridge at meeting point) */
+        .blob-cream {
+            position: absolute;
+            top: 30vh;
+            left: 80vw;
+            width: 50vmax;
+            height: 50vmax;
+            background: radial-gradient(circle,
+                    #FFE8C8 0%,
+                    #FFD84D 30%,
+                    transparent 65%);
+            opacity: 0.6;
+            mix-blend-mode: screen;
+        }
+
+        /* 4. Golden Glow (Bottom Right - End) */
+        .blob-yellow {
+            position: absolute;
+            bottom: -50vh;
+            right: -20vw;
+            width: 80vmax;
+            height: 80vmax;
+            background: radial-gradient(circle,
+                    #FFD700 0%,
+                    #FFC700 20%,
+                    #FFB84D 40%,
+                    transparent 70%);
+            opacity: 0.9;
+        }
+
+        /* 5. Additional mixing blob */
+        .blob-mix {
+            position: absolute;
+            top: 20vh;
+            left: 100vw;
+            width: 70vmax;
+            height: 70vmax;
+            background: radial-gradient(circle,
+                    #FFD84D 0%,
+                    #FFE8C8 25%,
+                    #C8E8F8 50%,
+                    transparent 70%);
+            opacity: 0.5;
+            mix-blend-mode: overlay;
+        }
+
+        /* Noise Texture */
+        .noise-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.4'/%3E%3C/svg%3E");
+            background-size: 200px 200px;
+            opacity: 0.4;
+            mix-blend-mode: overlay;
+            pointer-events: none;
+            z-index: 3;
+        }
+
+        /* Content */
+        .content-layer {
+            position: relative;
+            z-index: 4;
+            display: flex;
+            width: 100%;
+            height: 100%;
+        }
+
+        .section {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            background: transparent;
+        }
+
+        h1 {
+            font-size: clamp(2rem, 5vw, 4rem);
+            font-weight: 700;
+            color: #2a2a2a;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 8px rgba(255, 255, 255, 0.3);
+        }
+
+        .section-info {
+            font-size: clamp(0.9rem, 2vw, 1.2rem);
+            color: #333;
+            font-weight: 400;
+        }
+
+        .scroll-hint {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.9);
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            color: #333;
+            z-index: 1000;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="scroll-hint">← Scroll: Blue & Cream Nuance → Golden Yellow</div>
+
+    <div class="scroll-container">
+        <div class="atmospheric-background">
+            <div class="blob-blue"></div>
+            <div class="blob-nuance"></div> <!-- NEW Cream Nuance -->
+            <div class="blob-cyan"></div>
+            <div class="blob-cream"></div>
+            <div class="blob-mix"></div>
+            <div class="blob-yellow"></div>
+            <div class="noise-overlay"></div>
+        </div>
+
+        <div class="content-layer">
+            <div class="section">
+                <h1>Section 1</h1>
+                <p class="section-info">Blue with Cream Nuance</p>
+            </div>
+            <div class="section">
+                <h1>Section 2</h1>
+                <p class="section-info">Seamless Drift into Yellow</p>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

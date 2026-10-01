@@ -1,0 +1,750 @@
+/* ==========================================================================
+   Sample Packs, Showcase Blocks, Dev Projects Grid
+   ========================================================================== */
+    }
+
+    /* ==========================================================================
+       Sample Packs & VST Presets Section (~10€ Packs)
+       ========================================================================== */
+    .soundpacks-compact-box {
+      margin-top: 14px;
+      background: var(--glass-card);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      padding: 24px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+    }
+
+    .soundpacks-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 14px;
+      border-bottom: 1px dashed var(--border-dashed);
+      padding-bottom: 14px;
+    }
+
+    .soundpacks-title-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .soundpacks-tag {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent-blue);
+    }
+
+    .soundpacks-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.5rem, 2.6vw, 2rem);
+      line-height: 1.05;
+      letter-spacing: 0.02em;
+      color: var(--text-dark);
+      margin: 0;
+    }
+
+    .soundpacks-subtitle {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin: 4px 0 0 0;
+      line-height: 1.45;
+    }
+
+    .soundpacks-store-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 18px;
+      background: var(--text-dark);
+      color: #ffffff;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      text-decoration: none;
+      border-radius: 20px;
+      transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .soundpacks-store-link:hover {
+      transform: translateY(-2px);
+      background: var(--accent-blue);
+      box-shadow: 0 6px 20px rgba(23, 146, 207, 0.35);
+    }
+
+    .soundpacks-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    @media (max-width: 992px) {
+      .soundpacks-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 540px) {
+      .soundpacks-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .soundpack-card {
+      background: rgba(255, 255, 255, 0.45);
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      border-radius: 14px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      position: relative;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    }
+
+    .soundpack-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+      border-color: rgba(23, 146, 207, 0.4);
+    }
+
+    .soundpack-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 3px 8px;
+      border-radius: 8px;
+      background: rgba(0, 0, 0, 0.7);
+      color: #ffffff;
+      backdrop-filter: blur(8px);
+      z-index: 2;
+    }
+
+    .soundpack-badge.vst { background: #1792cf; }
+    .soundpack-badge.samples { background: #e85a4f; }
+    .soundpack-badge.loops { background: #8e44ad; }
+    .soundpack-badge.vocals { background: #27ae60; }
+
+    .soundpack-artwork {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #181c24, #0b0d13);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .soundpack-artwork::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 30%, rgba(23, 146, 207, 0.25), transparent 70%);
+      pointer-events: none;
+    }
+
+    .soundpack-art-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 4px;
+      z-index: 1;
+      padding: 10px;
+    }
+
+    .art-icon { font-size: 1.8rem; line-height: 1; }
+    .art-title {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: 0.04em;
+    }
+    .art-sub {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: rgba(255, 255, 255, 0.6);
+      text-transform: uppercase;
+    }
+
+    .soundpack-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .soundpack-name {
+      font-family: var(--font-body);
+      font-weight: 700;
+      font-size: 0.92rem;
+      margin: 0;
+      color: var(--text-dark);
+      line-height: 1.25;
+    }
+
+    .soundpack-desc {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.35;
+    }
+
+    .soundpack-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 6px;
+      padding-top: 8px;
+      border-top: 1px dashed rgba(0, 0, 0, 0.08);
+    }
+
+    .soundpack-price {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--text-dark);
+    }
+
+    .soundpack-btn {
+      padding: 6px 14px;
+      border-radius: 14px;
+      background: var(--text-dark);
+      color: #ffffff;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+
+    /* ==========================================================================
+       Art & Audio / 808 MAX Side-by-Side Showcase Sections
+       ========================================================================== */
+    .showcase-block {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 10px;
+      margin-bottom: 24px;
+    }
+
+    .showcase-card {
+      width: 100%;
+      background: var(--glass-card);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      padding: 32px;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.06);
+    }
+
+    .showcase-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.05fr;
+      gap: 32px;
+      align-items: center;
+    }
+
+    .showcase-grid.reverse {
+      grid-template-columns: 1.15fr 0.85fr;
+    }
+
+    .showcase-info {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .showcase-badge-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .showcase-pill {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 12px;
+      border-radius: 20px;
+      background: rgba(18, 19, 22, 0.08);
+      color: var(--text-dark);
+      border: 1px solid rgba(18, 19, 22, 0.12);
+    }
+
+    .showcase-pill.highlight {
+      background: #ee382b;
+      color: #ffffff;
+      border: none;
+    }
+
+    .showcase-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 3.4vw, 2.9rem);
+      line-height: 1.05;
+      letter-spacing: 0.02em;
+      color: var(--text-dark);
+      text-transform: uppercase;
+    }
+
+    .showcase-subtitle {
+      font-family: var(--font-main);
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-top: -6px;
+    }
+
+    .showcase-desc {
+      font-family: var(--font-main);
+      font-size: 0.94rem;
+      line-height: 1.6;
+      color: var(--text-muted);
+    }
+
+    .showcase-meta-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .showcase-tag {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--text-dark);
+      background: rgba(255, 255, 255, 0.65);
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid rgba(18, 19, 22, 0.08);
+      font-weight: 600;
+    }
+
+    .showcase-media-frame {
+      width: 100%;
+      border-radius: 14px;
+      overflow: hidden;
+      position: relative;
+      background: #000000;
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .showcase-media-frame:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.22);
+    }
+
+    .showcase-img {
+      width: 100%;
+      height: 100%;
+      max-height: 360px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+
+    .showcase-media-frame:hover .showcase-img {
+      transform: scale(1.02);
+    }
+
+    .showcase-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      width: fit-content;
+      margin-top: 6px;
+      padding: 10px 22px;
+      background: var(--text-dark);
+      color: #ffffff;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 24px;
+      transition: all 0.2s ease;
+    }
+
+    .showcase-btn:hover {
+      background: #000000;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+    }
+
+    /* ==========================================================================
+       Radio Residencies Section (Free-Floating DJ Drawing & Stacked Media Cards)
+       ========================================================================== */
+    .radio-split-showcase {
+      display: block;
+      margin-top: 16px;
+    }
+
+    /* Left Column: Pure Free-Floating Hand-Drawn DJ Sketch (No background, No border) */
+    .radio-free-drawing {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      padding: 0;
+    }
+
+    .radio-free-drawing-img {
+      width: 100%;
+      height: auto;
+      max-height: 520px;
+      object-fit: contain;
+      filter: drop-shadow(0 14px 32px rgba(0, 0, 0, 0.08));
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .radio-free-drawing:hover .radio-free-drawing-img {
+      transform: scale(1.02);
+    }
+
+    /* Right Column: Stacked Radio Residency Cards */
+    .radio-info-stack {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .radio-residency-card {
+      background: transparent;
+      border: none;
+      border-radius: 22px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: none;
+      transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .radio-residency-card:hover {
+      transform: translateY(-3px);
+    }
+
+    .radio-card-media-wrap {
+      position: relative;
+      width: 100%;
+      height: 140px;
+      overflow: hidden;
+      background: #111215;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .radio-card-media-wrap.kiosk-bg {
+      background: linear-gradient(135deg, #18191c 0%, #0d0e10 100%);
+      height: 130px;
+      padding: 12px;
+    }
+
+    .radio-card-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      transition: transform 0.4s ease;
+    }
+
+    .radio-residency-card:hover .radio-card-img {
+      transform: scale(1.04);
+    }
+
+    .radio-card-logo-img {
+      max-width: 170px;
+      max-height: 80px;
+      object-fit: contain;
+      filter: drop-shadow(0 6px 18px rgba(0, 0, 0, 0.6));
+      transition: transform 0.3s ease;
+    }
+
+    .radio-residency-card:hover .radio-card-logo-img {
+      transform: scale(1.06);
+    }
+
+    .radio-card-badge-overlay {
+      position: absolute;
+      bottom: 10px;
+      left: 12px;
+      z-index: 2;
+    }
+
+    .radio-card-body {
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .radio-card-header {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .radio-card-title {
+      font-family: var(--font-display);
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--text-dark);
+      margin: 0;
+      line-height: 1.15;
+    }
+
+    .radio-card-subtitle {
+      font-family: var(--font-main);
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    .radio-card-desc {
+      font-family: var(--font-main);
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: var(--text-dark);
+      margin: 0;
+    }
+
+    .radio-card-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 2px;
+      flex-wrap: wrap;
+    }
+
+    .radio-badge {
+      background: rgba(0, 0, 0, 0.78);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      color: #ffffff;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* ==========================================================================
+       Floating 3D Computer & Dev Projects Showcase Grid
+       ========================================================================== */
+    .dev-hero-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      margin-top: 20px;
+      margin-bottom: 28px;
+      position: relative;
+    }
+
+    .dev-computer-canvas {
+      width: 100%;
+      max-width: 680px;
+      height: 420px;
+      position: relative;
+      cursor: grab;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: -10px;
+    }
+
+    .dev-computer-canvas:active {
+      cursor: grabbing;
+    }
+
+    .dev-computer-canvas canvas {
+      width: 100% !important;
+      height: 100% !important;
+      display: block;
+    }
+
+    .dev-hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.4rem, 4.2vw, 3.8rem);
+      line-height: 1;
+      letter-spacing: 0.02em;
+      color: var(--text-dark);
+      text-transform: uppercase;
+      margin-top: 6px;
+      margin-bottom: 8px;
+    }
+
+    .dev-hero-subtitle {
+      font-family: var(--font-main);
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      max-width: 600px;
+    }
+
+    .dev-projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+      width: 100%;
+      margin-top: 14px;
+    }
+
+    .dev-card {
+      background: var(--glass-card);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      padding: 24px;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 16px;
+      text-decoration: none;
+      color: inherit;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .dev-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
+      border-color: rgba(18, 19, 22, 0.35);
+    }
+
+    .dev-card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .browser-dots {
+      display: flex;
+      gap: 5px;
+    }
+
+    .browser-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(18, 19, 22, 0.25);
+    }
+
+    .dev-card-pill {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      background: rgba(255, 255, 255, 0.6);
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+
+    .dev-card-icon-wrap {
+      width: 52px;
+      height: 52px;
+      border-radius: 12px;
+      background: rgba(18, 19, 22, 0.06);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      color: var(--text-dark);
+      margin-top: 4px;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .dev-card:hover .dev-card-icon-wrap {
+      transform: scale(1.08);
+      background: var(--text-dark);
+      color: #ffffff;
+    }
+
+    .dev-card-content h3 {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      letter-spacing: 0.02em;
+      line-height: 1.1;
+      color: var(--text-dark);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+
+    .dev-card-content p {
+      font-family: var(--font-main);
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+
+    .dev-card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px dashed var(--border-dashed);
+      padding-top: 12px;
+      margin-top: 4px;
+    }
+
+    .dev-card-tech {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .dev-card-arrow {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      transition: transform 0.2s ease;
+    }
+
+    .dev-card:hover .dev-card-arrow {
+      transform: translate(3px, -3px);
+    }
+

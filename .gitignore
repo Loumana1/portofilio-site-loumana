@@ -1,0 +1,43 @@
+# Dependencies, build output, OS files
+node_modules/
+dist/
+.vite/
+.DS_Store
+
+# Media and models. These stay on disk; they are too large for this repo.
+*.mp4
+*.mov
+*.mp3
+*.ply
+*.max
+
+# Other files over 1 MB
+assets/images/adorable-floating.jpg
+assets/images/box1.jpg
+assets/images/box2.jpg
+assets/images/box3.jpg
+assets/images/box4.jpg
+assets/images/bruzz_radio.jpg
+assets/images/hero-floating.jpg
+assets/media/Dj_carrer_drawing.png
+assets/media/Dj_carrer_drawing_no_bg.png
+assets/media/dj-2.jpg
+assets/media/dj-3.jpg
+assets/media/dj-4.jpg
+assets/media/dj-7.jpg
+assets/media/dj_onPlane_no_bg.png
+assets/media/landing-3.jpg
+assets/media/radio-4.jpg
+assets/media/release-2.png
+assets/media/release-3.png
+assets/media/release-4.jpg
+assets/media/tour-1.jpg
+assets/media/tour-2.jpg
+assets/media/tour-3.jpg
+assets/media/tour-4.jpg
+assets/media/tour-5.jpg
+assets/media/tour-6.jpg
+assets/media/tour-7.png
+assets/models/computer-model.js
+assets/models/moog-model.js
+Prototyes/Loumana_Geometrie_FINAL-2.jpg

@@ -1,0 +1,138 @@
+/* ==========================================================================
+   Base Styles: Reset, CSS Tokens, Fonts, Body, Background & Noise
+   ========================================================================== */
+
+/* Local Font Face Declarations */
+@font-face {
+  font-family: 'BDO Grotesk';
+  src: url('../../../assets/fonts/bdogrotesk-vf.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Cactus Jack';
+  src: url('../../../assets/fonts/cactus-jack.ttf') format('truetype'),
+       url('../../../assets/fonts/cactus-jack.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Cactus Jack Alternate';
+  src: url('../../../assets/fonts/cactus-jack-alternate.ttf') format('truetype'),
+       url('../../../assets/fonts/cactus-jack-alternate.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* CSS Reset & Tokens */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --font-main: 'BDO Grotesk', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-display: 'Cactus Jack', 'Bebas Neue', sans-serif;
+  --font-mono: 'Space Grotesk', monospace;
+  
+  --text-dark: #121316;
+  --text-muted: #3d424a;
+  --glass-bg: rgba(255, 255, 255, 0.45);
+  --glass-card: rgba(255, 255, 255, 0.65);
+  --glass-pill: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.75);
+  --border-dashed: rgba(18, 19, 22, 0.35);
+  --accent-blue: #1792cf;
+  --accent-yellow: #e8c94a;
+  --accent-teal: #47b1d4;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  background-color: #5fc0e4;
+  color: var(--text-dark);
+  font-family: var(--font-main);
+  line-height: 1.5;
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Atmospheric Organic Gradient Background (Blue-Yellow Drift) */
+.atmospheric-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -2;
+  background-color: #5fc0e4;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.blob-1 {
+  position: absolute;
+  top: -30vh;
+  left: -20vw;
+  width: 100vw;
+  height: 120vh;
+  background: radial-gradient(circle, #1792cf 0%, transparent 70%);
+  opacity: 0.95;
+}
+
+.blob-2 {
+  position: absolute;
+  top: 15vh;
+  left: 30vw;
+  width: 80vw;
+  height: 90vh;
+  background: radial-gradient(circle, #7fd3db 0%, transparent 65%);
+  opacity: 0.85;
+  mix-blend-mode: overlay;
+}
+
+.blob-3 {
+  position: absolute;
+  bottom: -40vh;
+  right: -15vw;
+  width: 110vw;
+  height: 120vh;
+  background: radial-gradient(circle, #e8c94a 0%, transparent 70%);
+  opacity: 0.92;
+}
+
+.blob-4 {
+  position: absolute;
+  top: 5vh;
+  right: 10vw;
+  width: 60vw;
+  height: 70vh;
+  background: radial-gradient(circle, #ded16b 0%, transparent 70%);
+  opacity: 0.65;
+}
+
+/* Fractal Noise Grain Overlay */
+.noise-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.5'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+  opacity: 0.22;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+  z-index: -1;
+}

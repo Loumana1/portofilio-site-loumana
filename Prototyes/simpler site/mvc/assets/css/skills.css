@@ -1,0 +1,94 @@
+/* ==========================================================================
+   Skills Bento Grid
+   ========================================================================== */
+    .skills-bento-container {
+      width: 100%;
+      background: var(--glass-card);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      padding: 36px 32px;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.06);
+      margin-top: 10px;
+      margin-bottom: 24px;
+    }
+
+    .skills-header-wrap {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      border-bottom: 1px dashed var(--border-dashed);
+      padding-bottom: 14px;
+      margin-bottom: 24px;
+    }
+
+    .skills-main-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.2rem, 3.8vw, 3.2rem);
+      letter-spacing: 0.02em;
+      line-height: 0.9;
+      color: var(--text-dark);
+      text-transform: uppercase;
+    }
+
+    .skills-groups-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+
+    .skill-family-card {
+      background: rgba(255, 255, 255, 0.55);
+      border: 1px solid rgba(18, 19, 22, 0.1);
+      border-radius: 14px;
+      padding: 18px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    .skill-family-card:hover {
+      background: rgba(255, 255, 255, 0.85);
+      transform: translateY(-2px);
+    }
+
+    .skill-family-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .skill-family-icon {
+      font-size: 1.1rem;
+      color: var(--text-dark);
+    }
+
+    .skill-family-name {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-dark);
+    }
+
+    .skill-badges-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .skill-chip {
+      font-family: var(--font-main);
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(18, 19, 22, 0.12);
+      padding: 4px 10px;
+      border-radius: 6px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+    }
+
