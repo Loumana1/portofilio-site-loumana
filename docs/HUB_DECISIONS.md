@@ -84,9 +84,9 @@ These are **not in Git yet**. Deleting them would not be recoverable from histor
 
 The parent folder (`prototypes/`, `Archived docs/`, `resources/`) is outside this repository entirely.
 
-**Before removing the old site, commit this document and `Prototyes/`.** History currently protects the website that will not be used, and does not protect the prototypes.
+The decisions, `Prototyes/`, and `.gitignore` are committed. The obsolete site at the `src` root is removed from the working tree. The first commit, `c26e2c5`, still has those pages.
 
-After that commit, remove only the obsolete site from the working tree:
+Removed from the working tree:
 
 - `index.html`, `about.html`, `music.html`, `software.html`, `book-me.html`, `legal.html`, `beats-download.html`, `js-exo-1.html`
 - `style.css`, `script.js`, `music-style.css`, `music-script.js`, `software-style.css`, `software-script.js`
