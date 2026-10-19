@@ -1,0 +1,56 @@
+/* Palette and type for the hub.
+ * Decisions: docs/DESIGN_BACKLOG.md §1 and §2.
+ * Deep blue carries the page. Teal is darker than the old aqua so the
+ * page reads blue, not green. */
+
+@font-face {
+  font-family: 'BDO Grotesk';
+  src: url('/fonts/bdogrotesk-vf.ttf') format('truetype');
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Cactus Jack';
+  src: url('/fonts/cactus-jack.ttf') format('truetype');
+  font-display: swap;
+}
+
+:root {
+  /* ground */
+  --blue: #002366;
+  --blue-deep: #001a4d;
+  --teal: #0b4f4a;
+  --teal-dim: rgba(11, 79, 74, 0.35);
+
+  /* text */
+  --text: #ffffff;
+  --text-soft: rgba(255, 255, 255, 0.72);
+  --text-mute: rgba(255, 255, 255, 0.45);
+  --accent: #a6d1c9;
+
+  /* glass boxes, from the old software page */
+  --glass: rgba(255, 255, 255, 0.05);
+  --glass-hover: rgba(255, 255, 255, 0.12);
+  --glass-line: rgba(255, 255, 255, 0.1);
+  --glass-line-hover: rgba(255, 255, 255, 0.3);
+  --glass-blur: 10px;
+  --radius: 16px;
+
+  /* type, scale kept from the hub prototype */
+  --font-body: 'BDO Grotesk', 'Helvetica Neue', Arial, sans-serif;
+  --font-display: 'Cactus Jack', 'Helvetica Neue', Arial, sans-serif;
+  --title-hero: clamp(4.5rem, 14vw, 9rem);
+  --title-page: clamp(3.25rem, 8vw, 5.25rem);
+  --title-section: clamp(2.1rem, 4.5vw, 3rem);
+  --title-door: clamp(2.2rem, 5vw, 3.6rem);
+
+  /* rhythm */
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 1.5rem;
+  --space-lg: 2.5rem;
+  --space-xl: 4rem;
+  --max: 1120px;
+  --header-h: 4.25rem;
+}

@@ -1,0 +1,229 @@
+/* Header, used on inner pages. The home page has none. */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  height: var(--header-h);
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--glass-line);
+  background: rgba(0, 26, 77, 0.55);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+}
+
+.header .wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+}
+
+.header__mark {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  letter-spacing: 0.04em;
+}
+
+.header__nav {
+  display: flex;
+  gap: var(--space-md);
+  font-size: 0.95rem;
+  color: var(--text-soft);
+}
+
+.header__nav a:hover,
+.header__nav a[aria-current='page'] {
+  color: var(--text);
+}
+
+/* Footer, shared. */
+.footer {
+  padding: var(--space-xl) 0 var(--space-lg);
+  color: var(--text-mute);
+  font-size: 0.85rem;
+}
+
+.footer .wrap {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--space-sm);
+}
+
+.footer a:hover {
+  color: var(--text);
+}
+
+/* Door: a large text link on the home page.
+ * Arrow slides in from the left on hover, from the Gemini prototype. */
+.door {
+  position: relative;
+  display: inline-block;
+  width: fit-content;
+  font-family: var(--font-display);
+  font-size: var(--title-door);
+  line-height: 1;
+  padding-left: 0;
+  transition: color 0.2s ease, transform 0.25s ease;
+}
+
+.door::before {
+  content: '→';
+  position: absolute;
+  left: -1.1em;
+  top: 0;
+  opacity: 0;
+  color: var(--accent);
+  transition: opacity 0.2s ease, left 0.2s ease;
+}
+
+.door:hover,
+.door:focus-visible {
+  color: var(--accent);
+  transform: translateX(0.35em);
+}
+
+.door:hover::before,
+.door:focus-visible::before {
+  opacity: 1;
+  left: -1.4em;
+}
+
+/* Glass box, used on Music and Technology. */
+.glass {
+  background: var(--glass);
+  border: 1px solid var(--glass-line);
+  border-radius: var(--radius);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+}
+
+a.glass:hover,
+button.glass:hover {
+  background: var(--glass-hover);
+  border-color: var(--glass-line-hover);
+  transform: translateY(-4px);
+}
+
+/* Section spacing on inner pages. */
+.section {
+  padding: var(--space-xl) 0;
+}
+
+.section--tight {
+  padding-top: 0;
+  padding-bottom: var(--space-lg);
+}
+
+.section__head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-lg);
+}
+
+.section__head--row {
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-sm);
+}
+
+.muted {
+  color: var(--text-mute);
+  font-size: 0.9rem;
+}
+
+/* Pill: a small link or status tag. */
+.pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  border: 1px solid var(--glass-line);
+  font-size: 0.85rem;
+  color: var(--text);
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+a.pill:hover {
+  background: var(--glass-hover);
+  border-color: var(--glass-line-hover);
+}
+
+.pill--on-air {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.pill--sold-out {
+  opacity: 0.5;
+}
+
+/* Button: the one real call to action per page. */
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.9rem 1.6rem;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--blue-deep);
+  font-weight: 500;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.button:hover {
+  background: #fff;
+  transform: translateY(-2px);
+}
+
+/* 1. Hero with the 3D object */
+.hero3d {
+  padding-top: var(--space-lg);
+}
+
+.hero3d__stage {
+  height: clamp(260px, 42vh, 440px);
+  cursor: grab;
+  touch-action: pan-y;
+}
+
+.hero3d__stage:active {
+  cursor: grabbing;
+}
+
+.hero3d__stage canvas {
+  display: block;
+}
+
+.hero3d .label {
+  margin-top: var(--space-sm);
+}
+
+.hero3d__hint {
+  margin-top: var(--space-sm);
+  font-size: 0.85rem;
+}
+
+
+/* 8. Download */
+.download {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  padding: var(--space-lg);
+}
+

@@ -1,0 +1,62 @@
+/* Home: one viewport, name, one line, two doors, a footer line.
+ * Decisions: docs/DESIGN_BACKLOG.md §3. */
+.home {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: var(--space-xl) 0;
+}
+
+.home__name {
+  font-size: var(--title-hero);
+  line-height: 0.85;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  animation: rise 0.7s ease both;
+}
+
+.home__line {
+  margin-top: var(--space-md);
+  max-width: 34ch;
+  font-size: clamp(1.05rem, 1.6vw, 1.3rem);
+  color: var(--text-soft);
+  animation: rise 0.7s ease 0.1s both;
+}
+
+.home__doors {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  margin-top: var(--space-xl);
+  padding-left: 1.6em;
+  animation: rise 0.7s ease 0.2s both;
+}
+
+.home__foot {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  margin-top: auto;
+  padding-top: var(--space-xl);
+  font-size: 0.85rem;
+  color: var(--text-mute);
+  animation: rise 0.7s ease 0.3s both;
+}
+
+.home__foot a:hover {
+  color: var(--text);
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

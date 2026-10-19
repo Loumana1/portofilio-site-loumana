@@ -1,0 +1,442 @@
+/* Music page blocks. Shared bits (pill, button, glass) are in components.css. */
+
+/* 2. Timeline */
+.tl-nav {
+  display: flex;
+  gap: var(--space-xs);
+}
+
+.tl-nav__btn {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  border: 1px solid var(--glass-line);
+  color: var(--text);
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.tl-nav__btn:hover:not(:disabled) {
+  background: var(--glass-hover);
+  border-color: var(--glass-line-hover);
+}
+
+.tl-nav__btn:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.tl-viewport {
+  overflow: hidden;
+}
+
+.tl-track {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: calc(50% - var(--space-md) / 2);
+  column-gap: var(--space-md);
+  list-style: none;
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.tl-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.tl-card__img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  background: var(--teal-dim);
+}
+
+.tl-card__img--empty {
+  background:
+    radial-gradient(ellipse at 30% 30%, var(--teal) 0%, transparent 60%),
+    var(--blue-deep);
+}
+
+.tl-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  padding: var(--space-md);
+}
+
+.tl-card__meta {
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.tl-card__title {
+  font-size: 1.6rem;
+}
+
+.tl-card__place {
+  color: var(--text-soft);
+}
+
+.tl-card .pill {
+  align-self: flex-start;
+  margin-top: var(--space-xs);
+}
+
+/* 3. Upcoming shows */
+.shows {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: var(--space-sm);
+}
+
+.show {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+}
+
+.show__date {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 3rem;
+  line-height: 1;
+}
+
+.show__day {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+}
+
+.show__month {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+}
+
+.show__venue {
+  font-weight: 500;
+}
+
+.show__city {
+  font-size: 0.85rem;
+  color: var(--text-soft);
+}
+
+/* 4. Radio blocks */
+.radio-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--space-md);
+}
+
+.radio-block {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Fixed frame. Portrait photos are cropped here and cannot stretch the card. */
+.radio-block__media {
+  position: relative;
+  width: 100%;
+  height: 180px;
+  flex: 0 0 180px;
+  overflow: hidden;
+  background: var(--teal-dim);
+}
+
+.radio-block__media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  object-fit: cover;
+  object-position: center 42%;
+}
+
+.radio-block__media--logo {
+  background: radial-gradient(ellipse at 50% 50%, var(--teal) 0%, var(--blue-deep) 70%);
+}
+
+.radio-block__media--logo img {
+  inset: auto;
+  top: 50%;
+  left: 50%;
+  width: 88px;
+  height: 88px;
+  transform: translate(-50%, -50%);
+  object-fit: contain;
+}
+
+.radio-block__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  padding: var(--space-md);
+}
+
+.radio-block__name {
+  font-size: 2rem;
+}
+
+.radio-block__show {
+  color: var(--text-soft);
+}
+
+.radio-block__text {
+  font-size: 0.95rem;
+  color: var(--text-soft);
+}
+
+.radio-block__more {
+  margin-top: var(--space-xs);
+  color: var(--accent);
+}
+
+/* 5. Releases, one row each */
+.releases {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  list-style: none;
+}
+
+.release__hit {
+  display: grid;
+  grid-template-columns: 72px 1fr auto;
+  align-items: center;
+  gap: var(--space-md);
+  width: 100%;
+  padding: var(--space-sm);
+  text-align: left;
+}
+
+.release__cover {
+  width: 72px;
+  height: 72px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.release__summary {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.release__title {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  line-height: 1;
+}
+
+.release__meta {
+  font-size: 0.9rem;
+  color: var(--text-soft);
+}
+
+.release__plus {
+  font-size: 1.8rem;
+  line-height: 1;
+  color: var(--accent);
+  transition: transform 0.3s ease;
+}
+
+.release.is-open .release__plus {
+  transform: rotate(45deg);
+}
+
+.release__panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  visibility: hidden;
+  transition: grid-template-rows 0.35s ease, visibility 0s 0.35s;
+}
+
+.release.is-open .release__panel {
+  grid-template-rows: 1fr;
+  visibility: visible;
+  transition: grid-template-rows 0.35s ease, visibility 0s;
+}
+
+.release__panel-inner {
+  overflow: hidden;
+  padding: 0 var(--space-sm);
+}
+
+.release.is-open .release__panel-inner {
+  padding-bottom: var(--space-md);
+}
+
+.release__label {
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.release__story {
+  max-width: 62ch;
+  margin: var(--space-xs) 0 var(--space-sm);
+  color: var(--text-soft);
+}
+
+/* 6. Born to make beats */
+.btmb {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-lg);
+  align-items: center;
+}
+
+.btmb__text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.btmb__text p {
+  color: var(--text-soft);
+  max-width: 48ch;
+}
+
+.btmb__embed {
+  overflow: hidden;
+}
+
+.btmb__embed iframe {
+  display: block;
+}
+
+/* 7. Featured beats */
+.beats {
+  list-style: none;
+  padding: var(--space-xs);
+}
+
+.beat {
+  display: grid;
+  grid-template-columns: 48px auto 1fr minmax(80px, 200px) auto;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-xs) var(--space-sm);
+  border-bottom: 1px solid var(--glass-line);
+}
+
+.beat:last-child {
+  border-bottom: 0;
+}
+
+.beat__cover {
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.beat__play {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  border: 1px solid var(--glass-line);
+  display: grid;
+  place-items: center;
+  font-size: 0.7rem;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.beat__play:hover {
+  background: var(--glass-hover);
+  border-color: var(--glass-line-hover);
+}
+
+.beat__icon-pause,
+.beat.is-playing .beat__icon-play {
+  display: none;
+}
+
+.beat.is-playing .beat__icon-pause {
+  display: inline;
+}
+
+.beat__info {
+  display: flex;
+  flex-direction: column;
+}
+
+.beat__meta {
+  font-size: 0.85rem;
+  color: var(--text-soft);
+}
+
+.beat__bar {
+  height: 4px;
+  border-radius: 2px;
+  background: var(--glass-line);
+  cursor: pointer;
+}
+
+.beat__fill {
+  width: 0;
+  height: 100%;
+  border-radius: 2px;
+  background: var(--accent);
+}
+
+.beat__time {
+  font-size: 0.8rem;
+  color: var(--text-mute);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Elsewhere: socials + music profiles */
+.links-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-lg);
+  padding: var(--space-lg);
+}
+
+.links-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.links-list {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+}
+
+@media (max-width: 720px) {
+  .tl-track {
+    grid-auto-columns: 100%;
+  }
+
+  .btmb {
+    grid-template-columns: 1fr;
+  }
+
+  .beat {
+    grid-template-columns: 48px auto 1fr;
+  }
+
+  .beat__bar,
+  .beat__time {
+    display: none;
+  }
+
+  .links-grid {
+    grid-template-columns: 1fr;
+  }
+}
