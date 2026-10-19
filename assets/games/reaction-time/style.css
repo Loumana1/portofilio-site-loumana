@@ -1,0 +1,402 @@
+/* ============================================
+   REACTION TIME TEST - LOUMANA WEBSITE STYLE
+   Deep Blue + Aqua (Hybrid with Semantic Red/Green)
+   ============================================ */
+
+:root {
+    --color-bg-deep: #002366;
+    --color-bg-aqua: #107C74;
+    --color-text-primary: #ffffff;
+    --color-text-secondary: #A6D1C9;
+    --color-accent: #107C74;
+    --color-accent-light: #A6D1C9;
+
+    --color-red: #ff3333;
+    --color-green: #00ff00;
+
+    --font-heading: 'Bebas Neue', sans-serif;
+    --font-body: 'Inter', sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-body);
+    background-color: var(--color-bg-deep);
+    color: var(--color-text-primary);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+    padding: 20px;
+    position: relative;
+}
+
+/* Grainy Texture Overlay */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.15'/%3E%3C/svg%3E");
+    background-size: 150px 150px;
+    opacity: 0.15;
+    pointer-events: none;
+    z-index: -1;
+    mix-blend-mode: overlay;
+}
+
+/* Main Gradient Background */
+body::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at top right, #107C74 0%, transparent 40%),
+        radial-gradient(circle at bottom left, #002366 0%, transparent 40%),
+        linear-gradient(180deg, #002366 0%, #051a30 100%);
+    z-index: -2;
+}
+
+.app {
+    width: 100%;
+    max-width: 1200px;
+    height: 90vh;
+    max-height: 800px;
+    position: relative;
+    background: transparent;
+    box-shadow: none;
+    border-radius: 20px;
+    overflow: hidden;
+    border: none;
+    z-index: 10;
+}
+
+.screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+    z-index: 1;
+}
+
+.screen.active {
+    opacity: 1;
+    pointer-events: all;
+    z-index: 10;
+}
+
+/* ============================================
+   START SCREEN
+   ============================================ */
+.title {
+    font-family: var(--font-heading);
+    font-size: clamp(4rem, 10vw, 8rem);
+    font-weight: 400;
+    color: var(--color-text-primary);
+    margin-bottom: 2rem;
+    text-align: center;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-shadow: 0 0 30px rgba(16, 124, 116, 0.4);
+}
+
+.highlight {
+    color: var(--color-text-secondary);
+}
+
+.instructions {
+    font-size: 1.2rem;
+    color: var(--color-text-secondary);
+    margin-bottom: 3rem;
+    text-align: center;
+    letter-spacing: 0.5px;
+}
+
+.rules-box {
+    background: rgba(16, 124, 116, 0.15);
+    border: 1px solid rgba(166, 209, 201, 0.3);
+    padding: 2rem 3rem;
+    border-radius: 12px;
+    margin-bottom: 3rem;
+    text-align: left;
+    max-width: 600px;
+    backdrop-filter: blur(10px);
+}
+
+.rules-box p {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--color-text-primary);
+    letter-spacing: 1px;
+}
+
+.rules-box ul {
+    margin-top: 1rem;
+    padding-left: 2rem;
+    list-style: none;
+}
+
+.rules-box li {
+    margin-bottom: 0.8rem;
+    color: #fff;
+    font-size: 1.1rem;
+    position: relative;
+    padding-left: 1.5rem;
+}
+
+.rules-box li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: var(--color-text-secondary);
+    font-size: 1.2rem;
+}
+
+/* ============================================
+   GAME SCREEN
+   ============================================ */
+.game-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+}
+
+/* Click Zone - Main Interactive Area */
+.click-zone {
+    flex: 1;
+    width: 100%;
+    max-width: 800px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* State: Waiting (Blue/Aqua Theme) */
+.click-zone.waiting {
+    background: linear-gradient(135deg, rgba(16, 124, 116, 0.2) 0%, rgba(0, 35, 102, 0.4) 100%);
+    border-color: var(--color-accent);
+    backdrop-filter: blur(5px);
+}
+
+.click-zone.waiting:hover {
+    background: linear-gradient(135deg, rgba(16, 124, 116, 0.3) 0%, rgba(0, 35, 102, 0.5) 100%);
+}
+
+/* State: Ready (Wait for Green) - Dark Red/Warning feels */
+.click-zone.ready {
+    background: #3a1c1c;
+    border-color: #ff3333;
+    animation: pulse 1s infinite;
+}
+
+/* State: GO (Green) */
+.click-zone.go {
+    background: #006622;
+    border-color: #00ff00;
+    box-shadow: 0 0 80px rgba(0, 255, 0, 0.4);
+}
+
+/* State: Too Early (Red) */
+.click-zone.too-early {
+    background: #660000;
+    border-color: #ff0000;
+    animation: shake 0.5s;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.8;
+    }
+}
+
+@keyframes shake {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-10px);
+    }
+
+    75% {
+        transform: translateX(10px);
+    }
+}
+
+.message {
+    font-family: var(--font-heading);
+    font-size: clamp(3rem, 8vw, 6rem);
+    font-weight: 400;
+    letter-spacing: 2px;
+    text-align: center;
+    text-transform: uppercase;
+    color: #ffffff;
+    pointer-events: none;
+    user-select: none;
+    text-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Stats Panel */
+.stats-panel {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    width: 100%;
+    max-width: 900px;
+    padding: 1.5rem;
+    background: rgba(0, 35, 102, 0.6);
+    border-radius: 12px;
+    border: 1px solid rgba(166, 209, 201, 0.2);
+}
+
+.stat-item {
+    text-align: center;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+}
+
+.stat-label {
+    font-family: var(--font-heading);
+    font-size: 1.2rem;
+    color: var(--color-text-secondary);
+    letter-spacing: 1px;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+}
+
+.stat-value {
+    font-family: var(--font-body);
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-bottom: 0.2rem;
+}
+
+.stat-value.highlight {
+    color: var(--color-accent-light);
+    text-shadow: 0 0 15px rgba(16, 124, 116, 0.5);
+}
+
+.stat-unit {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.5);
+    text-transform: uppercase;
+}
+
+/* ============================================
+   BUTTONS
+   ============================================ */
+.btn {
+    padding: 1rem 3rem;
+    font-size: 1.5rem;
+    font-family: var(--font-heading);
+    letter-spacing: 2px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    border: 1px solid transparent;
+}
+
+.btn.primary {
+    background: var(--color-accent);
+    color: #ffffff;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    border-color: var(--color-accent);
+}
+
+.btn.primary:hover {
+    background: #ffffff;
+    color: var(--color-bg-deep);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(16, 124, 116, 0.4);
+}
+
+.btn.secondary {
+    background: transparent;
+    border: 1px solid var(--color-text-secondary);
+    color: var(--color-text-secondary);
+}
+
+.btn.secondary:hover {
+    background: var(--color-text-secondary);
+    color: var(--color-bg-deep);
+    box-shadow: 0 0 15px rgba(166, 209, 201, 0.3);
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 768px) {
+    .stats-panel {
+        grid-template-columns: repeat(2, 1fr);
+        padding: 1rem;
+    }
+
+    .stat-value {
+        font-size: 2rem;
+    }
+
+    .click-zone {
+        min-height: 300px;
+    }
+
+    .message {
+        font-size: 2.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .app {
+        height: 100vh;
+        border-radius: 0;
+    }
+
+    .screen {
+        padding: 1.5rem;
+    }
+
+    .stats-panel {
+        grid-template-columns: 1fr;
+    }
+}

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reaction Time Test</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+
+<style>.back-site{position:fixed;top:12px;left:12px;z-index:9999;padding:.55rem .9rem;border-radius:999px;background:rgba(0,0,0,.55);color:#fff;font:500 13px/1 system-ui,sans-serif;text-decoration:none;border:1px solid rgba(255,255,255,.25);backdrop-filter:blur(8px)}.back-site:hover{background:rgba(0,0,0,.75)}</style>
+<a class="back-site" href="/technology.html#games">← Technology</a>
+
+    <div class="app">
+        <!-- Start Screen -->
+        <div id="start-screen" class="screen active">
+            <h1 class="title">Reaction <span class="highlight">Time</span></h1>
+            <div class="rules-box">
+                <p><strong>How to Play:</strong></p>
+                <ul>
+                    <li>Wait for the screen to turn <strong>GREEN</strong></li>
+                    <li>Click/Tap as <strong>FAST</strong> as possible</li>
+                    <li>Your reaction time will be measured in <strong>milliseconds</strong></li>
+                    <li>Don't click too early or you'll have to restart!</li>
+                </ul>
+            </div>
+            <p class="instructions">Test your reflexes. How fast can you react?</p>
+            <button id="start-btn" class="btn primary">Start Test</button>
+        </div>
+
+        <!-- Game Screen -->
+        <div id="game-screen" class="screen">
+            <div class="game-container">
+                <div id="click-zone" class="click-zone waiting">
+                    <div class="message" id="message">Click to Begin</div>
+                </div>
+
+                <div class="stats-panel">
+                    <div class="stat-item">
+                        <div class="stat-label">Current</div>
+                        <div class="stat-value" id="current-time">---</div>
+                        <div class="stat-unit">ms</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Best</div>
+                        <div class="stat-value highlight" id="best-time">---</div>
+                        <div class="stat-unit">ms</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Average</div>
+                        <div class="stat-value" id="avg-time">---</div>
+                        <div class="stat-unit">ms</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Attempts</div>
+                        <div class="stat-value" id="attempts">0</div>
+                    </div>
+                </div>
+
+                <button id="back-btn" class="btn secondary">Back to Menu</button>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>

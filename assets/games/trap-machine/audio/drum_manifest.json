@@ -1,0 +1,95 @@
+{
+    "808_machine": {
+        "kick": [
+            "audio/808_machine/808_machine_kick_01_kick-808-12.wav"
+        ],
+        "snare": [
+            "audio/808_machine/808_machine_snare_01_bnyx-vinyl-snare.wav",
+            "audio/808_machine/808_machine_snare_02_oliver-snare-disco-mixready-hybrid.wav",
+            "audio/808_machine/808_machine_snare_03_snare-808-2.wav",
+            "audio/808_machine/808_machine_snare_04_tsp-noisia-v2-snare-clack-edit.wav",
+            "audio/808_machine/808_machine_snare_05_tsp-noisia-v2-snare-clean-clap-ish-supershort-alt.wav"
+        ],
+        "hihat": [
+            "audio/808_machine/808_machine_hihat_01_ride-cymbal-10.wav",
+            "audio/808_machine/808_machine_hihat_02_space-cadet-open-hat.wav",
+            "audio/808_machine/808_machine_hihat_03_open-hh-3.wav"
+        ],
+        "clap": [
+            "audio/808_machine/808_machine_clap_01_bnyx-crispy-clap.wav"
+        ],
+        "808": [
+            "audio/808_machine/808_machine_808_01_808-cowbell.wav",
+            "audio/808_machine/808_machine_808_02_808-rim.wav",
+            "audio/808_machine/808_machine_808_03_tom-808-low.aif"
+        ],
+        "perc": [
+            "audio/808_machine/808_machine_perc_01_bnyx-perc-18.wav"
+        ],
+        "rim": [],
+        "crash": [
+            "audio/808_machine/808_machine_crash_01_crash-2.wav"
+        ],
+        "tom": []
+    },
+    "707_machine": {
+        "kick": [
+            "audio/707_machine/707_machine_kick_01_bnyx-kick3.wav"
+        ],
+        "snare": [
+            "audio/707_machine/707_machine_snare_01_snare-707.wav",
+            "audio/707_machine/707_machine_snare_02_tsp-noisia-v2-snare-clean-clap-ish-supershort-alt.wav",
+            "audio/707_machine/707_machine_snare_03_tsp-noisia-v2-snare-light-snare-30006.wav",
+            "audio/707_machine/707_machine_snare_04_tsp-noisia-v2-snare-loop-snareje.wav"
+        ],
+        "hihat": [
+            "audio/707_machine/707_machine_hihat_01_hihat-707-closed.aif",
+            "audio/707_machine/707_machine_hihat_02_tsp-noisia-v2-hi-hat-maffe-denoise.wav",
+            "audio/707_machine/707_machine_hihat_03_ap-open-hat-real.wav",
+            "audio/707_machine/707_machine_hihat_04_bnyx-wus-gud-open-hat.wav",
+            "audio/707_machine/707_machine_hihat_05_open-hat.wav"
+        ],
+        "clap": [],
+        "808": [],
+        "perc": [
+            "audio/707_machine/707_machine_perc_01_bnyx-perc-12.wav"
+        ],
+        "rim": [
+            "audio/707_machine/707_machine_rim_01_rim-707.wav"
+        ],
+        "crash": [
+            "audio/707_machine/707_machine_crash_01_crash-7.wav"
+        ],
+        "tom": []
+    },
+    "Murda_machine": {
+        "kick": [
+            "audio/Murda_machine/Murda_machine_kick_01_bnyx-kick1.wav"
+        ],
+        "snare": [
+            "audio/Murda_machine/Murda_machine_snare_01_tsp-noisia-v2-snare-clean-clap-ish-supershort-alt.wav",
+            "audio/Murda_machine/Murda_machine_snare_02_bnyx-overweight-88-snare.wav",
+            "audio/Murda_machine/Murda_machine_snare_03_bnyx-popeyes-sandwich-snare.wav",
+            "audio/Murda_machine/Murda_machine_snare_04_bnyx-trap-snare.wav"
+        ],
+        "hihat": [
+            "audio/Murda_machine/Murda_machine_hihat_01_pv-hihat-oz.wav",
+            "audio/Murda_machine/Murda_machine_hihat_02_ride-cymbal-3.wav",
+            "audio/Murda_machine/Murda_machine_hihat_03_bnyx-hellraiser-hat.wav",
+            "audio/Murda_machine/Murda_machine_hihat_04_closed-milly-hat.wav"
+        ],
+        "clap": [
+            "audio/Murda_machine/Murda_machine_clap_01_clap-4-african-producer-bundle-seventhbeats.wav",
+            "audio/Murda_machine/Murda_machine_clap_02_bnyx-pornhub-clap.wav"
+        ],
+        "808": [
+            "audio/Murda_machine/Murda_machine_808_01_bnyx-disk-error-808.wav"
+        ],
+        "perc": [],
+        "rim": [
+            "audio/Murda_machine/Murda_machine_rim_01_bnyx-rims3.wav"
+        ],
+        "crash": [],
+        "tom": []
+    }
+}

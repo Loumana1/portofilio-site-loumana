@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rhythm Clicker</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+
+<style>.back-site{position:fixed;top:12px;left:12px;z-index:9999;padding:.55rem .9rem;border-radius:999px;background:rgba(0,0,0,.55);color:#fff;font:500 13px/1 system-ui,sans-serif;text-decoration:none;border:1px solid rgba(255,255,255,.25);backdrop-filter:blur(8px)}.back-site:hover{background:rgba(0,0,0,.75)}</style>
+<a class="back-site" href="/technology.html#games">← Technology</a>
+
+    <div class="app">
+        <!-- Start Screen -->
+        <div id="start-screen" class="screen active">
+            <h1 class="title">GOT <span class="highlight">RHYTHM?</span></h1>
+
+            <div class="rules-box">
+                <p><strong>THE CHALLENGE:</strong></p>
+                <ul>
+                    <li>3 Random Rhythms</li>
+                    <li>3 Speed Levels Each (Slow, Normal, Fast)</li>
+                    <li>Can you keep the beat as it gets faster?</li>
+                </ul>
+            </div>
+
+            <div class="settings-panel">
+                <div class="setting-group">
+                    <label for="difficulty-select">Select Difficulty:</label>
+                    <select id="difficulty-select" class="game-select">
+                        <option value="easy">Easy (Forgiving)</option>
+                        <option value="normal" selected>Normal (Standard)</option>
+                        <option value="hard">Hard (Precise)</option>
+                    </select>
+                </div>
+            </div>
+
+            <button id="start-btn" class="btn primary">START TEST</button>
+        </div>
+
+        <!-- Game Screen -->
+        <div id="game-screen" class="screen">
+            <!-- 3D Countdown Overlay -->
+            <div id="countdown-overlay" class="countdown-overlay">
+                <div id="countdown-text" class="countdown-text">READY</div>
+            </div>
+            <div class="game-container">
+                <!-- Header Info -->
+                <div class="game-header">
+                    <div class="rhythm-info">
+                        <span class="label">RHYTHM</span>
+                        <h2 id="current-rhythm-name">SON CLAVE</h2>
+                    </div>
+                    <div class="progress-info">
+                        <span class="label">ROUND</span>
+                        <h2 id="round-display">ROUND 1</h2>
+                    </div>
+                </div>
+
+                <!-- Game Phase & Timer -->
+                <div class="phase-container">
+                    <h1 id="phase-message" class="phase-message">LISTEN</h1>
+                    <div id="recreation-timer" class="recreation-timer hidden">3.00</div>
+                </div>
+
+                <!-- Beat Visualizer -->
+                <div class="visualizer-container">
+                    <div id="beat-circle" class="beat-circle"></div>
+                </div>
+
+                <!-- Click Zone -->
+                <div id="click-zone" class="click-zone">
+                    <span class="click-message">TAP HERE</span>
+                </div>
+
+                <!-- Stats -->
+                <div class="main-stats">
+                    <div class="accuracy-display">
+                        <span class="label">ACCURACY</span>
+                        <span id="accuracy" class="big-number">0%</span>
+                    </div>
+                </div>
+
+                <button id="back-btn" class="btn secondary">GIVE UP</button>
+            </div>
+        </div>
+
+        <!-- End Screen -->
+        <div id="end-screen" class="screen">
+            <h2 class="end-title">RHYTHM REPORT</h2>
+
+            <div id="rhythm-report" class="rhythm-report">
+                <!-- Report content will be injected here -->
+            </div>
+
+            <div class="final-score-box">
+                <span class="label">OVERALL RATING</span>
+                <h1 id="final-rank">RHYTHM MASTER</h1>
+            </div>
+
+            <button id="restart-btn" class="btn primary">TRY AGAIN</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
