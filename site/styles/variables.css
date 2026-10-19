@@ -5,14 +5,15 @@
 
 @font-face {
   font-family: 'BDO Grotesk';
-  src: url('/fonts/bdogrotesk-vf.ttf') format('truetype');
+  /* Relative to CSS in dist/bundle/ so GitHub project Pages base works. */
+  src: url('../fonts/bdogrotesk-vf.ttf') format('truetype');
   font-weight: 100 900;
   font-display: swap;
 }
 
 @font-face {
   font-family: 'Cactus Jack';
-  src: url('/fonts/cactus-jack.ttf') format('truetype');
+  src: url('../fonts/cactus-jack.ttf') format('truetype');
   font-display: swap;
 }
 

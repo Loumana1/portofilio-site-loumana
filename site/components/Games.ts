@@ -1,4 +1,5 @@
 import type { Project } from '../data/projects';
+import { withBase } from '../paths';
 import { esc } from './format';
 
 // Small browser pieces. Whole tile opens the playable page.
@@ -13,7 +14,7 @@ function tile(p: Project): string {
       <div class="tags">${tags}</div>
       ${cta}`;
   if (p.link) {
-    return `<a class="game glass" href="${esc(p.link.href)}">${body}</a>`;
+    return `<a class="game glass" href="${esc(withBase(p.link.href))}">${body}</a>`;
   }
   return `<article class="game glass">${body}</article>`;
 }

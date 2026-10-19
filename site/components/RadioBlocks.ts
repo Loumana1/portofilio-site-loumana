@@ -1,4 +1,5 @@
 import type { Station } from '../data/radio';
+import { withBase } from '../paths';
 import { esc } from './format';
 
 // BRUZZ and Kiosk as two blocks. Each opens the radio page.
@@ -6,10 +7,10 @@ import { esc } from './format';
 
 function block(s: Station): string {
   const media = s.logo
-    ? `<div class="radio-block__media radio-block__media--logo"><img src="${esc(s.image)}" alt="${esc(s.name)}" loading="lazy" /></div>`
-    : `<div class="radio-block__media"><img src="${esc(s.image)}" alt="" loading="lazy" /></div>`;
+    ? `<div class="radio-block__media radio-block__media--logo"><img src="${esc(withBase(s.image))}" alt="${esc(s.name)}" loading="lazy" /></div>`
+    : `<div class="radio-block__media"><img src="${esc(withBase(s.image))}" alt="" loading="lazy" /></div>`;
   return `
-    <a class="radio-block glass" href="/radio.html#${s.id}">
+    <a class="radio-block glass" href="${withBase('/radio.html')}#${s.id}">
       ${media}
       <div class="radio-block__body">
         <p class="label">${esc(s.where)}</p>

@@ -56,7 +56,13 @@ Do **not** treat `docs/archive/` as active backlog. The old 1 Oct design lock li
 
 ## Deploy goal
 
-Final hosting: **GitHub Pages**, with a CI pipeline so each change on `main` updates what visitors see. Details: `docs/backlog/procedures/github-pages-deploy.md`. Dev still uses `npm run dev` (Vite). Production is the static `dist/` output.
+Final hosting: **GitHub Pages** for [portofilio-site-loumana](https://github.com/Loumana1/portofilio-site-loumana).  
+Live (after Pages is enabled): `https://Loumana1.github.io/portofilio-site-loumana/`  
+Later domain: **loumana.co**.
+
+**Ship a change:** edit → commit (when asked) → `git push origin main` → wait for Actions green → refresh the live URL.  
+Workflow: `.github/workflows/deploy.yml`. Details: `docs/backlog/procedures/github-pages-deploy.md`.  
+Local: `npm run dev`. Production is the static `dist/` output.
 
 ---
 

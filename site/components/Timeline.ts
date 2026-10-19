@@ -1,4 +1,5 @@
 import type { TimelineEntry } from '../data/timeline';
+import { withBase } from '../paths';
 import { esc, splitDate } from './format';
 
 // Things that happened. Two cards visible, newest on the left,
@@ -7,7 +8,7 @@ import { esc, splitDate } from './format';
 function card(e: TimelineEntry): string {
   const d = splitDate(e.date);
   const img = e.image
-    ? `<img class="tl-card__img" src="${esc(e.image)}" alt="" loading="lazy" />`
+    ? `<img class="tl-card__img" src="${esc(withBase(e.image))}" alt="" loading="lazy" />`
     : `<div class="tl-card__img tl-card__img--empty"></div>`;
   const link = e.link
     ? `<a class="pill" href="${esc(e.link.href)}" target="_blank" rel="noopener">${esc(e.link.label)} ↗</a>`

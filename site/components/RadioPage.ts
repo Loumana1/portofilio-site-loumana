@@ -1,4 +1,5 @@
 import type { Station } from '../data/radio';
+import { withBase } from '../paths';
 import { esc } from './format';
 
 // Full radio page: two feature splits + short context.
@@ -6,8 +7,8 @@ import { esc } from './format';
 
 function split(s: Station, flip: boolean): string {
   const media = s.logo
-    ? `<div class="split__media split__media--logo"><img src="${esc(s.image)}" alt="${esc(s.name)}" loading="lazy" /></div>`
-    : `<div class="split__media"><img src="${esc(s.image)}" alt="" loading="lazy" /></div>`;
+    ? `<div class="split__media split__media--logo"><img src="${esc(withBase(s.image))}" alt="${esc(s.name)}" loading="lazy" /></div>`
+    : `<div class="split__media"><img src="${esc(withBase(s.image))}" alt="" loading="lazy" /></div>`;
   return `
     <article class="split glass${flip ? ' split--flip' : ''}" id="${s.id}">
       ${media}

@@ -1,4 +1,5 @@
 import type { Project } from '../data/projects';
+import { withBase } from '../paths';
 import { esc } from './format';
 
 // Large project cards: Snap to Grid, 808 MAX, Micro-opacités.
@@ -6,7 +7,7 @@ import { esc } from './format';
 
 function card(p: Project, flip: boolean): string {
   const media = p.image
-    ? `<div class="feature__media"><img src="${esc(p.image)}" alt="" loading="lazy" /></div>`
+    ? `<div class="feature__media"><img src="${esc(withBase(p.image))}" alt="" loading="lazy" /></div>`
     : `<div class="feature__media feature__media--empty"></div>`;
   const tags = p.stack.map((t) => `<span class="tag">${esc(t)}</span>`).join('');
   const cta = p.link ? `<span class="pill">${esc(p.link.label)} ↗</span>` : '';
@@ -22,8 +23,9 @@ function card(p: Project, flip: boolean): string {
   const flipClass = flip ? ' feature--flip' : '';
   if (p.link) {
     const external = p.link.href.startsWith('http');
+    const href = external ? p.link.href : withBase(p.link.href);
     return `
-    <a class="feature glass${flipClass}" id="${p.id}" href="${esc(p.link.href)}"${external ? ' target="_blank" rel="noopener"' : ''}>
+    <a class="feature glass${flipClass}" id="${p.id}" href="${esc(href)}"${external ? ' target="_blank" rel="noopener"' : ''}>
       ${body}
     </a>`;
   }

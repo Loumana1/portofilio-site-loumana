@@ -1,4 +1,5 @@
 import type { Release } from '../data/releases';
+import { withBase } from '../paths';
 import { esc } from './format';
 
 // One row per release: cover, title, year, collaborator, + to expand.
@@ -20,7 +21,7 @@ function row(r: Release): string {
   return `
     <li class="release glass" data-release="${r.id}">
       <button class="release__hit" type="button" aria-expanded="false" aria-controls="${panelId}">
-        <img class="release__cover" src="${esc(r.cover)}" alt="" loading="lazy" />
+        <img class="release__cover" src="${esc(withBase(r.cover))}" alt="" loading="lazy" />
         <span class="release__summary">
           <span class="release__title">${esc(r.title)}</span>
           <span class="release__meta">${r.year}${r.with ? ` · with ${esc(r.with)}` : ''}</span>
@@ -31,6 +32,7 @@ function row(r: Release): string {
         <div class="release__panel-inner">
           <p class="release__label">${esc(r.label)}</p>
           <p class="release__story">${esc(r.story)}</p>
+          <p class="release__credits muted">Produced ${esc(r.credits.produced)} · Mixed ${esc(r.credits.mixed)} · Mastered ${esc(r.credits.mastered)}</p>
           <div class="pills">${links}</div>
         </div>
       </div>

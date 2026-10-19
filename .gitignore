@@ -38,6 +38,6 @@ assets/media/tour-4.jpg
 assets/media/tour-5.jpg
 assets/media/tour-6.jpg
 assets/media/tour-7.png
-assets/models/computer-model.js
-assets/models/moog-model.js
+# Point-cloud model scripts are tracked (needed for GitHub Pages 3D).
+# Raw .ply scans stay ignored above (*.ply).
 Prototyes/Loumana_Geometrie_FINAL-2.jpg

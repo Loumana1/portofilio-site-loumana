@@ -1,6 +1,7 @@
 import { page } from '../main';
 import '../styles/about.css';
 import { site } from '../data/site';
+import { withBase } from '../paths';
 
 page(
   '/about.html',
@@ -35,8 +36,8 @@ page(
         </ul>
         <p class="label" style="margin-top:var(--space-md)">Doors</p>
         <ul class="about__list">
-          <li><a href="/music.html">Music</a></li>
-          <li><a href="/technology.html">Technology</a></li>
+          <li><a href="${withBase('/music.html')}">Music</a></li>
+          <li><a href="${withBase('/technology.html')}">Technology</a></li>
         </ul>
       </div>
     </div>

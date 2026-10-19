@@ -1,5 +1,6 @@
 import type { Beat } from '../data/beats';
 import { site } from '../data/site';
+import { withBase } from '../paths';
 import { esc } from './format';
 
 // Block 6: Born to Make Beats, text left, SoundCloud right.
@@ -42,8 +43,8 @@ export function BornToMakeBeats(embed: string): string {
 
 function track(b: Beat): string {
   return `
-    <li class="beat" data-beat="${b.id}" data-src="${esc(b.audio)}">
-      <img class="beat__cover" src="${esc(b.cover)}" alt="" loading="lazy" />
+    <li class="beat" data-beat="${b.id}" data-src="${esc(withBase(b.audio))}">
+      <img class="beat__cover" src="${esc(withBase(b.cover))}" alt="" loading="lazy" />
       <button class="beat__play" type="button" aria-label="Play ${esc(b.title)}" aria-pressed="false">
         <span class="beat__icon-play">▶</span>
         <span class="beat__icon-pause">❚❚</span>

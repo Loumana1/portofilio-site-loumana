@@ -1,11 +1,12 @@
 import type { Project } from '../data/projects';
+import { withBase } from '../paths';
 import { esc } from './format';
 
 // Four school project cards with screenshots. Whole card opens GitHub.
 
 function tile(p: Project): string {
   const img = p.image
-    ? `<img class="school__img" src="${esc(p.image)}" alt="" loading="lazy" />`
+    ? `<img class="school__img" src="${esc(withBase(p.image))}" alt="" loading="lazy" />`
     : `<div class="school__img school__img--empty"></div>`;
   const tags = p.stack.map((t) => `<span class="tag">${esc(t)}</span>`).join('');
   const cta = p.link ? `<span class="pill">${esc(p.link.label)} ↗</span>` : '';

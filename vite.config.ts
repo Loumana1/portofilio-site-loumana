@@ -3,8 +3,10 @@ import { defineConfig } from 'vite';
 // One project, one HTML file per page. Each page loads its own script
 // from site/pages/, which imports the shared header, footer, and styles.
 export default defineConfig({
-  // assets/ is copied to dist as-is and served at the site root,
-  // so /fonts/x.ttf, /images/x.png, /downloads/x.pdf, /models/x.ply.
+  // Project Pages: https://Loumana1.github.io/portofilio-site-loumana/
+  // Switch to '/' when loumana.co (or a user site) is the host.
+  base: '/portofilio-site-loumana/',
+  // assets/ is copied to dist as-is (images, fonts, downloads, models, games).
   publicDir: 'assets',
   server: { port: 5174, host: '127.0.0.1' },
   build: {

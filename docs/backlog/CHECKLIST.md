@@ -25,13 +25,13 @@ Goal: push to `main` → CI builds → visitors see the update. Domain later: **
 
 - [x] Decide Pages mode — project repo [portofilio-site-loumana](https://github.com/Loumana1/portofilio-site-loumana); domain loumana.co later
 - [x] Repo name known → Vite `base: '/portofilio-site-loumana/'`
-- [ ] Set Vite `base` to `'/portofilio-site-loumana/'`
-- [ ] Add GitHub Actions: install → `npm run build` → deploy `dist/`
-- [ ] Turn on Pages (Actions as source)
+- [x] Set Vite `base` to `'/portofilio-site-loumana/'`
+- [x] Add GitHub Actions workflow (`.github/workflows/deploy.yml`)
+- [ ] Turn on Pages in GitHub: Settings → Pages → Source **GitHub Actions**
 - [x] Media plan — commit needed assets; 3D models must ship; heavy video/audio may go Drive later — [`procedures/github-pages-deploy.md`](./procedures/github-pages-deploy.md)
-- [ ] Un-ignore / commit Moog + computer model files so production has 3D
-- [ ] Smoke-test live URL
-- [ ] Document push → CI → live in workflow
+- [x] Track Moog + computer model scripts in Git
+- [ ] Smoke-test live URL after first green deploy
+- [x] Document push → CI → live in workflow / deploy procedure
 - [ ] Later: attach **loumana.co** (CNAME + DNS) and switch `base` if needed
 
 ---

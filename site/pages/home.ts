@@ -3,6 +3,7 @@ import '../styles/home.css';
 
 import { Door } from '../components/Door';
 import { doors, site } from '../data/site';
+import { withBase } from '../paths';
 
 ground();
 
@@ -18,6 +19,6 @@ app.innerHTML = `
     </nav>
     <p class="home__foot">
       <span>${site.place} · ${site.year}</span>
-      <a href="/about.html">About</a>
+      <a href="${withBase('/about.html')}">About</a>
     </p>
   </main>`;
