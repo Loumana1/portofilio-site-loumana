@@ -1,10 +1,12 @@
 # Hub decisions
 
-**Date:** 1 October 2026  
-**Status:** Structure and stack are locked. The look is not chosen yet.  
-**Do not code from this file until the look pass.**
+**Date:** 1 October 2026 · **Updated:** 4 October 2026  
+**Status:** Structure and stack locked. Vite TypeScript site exists (~60%). Look polish and Music section redesigns are open in `docs/backlog/`.  
+**Active work list:** `docs/backlog/CHECKLIST.md`.
 
-This is the record of the decisions made while reviewing `src/`, `src/Prototyes/`, and the older prototypes. It replaces the direction in `archive/VERSION_1_BACKLOG.md` and the four-door plan in `archive/research_prototype_cursor.md`. Those files, plus the Gemini note, the version 1 sitemap, and the empty general backlog, live in `docs/archive/`.
+People: `LOUMANA_ARTIST_PROFILE.md` (music) and `LOUMANA_DEV_PATH.md` (software). Project rules: `LOUMANA_WORKFLOW.md`.
+
+This is the record of the decisions made while reviewing `src/`, `src/Prototyes/`, and the older prototypes. It replaces the direction in `archive/VERSION_1_BACKLOG.md` and the four-door plan in `archive/research_prototype_cursor.md`. Those files, plus the Gemini note, the version 1 sitemap, the empty general backlog, and the 1 Oct design backlog, live in `docs/archive/`.
 
 ---
 
@@ -49,7 +51,7 @@ The site does not render either document. A password is optional and can wait. L
 | 3D | Three.js, only on the pages that use it |
 | Content | JSON or TypeScript data (events, releases, projects) |
 | Version control | Git |
-| Hosting | Static files |
+| Hosting | Static files → **GitHub Pages** (CI build of `dist/` on each push to `main`). Procedure: `docs/backlog/procedures/github-pages-deploy.md` |
 | Commerce | Shopify, later |
 | Server, database, CMS, accounts | None, until a concrete feature needs one |
 
@@ -102,4 +104,6 @@ Keep:
 
 Files over 1 MB (video, audio, large images, `.ply` models, and the generated model scripts) are listed in `.gitignore`. They stay on disk. The first commit still contains the copies that were already tracked. Ignoring them does not shrink that history.
 
-The new site, when it starts, is a new folder. It does not grow inside the old pages.
+The new site lives at the repo root as Vite pages (`index.html`, `music.html`, …) plus `site/`. It did not grow inside the retired HTML pages.
+
+**Look / Music redesign notes (4 Oct 2026)** are tracked in `docs/backlog/CHECKLIST.md` §§3–6, not here. This file stays the structure and stack lock.
